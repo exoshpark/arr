@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>2022~2025 ARR 대시보드</title>
+  <style>
+    :root{--bg:#08111f;--panel:#0f172a;--panel2:#111827;--text:#e5e7eb;--muted:#94a3b8;--line:#38bdf8;--good:#22c55e;--bad:#ef4444;--grid:#334155;--warn:#f59e0b}
+    *{box-sizing:border-box} body{margin:0;background:radial-gradient(circle at top left,#1e293b 0,#0b1020 42%,#020617 100%);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Noto Sans KR',sans-serif} .wrap{max-width:1240px;margin:0 auto;padding:28px} h1{margin:0 0 8px;font-size:32px;letter-spacing:-.04em} h2{font-size:18px;margin:0 0 14px}.sub{color:var(--muted);line-height:1.55;margin-bottom:18px}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.two{display:grid;grid-template-columns:1.35fr .65fr;gap:14px;margin-top:14px}.card{background:rgba(15,23,42,.88);border:1px solid rgba(148,163,184,.22);border-radius:18px;padding:18px;box-shadow:0 18px 45px rgba(0,0,0,.24)}.k{font-size:13px;color:var(--muted)}.v{font-size:27px;font-weight:850;margin-top:7px;letter-spacing:-.04em}.section{margin-top:14px}.chartWrap{position:relative;background:#08111f;border:1px solid rgba(148,163,184,.14);border-radius:14px;padding:8px;overflow:hidden} svg{width:100%;height:auto;display:block}.axis{fill:#94a3b8;font-size:12px}.gridline{stroke:var(--grid);opacity:.45;stroke-width:1}.trendLine{fill:none;stroke:var(--line);stroke-width:4;stroke-linecap:round;stroke-linejoin:round}.point{fill:#0ea5e9;stroke:#e0f2fe;stroke-width:1.5;cursor:pointer}.bar{cursor:pointer;opacity:.88}.pos{fill:var(--good)}.neg{fill:var(--bad)}.zero{stroke:#94a3b8;opacity:.7}.tooltip{position:absolute;display:none;min-width:260px;max-width:430px;background:#020617;border:1px solid rgba(186,230,253,.36);box-shadow:0 20px 45px rgba(0,0,0,.45);border-radius:14px;padding:13px;z-index:5;pointer-events:none;color:#e5e7eb;font-size:13px;line-height:1.5}.tooltip b{color:#fff}.pill{display:inline-block;padding:5px 9px;border-radius:999px;background:rgba(56,189,248,.13);color:#bae6fd;font-size:12px;margin:0 5px 6px 0}table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:10px 8px;border-bottom:1px solid rgba(148,163,184,.16);text-align:right;white-space:nowrap}th:first-child,td:first-child{text-align:left}th{position:sticky;top:0;background:#132033;color:#cbd5e1;z-index:1}.scroll{max-height:520px;overflow:auto}.small{font-size:12px;color:#94a3b8;margin-top:8px;line-height:1.6}.note{color:#cbd5e1;line-height:1.7;font-size:14px}.status{border-radius:14px;padding:12px 14px;margin:12px 0;background:rgba(2,6,23,.65);border:1px solid rgba(148,163,184,.2);color:#cbd5e1;font-size:13px;line-height:1.6}.status.err{border-color:rgba(239,68,68,.4);color:#fecaca}.status.ok{border-color:rgba(34,197,94,.35);color:#bbf7d0}.btn{border:1px solid rgba(148,163,184,.28);background:rgba(15,23,42,.9);color:#e5e7eb;border-radius:12px;padding:9px 12px;cursor:pointer}.btn.primary{background:#0ea5e9;border-color:#38bdf8;color:#00111d;font-weight:800}.btn:disabled{opacity:.55;cursor:not-allowed}.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.authBox{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.input{height:39px;border-radius:12px;border:1px solid rgba(148,163,184,.34);background:rgba(2,6,23,.65);color:#e5e7eb;padding:0 12px;outline:none;min-width:170px} .input:focus{border-color:#38bdf8}.pinBox{display:flex;gap:8px;align-items:center}.pinInput{width:46px;height:48px;border-radius:14px;border:1px solid rgba(148,163,184,.34);background:rgba(2,6,23,.68);color:#e5e7eb;text-align:center;font-size:24px;font-weight:900;outline:none;box-shadow:inset 0 0 0 1px rgba(255,255,255,.02)}.pinInput:focus{border-color:#38bdf8;box-shadow:0 0 0 3px rgba(56,189,248,.14)}.pinInput.filled{border-color:rgba(56,189,248,.54);background:rgba(14,165,233,.12)}.netStats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:12px}.netStat{background:rgba(2,6,23,.52);border:1px solid rgba(148,163,184,.14);border-radius:12px;padding:10px}.netStat .label{font-size:11px;color:#94a3b8}.netStat .num{font-size:15px;font-weight:850;margin-top:3px}.barLabel{fill:#cbd5e1;font-size:11px;font-weight:700}.barGuide{stroke:#334155;opacity:.38;stroke-width:1}.yearDivider{stroke:#64748b;opacity:.28;stroke-dasharray:4 5}.netAxisTitle{fill:#94a3b8;font-size:11px}.modalBackdrop{position:fixed;inset:0;background:rgba(2,6,23,.72);display:none;align-items:center;justify-content:center;z-index:20;padding:20px}.modal{width:min(980px,96vw);max-height:86vh;overflow:auto;background:#020617;border:1px solid rgba(186,230,253,.32);border-radius:20px;box-shadow:0 30px 80px rgba(0,0,0,.58);padding:22px}.modalHead{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:14px}.modalTitle{font-size:22px;font-weight:850}.modalSub{color:#94a3b8;font-size:13px;margin-top:6px}.closeBtn{border:1px solid rgba(148,163,184,.28);background:rgba(15,23,42,.9);color:#e5e7eb;border-radius:12px;padding:8px 12px;cursor:pointer}.summaryBox{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:10px 0 16px}.summaryItem{background:rgba(15,23,42,.8);border:1px solid rgba(148,163,184,.15);border-radius:12px;padding:10px}.summaryItem .label{font-size:12px;color:#94a3b8}.summaryItem .num{font-size:16px;font-weight:800;margin-top:4px}.green{color:#86efac}.red{color:#fca5a5}.hidden{display:none!important}
+.loadingOverlay{position:fixed;inset:0;background:rgba(2,6,23,.78);display:none;align-items:center;justify-content:center;flex-direction:column;z-index:9999;backdrop-filter:blur(6px)}
+.loadingOverlay.show{display:flex}.spinner{width:62px;height:62px;border-radius:50%;border:5px solid rgba(226,232,240,.16);border-top-color:#38bdf8;animation:spin .9s linear infinite;box-shadow:0 0 32px rgba(56,189,248,.18)}.loadingText{margin-top:16px;color:#e5e7eb;font-size:14px;font-weight:750}.loadingSub{margin-top:6px;color:#94a3b8;font-size:12px}@keyframes spin{to{transform:rotate(360deg)}}
+@media(max-width:950px){.grid,.two,.summaryBox{grid-template-columns:1fr}.wrap{padding:18px}}
+  </style>
+</head>
+<body>
+<main class="wrap">
+  <div class="topbar">
+    <div>
+      <h1>2022~2025 ARR 대시보드</h1>
+      <div class="sub">비밀번호 입력 후 Apps Script JSON API에서 FY22~FY25 데이터를 가져와 계산합니다.</div>
+    </div>
+    <div class="authBox">
+      <div class="pinBox" aria-label="4자리 비밀번호 입력">
+        <input class="pinInput" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="1" autocomplete="one-time-code" aria-label="비밀번호 첫 번째 숫자" />
+        <input class="pinInput" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="1" autocomplete="one-time-code" aria-label="비밀번호 두 번째 숫자" />
+        <input class="pinInput" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="1" autocomplete="one-time-code" aria-label="비밀번호 세 번째 숫자" />
+        <input class="pinInput" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="1" autocomplete="one-time-code" aria-label="비밀번호 네 번째 숫자" />
+      </div>
+      <button id="loadBtn" class="btn primary">데이터 불러오기</button>
+      <button id="reloadBtn" class="btn" disabled>다시 불러오기</button>
+    </div>
+  </div>
+  <div id="status" class="status">비밀번호를 입력한 뒤 데이터를 불러오세요.</div>
+
+  <section class="grid" id="kpis"></section>
+  <section class="two hidden" id="mainCharts">
+    <div class="card"><h2>ARR 추이 <span class="k">· 점 클릭: 해당 월 Top20 고객</span></h2><div id="arrChart" class="chartWrap"></div><div class="small">Top20 기준: 해당 월 말 활성 계약의 고객별 일매출 합 × 365.</div></div>
+    <div class="card"><h2>해석 요약</h2><div id="summary" class="note"></div></div>
+  </section>
+  <section class="section card hidden" id="netSection"><h2>Net New ARR <span class="k">· 막대 클릭: 증감 고객사 상세</span></h2><div id="netArrChart" class="chartWrap"></div><div class="small">Net New ARR = 이번 달 ARR - 전월 ARR.</div></section>
+  <section class="two hidden" id="tablesSection">
+    <div class="card"><h2>연도별 요약</h2><div id="yearTable"></div></div>
+    <div class="card"><h2>최종월 Top10 고객 ARR</h2><div id="top10Table"></div></div>
+  </section>
+  <section class="section card hidden" id="monthSection"><h2>월별 상세</h2><div id="monthTable" class="scroll"></div></section>
+</main>
+<div id="modalBackdrop" class="modalBackdrop"><div class="modal"><div class="modalHead"><div><div id="modalTitle" class="modalTitle"></div><div id="modalSub" class="modalSub"></div></div><button class="closeBtn" id="modalClose">닫기</button></div><div id="modalBody"></div></div></div>
+
+<div id="loadingOverlay" class="loadingOverlay" aria-live="polite" aria-busy="true">
+  <div class="spinner"></div>
+  <div class="loadingText">데이터 불러오는 중...</div>
+  <div class="loadingSub">ARR 데이터를 계산하고 있습니다</div>
+</div>
+
+<script>
+const API_URL = "https://script.google.com/macros/s/AKfycby1bmRQ1El3e9Vvs_unjaYWvKwkQi-bmitfR4FC8_S6JuZj2Rt2RAm5G1Di-IUMFyx3/exec";
+const TARGET_SHEETS = ["FY22","FY23","FY24","FY25"];
+let MONTH_DATA = [];
+let RAW_ROWS = [];
+let LAST_PASSWORD = "";
+
+const $ = (id)=>document.getElementById(id);
+const fmt = (n)=>Math.round(n||0).toLocaleString('ko-KR') + '원';
+const fmtSign = (n)=> (n>=0?'+':'') + fmt(n);
+const fmtEok = (n)=> ((n||0)/100000000).toLocaleString('ko-KR',{maximumFractionDigits:2}) + '억';
+const pct = (n)=> isFinite(n) ? (n*100).toFixed(1)+'%' : '-';
+
+function normalizeKey(k){return String(k||'').replace(/\s/g,'').toLowerCase();}
+function getVal(row, candidates){
+  const keys = Object.keys(row||{});
+  for (const c of candidates){
+    const n = normalizeKey(c);
+    const found = keys.find(k=>normalizeKey(k)===n || normalizeKey(k).includes(n));
+    if(found) return row[found];
+  }
+  return undefined;
+}
+function parseMoney(v){
+  if(typeof v === 'number') return v;
+  if(v == null) return 0;
+  const s = String(v).replace(/,/g,'').replace(/원/g,'').replace(/\s/g,'').replace(/[()]/g,'');
+  const num = Number(s.replace(/[^0-9.-]/g,''));
+  return isNaN(num)?0:num;
+}
+function parseDate(v){
+  if(!v) return null;
+  if(v instanceof Date && !isNaN(v)) return v;
+  if(typeof v === 'number'){
+    const d = new Date(Math.round((v - 25569) * 86400 * 1000));
+    return isNaN(d) ? null : new Date(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate());
+  }
+  let s = String(v).trim();
+  if(!s) return null;
+  if(/^\d{4}-\d{2}-\d{2}T/.test(s)) return new Date(s.slice(0,10)+'T00:00:00');
+  s = s.replace(/[.년월]/g,'-').replace(/일/g,'').replace(/\//g,'-').replace(/\s+/g,'');
+  s = s.replace(/-+/g,'-').replace(/-$/,'');
+  const m = s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/);
+  if(!m) return null;
+  const d = new Date(Number(m[1]), Number(m[2])-1, Number(m[3]));
+  return isNaN(d)?null:d;
+}
+function daysInclusive(start,end){return Math.floor((end-start)/86400000)+1;}
+function endOfMonth(y,m){return new Date(y,m+1,0);}
+function ym(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');}
+function ymd(d){return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}
+function esc(s){return String(s??'').replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));}
+
+function showLoading(message='데이터 불러오는 중...', sub='ARR 데이터를 계산하고 있습니다'){
+  const overlay = $('loadingOverlay');
+  if(!overlay) return;
+  const text = overlay.querySelector('.loadingText');
+  const subText = overlay.querySelector('.loadingSub');
+  if(text) text.textContent = message;
+  if(subText) subText.textContent = sub;
+  overlay.classList.add('show');
+}
+function hideLoading(){
+  const overlay = $('loadingOverlay');
+  if(overlay) overlay.classList.remove('show');
+}
+
+function flattenApiData(payload){
+  const data = payload && payload.success === true && payload.data ? payload.data : payload;
+  const rows=[];
+  if(Array.isArray(data)) return data.map(r=>({...r, _sheet:'DATA'}));
+  for(const name of TARGET_SHEETS){
+    const arr = data?.[name] || data?.[name.toLowerCase()] || data?.[name.toUpperCase()];
+    if(Array.isArray(arr)) arr.forEach(r=>rows.push({...r,_sheet:name}));
+  }
+  if(rows.length===0 && data && typeof data==='object'){
+    Object.entries(data).forEach(([sheet, arr])=>{ if(Array.isArray(arr)) arr.forEach(r=>rows.push({...r,_sheet:sheet})); });
+  }
+  return rows;
+}
+function normalizeRows(rows){
+  return rows.map((r, idx)=>{
+    const customer = String(getVal(r,['고객명','고객','customer','client','회사명']) ?? '').trim();
+    const revenue = parseMoney(getVal(r,['매출','계약금액','금액','revenue','amount']));
+    const paidAt = parseDate(getVal(r,['결제일자','결제일','paidAt','paymentDate']));
+    const start = parseDate(getVal(r,['시작일','계약시작일','start','startDate']));
+    const end = parseDate(getVal(r,['만료일','종료일','계약만료일','end','endDate','expiryDate']));
+    const d = start && end ? daysInclusive(start,end) : 0;
+    return {idx, sheet:r._sheet||'', customer, revenue, paidAt, start, end, days:d, daily: d>0 ? revenue/d : 0, raw:r};
+  }).filter(r=>r.customer && r.revenue && r.start && r.end && r.days>0 && r.end>=r.start);
+}
+function calculate(rows){
+  const months=[];
+  for(let y=2022;y<=2025;y++){ for(let m=0;m<12;m++) months.push({month:`${y}-${String(m+1).padStart(2,'0')}`, date:endOfMonth(y,m)}); }
+  const prevMap = new Map();
+  return months.map((mo, i)=>{
+    const active = rows.filter(r=>r.start<=mo.date && r.end>=mo.date);
+    const byCustomer = new Map();
+    active.forEach(r=>{
+      const cur = byCustomer.get(r.customer)||{customer:r.customer,daily:0,contracts:0,revenue:0};
+      cur.daily += r.daily; cur.contracts += 1; cur.revenue += r.revenue; byCustomer.set(r.customer,cur);
+    });
+    const arr = [...byCustomer.values()].reduce((s,c)=>s+c.daily*365,0);
+    const mrr = [...byCustomer.values()].reduce((s,c)=>s+c.daily*30,0);
+    const currMap = new Map([...byCustomer.values()].map(c=>[c.customer,c.daily*365]));
+    const increases=[], decreases=[];
+    if(i>0){
+      const names = new Set([...prevMap.keys(),...currMap.keys()]);
+      names.forEach(name=>{
+        const prev=prevMap.get(name)||0, curr=currMap.get(name)||0, delta=curr-prev;
+        if(Math.abs(delta)<1) return;
+        const item={customer:name, previousArr:prev, currentArr:curr, deltaArr:delta, type: prev===0?'신규':curr===0?'이탈/만료':delta>0?'증액/추가':'감소'};
+        if(delta>0) increases.push(item); else decreases.push(item);
+      });
+    }
+    prevMap.clear(); currMap.forEach((v,k)=>prevMap.set(k,v));
+    const topCustomers=[...byCustomer.values()].map(c=>({customer:c.customer,mrr:c.daily*30,arr:c.daily*365,contracts:c.contracts})).sort((a,b)=>b.arr-a.arr).slice(0,20);
+    const prevArr = i>0 ? months[i-1]._arr || 0 : arr;
+    const netArr = i>0 ? arr-prevArr : 0;
+    mo._arr = arr;
+    return {month:mo.month,mrr,arr,netArr,activeCustomers:byCustomer.size,activeContracts:active.length,topCustomers,netDetails:{increases:increases.sort((a,b)=>b.deltaArr-a.deltaArr),decreases:decreases.sort((a,b)=>a.deltaArr-b.deltaArr),summary:{grossIncrease:increases.reduce((s,x)=>s+x.deltaArr,0),grossDecrease:decreases.reduce((s,x)=>s+x.deltaArr,0),net:netArr,newCustomers:increases.filter(x=>x.type==='신규').length,expandedCustomers:increases.filter(x=>x.type==='증액/추가').length,churnedCustomers:decreases.filter(x=>x.type==='이탈/만료').length,contractedCustomers:decreases.filter(x=>x.type==='감소').length}}};
+  });
+}
+function revealDashboard(){
+  ['mainCharts','netSection','tablesSection','monthSection'].forEach(id=>$(id).classList.remove('hidden'));
+  $('reloadBtn').disabled = false;
+}
+function render(){
+  revealDashboard();
+  const last = MONTH_DATA[MONTH_DATA.length-1];
+  const first = MONTH_DATA[0];
+  const max = MONTH_DATA.reduce((a,b)=> b.arr>a.arr?b:a, MONTH_DATA[0]);
+  const cagr = Math.pow(last.arr/Math.max(first.arr,1),1/3)-1;
+  $('kpis').innerHTML = `
+    <div class="card"><div class="k">${last.month} MRR</div><div class="v">${fmt(last.mrr)}</div></div>
+    <div class="card"><div class="k">${last.month} ARR</div><div class="v">${fmtEok(last.arr)}</div></div>
+    <div class="card"><div class="k">최고 ARR</div><div class="v">${max.month}</div><div class="k">${fmtEok(max.arr)}</div></div>
+    <div class="card"><div class="k">22말→25말 ARR CAGR</div><div class="v">${pct(cagr)}</div></div>`;
+  const top10Share = last.topCustomers.slice(0,10).reduce((s,c)=>s+c.arr,0)/last.arr;
+  const bestNet = MONTH_DATA.slice(1).reduce((a,b)=>b.netArr>a.netArr?b:a, MONTH_DATA[1]);
+  const worstNet = MONTH_DATA.slice(1).reduce((a,b)=>b.netArr<a.netArr?b:a, MONTH_DATA[1]);
+  $('summary').innerHTML = `<span class="pill">Apps Script API</span><span class="pill">FY22~FY25</span><span class="pill">Password Protected</span><br>
+    최종 ARR은 <b>${fmtEok(last.arr)}</b>입니다.<br>최종월 활성고객사는 <b>${last.activeCustomers.toLocaleString('ko-KR')}개</b>입니다.<br>Top10 고객 ARR 비중은 <b>${pct(top10Share)}</b>입니다.<br>최대 Net New ARR은 <b>${bestNet.month}</b>의 <b>${fmtSign(bestNet.netArr)}</b>입니다.<br>가장 큰 감소 월은 <b>${worstNet.month}</b>의 <b>${fmtSign(worstNet.netArr)}</b>입니다.`;
+  drawLineChart('arrChart', MONTH_DATA, 'arr', true);
+  drawBarChart('netArrChart', MONTH_DATA.slice(1), 'netArr');
+  renderYearTable(); renderTop10(last); renderMonthTable();
+}
+function table(headers, rows){return `<table><thead><tr>${headers.map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>${rows.join('')}</tbody></table>`}
+function renderYearTable(){
+  const rows=[];
+  for(let y=2022;y<=2025;y++){
+    const list=MONTH_DATA.filter(m=>m.month.startsWith(String(y)));
+    const end=list[list.length-1]; const prev=MONTH_DATA.find(m=>m.month===`${y-1}-12`);
+    rows.push(`<tr><td>${y}</td><td>${fmt(list.reduce((s,m)=>s+m.mrr,0)/list.length)}</td><td>${fmt(end.mrr)}</td><td>${fmtEok(end.arr)}</td><td>${prev?pct(end.arr/prev.arr-1):'-'}</td><td>${Math.round(list.reduce((s,m)=>s+m.activeCustomers,0)/list.length).toLocaleString('ko-KR')}개</td></tr>`);
+  }
+  $('yearTable').innerHTML=table(['연도','평균 MRR','연말 MRR','연말 ARR','ARR YoY','평균 활성고객사'],rows);
+}
+function renderTop10(last){
+  $('top10Table').innerHTML=table(['고객','MRR','ARR','계약수'],last.topCustomers.slice(0,10).map(c=>`<tr><td>${esc(c.customer)}</td><td>${fmt(c.mrr)}</td><td>${fmtEok(c.arr)}</td><td>${c.contracts}</td></tr>`));
+}
+function renderMonthTable(){
+  $('monthTable').innerHTML=table(['월','MRR','ARR','Net New ARR','활성고객사','활성계약수'],MONTH_DATA.map(m=>`<tr><td>${m.month}</td><td>${fmt(m.mrr)}</td><td>${fmtEok(m.arr)}</td><td class="${m.netArr>=0?'green':'red'}">${fmtSign(m.netArr)}</td><td>${m.activeCustomers.toLocaleString('ko-KR')}</td><td>${m.activeContracts.toLocaleString('ko-KR')}</td></tr>`));
+}
+function drawLineChart(id,data,key,clickable){
+  const w=900,h=330,p={l:58,r:22,t:18,b:42}; const vals=data.map(d=>d[key]); const max=Math.max(...vals)*1.08, min=0;
+  const x=i=>p.l+i*(w-p.l-p.r)/(data.length-1); const y=v=>h-p.b-(v-min)*(h-p.t-p.b)/(max-min||1);
+  const grid=[0,.25,.5,.75,1].map(t=>{const yy=p.t+t*(h-p.t-p.b); const val=max-(max-min)*t; return `<line class="gridline" x1="${p.l}" x2="${w-p.r}" y1="${yy}" y2="${yy}"/><text class="axis" x="8" y="${yy+4}">${fmtEok(val)}</text>`}).join('');
+  const path=data.map((d,i)=>`${i?'L':'M'}${x(i)},${y(d[key])}`).join(' ');
+  const monthTicks=data.map((d,i)=> i%3===0 ? `<text class="axis" x="${x(i)}" y="${h-14}" text-anchor="middle">${d.month.slice(2)}</text>`:'').join('');
+  const pts=data.map((d,i)=>`<circle class="point" cx="${x(i)}" cy="${y(d[key])}" r="4.6" data-i="${i}"/>`).join('');
+  $(id).innerHTML=`<div class="tooltip"></div><svg viewBox="0 0 ${w} ${h}" role="img">${grid}<path class="trendLine" d="${path}"/>${pts}${monthTicks}</svg>`;
+  bindTooltip(id,data,(d)=>`<b>${d.month}</b><br>MRR ${fmt(d.mrr)}<br>ARR ${fmtEok(d.arr)}<br>활성고객 ${d.activeCustomers.toLocaleString()}개`,clickable?openTop20:null);
+}
+function drawBarChart(id,data,key){
+  const w=980,h=380,p={l:76,r:26,t:42,b:60};
+  const maxAbs=Math.max(1,...data.map(d=>Math.abs(d[key])))*1.22;
+  const plotW=w-p.l-p.r, plotH=h-p.t-p.b;
+  const zero=p.t+plotH/2;
+  const slot=plotW/data.length;
+  const bw=Math.min(18, slot*.62);
+  const x=i=>p.l+i*slot+(slot-bw)/2;
+  const y=v=>zero-(v/maxAbs)*(plotH/2);
+  const gridVals=[-1,-.5,0,.5,1].map(r=>r*maxAbs);
+  const grid=gridVals.map(v=>{
+    const yy=y(v);
+    const label=(v>=0?'+':'')+fmtEok(v);
+    return `<line class="barGuide" x1="${p.l}" x2="${w-p.r}" y1="${yy}" y2="${yy}"/><text class="axis" x="8" y="${yy+4}">${label}</text>`;
+  }).join('');
+  const yearDividers=data.map((d,i)=> d.month.endsWith('-01') ? `<line class="yearDivider" x1="${p.l+i*slot}" x2="${p.l+i*slot}" y1="${p.t}" y2="${h-p.b}"/>` : '').join('');
+  const bars=data.map((d,i)=>{
+    const v=d[key];
+    const yy=Math.min(y(v),zero);
+    const hh=Math.max(2,Math.abs(y(v)-zero));
+    return `<rect class="bar ${v>=0?'pos':'neg'}" x="${x(i)}" y="${yy}" width="${bw}" height="${hh}" rx="5" data-i="${i}"/>`;
+  }).join('');
+  const labels=data.map((d,i)=>{
+    if(Math.abs(d[key]) < maxAbs*.18) return '';
+    const yy=d[key]>=0 ? y(d[key])-8 : y(d[key])+16;
+    return `<text class="barLabel" x="${x(i)+bw/2}" y="${yy}" text-anchor="middle">${fmtEok(d[key])}</text>`;
+  }).join('');
+  const ticks=data.map((d,i)=> i%3===0 ? `<text class="axis" x="${x(i)+bw/2}" y="${h-24}" text-anchor="middle">${d.month.slice(2)}</text>`:'').join('');
+  const best=data.reduce((a,b)=>b[key]>a[key]?b:a,data[0]);
+  const worst=data.reduce((a,b)=>b[key]<a[key]?b:a,data[0]);
+  $(id).innerHTML=`
+    <div class="netStats">
+      <div class="netStat"><div class="label">최대 증가</div><div class="num green">${best.month} · ${fmtSign(best[key])}</div></div>
+      <div class="netStat"><div class="label">최대 감소</div><div class="num red">${worst.month} · ${fmtSign(worst[key])}</div></div>
+      <div class="netStat"><div class="label">평균 증가월</div><div class="num green">${fmt(data.filter(d=>d[key]>0).reduce((s,d)=>s+d[key],0)/Math.max(1,data.filter(d=>d[key]>0).length))}</div></div>
+      <div class="netStat"><div class="label">평균 감소월</div><div class="num red">${fmt(data.filter(d=>d[key]<0).reduce((s,d)=>s+d[key],0)/Math.max(1,data.filter(d=>d[key]<0).length))}</div></div>
+    </div>
+    <div class="tooltip"></div>
+    <svg viewBox="0 0 ${w} ${h}">
+      ${grid}${yearDividers}
+      <line class="zero" x1="${p.l}" x2="${w-p.r}" y1="${zero}" y2="${zero}"/>
+      <text class="netAxisTitle" x="${p.l}" y="22">월별 ARR 순증감</text>
+      ${bars}${labels}${ticks}
+    </svg>`;
+  bindTooltip(id,data,(d)=>`<b>${d.month}</b><br>Net New ARR <span class="${d.netArr>=0?'green':'red'}">${fmtSign(d.netArr)}</span><br>신규 ${d.netDetails.summary.newCustomers} · 증액 ${d.netDetails.summary.expandedCustomers}<br>이탈 ${d.netDetails.summary.churnedCustomers} · 감소 ${d.netDetails.summary.contractedCustomers}`,openNetDetail);
+}
+function bindTooltip(id,data,htmlFn,clickFn){
+  const wrap=$(id), tip=wrap.querySelector('.tooltip');
+  wrap.querySelectorAll('[data-i]').forEach(el=>{
+    el.addEventListener('mousemove',e=>{const d=data[Number(el.dataset.i)]; tip.innerHTML=htmlFn(d); tip.style.display='block'; tip.style.left=Math.min(e.offsetX+14, wrap.clientWidth-280)+'px'; tip.style.top=Math.max(e.offsetY-8,8)+'px';});
+    el.addEventListener('mouseleave',()=>tip.style.display='none');
+    if(clickFn) el.addEventListener('click',()=>clickFn(data[Number(el.dataset.i)]));
+  });
+}
+function openTop20(d){
+  $('modalTitle').textContent=`${d.month} Top20 고객 ARR`; $('modalSub').textContent=`ARR ${fmtEok(d.arr)} · 활성고객 ${d.activeCustomers.toLocaleString()}개`;
+  $('modalBody').innerHTML=table(['순위','고객','MRR','ARR','계약수'],d.topCustomers.map((c,i)=>`<tr><td>${i+1}</td><td>${esc(c.customer)}</td><td>${fmt(c.mrr)}</td><td>${fmtEok(c.arr)}</td><td>${c.contracts}</td></tr>`));
+  $('modalBackdrop').style.display='flex';
+}
+function openNetDetail(d){
+  const s=d.netDetails.summary;
+  $('modalTitle').textContent=`${d.month} Net New ARR 상세`; $('modalSub').textContent=`Net ${fmtSign(d.netArr)} · Gross 증가 ${fmt(s.grossIncrease)} · Gross 감소 ${fmt(s.grossDecrease)}`;
+  const boxes=`<div class="summaryBox"><div class="summaryItem"><div class="label">신규</div><div class="num green">${s.newCustomers}개</div></div><div class="summaryItem"><div class="label">증액/추가</div><div class="num green">${s.expandedCustomers}개</div></div><div class="summaryItem"><div class="label">이탈/만료</div><div class="num red">${s.churnedCustomers}개</div></div><div class="summaryItem"><div class="label">감소</div><div class="num red">${s.contractedCustomers}개</div></div></div>`;
+  const inc=table(['구분','고객','이전 ARR','현재 ARR','증감'],d.netDetails.increases.slice(0,50).map(x=>`<tr><td>${x.type}</td><td>${esc(x.customer)}</td><td>${fmtEok(x.previousArr)}</td><td>${fmtEok(x.currentArr)}</td><td class="green">${fmtSign(x.deltaArr)}</td></tr>`));
+  const dec=table(['구분','고객','이전 ARR','현재 ARR','증감'],d.netDetails.decreases.slice(0,50).map(x=>`<tr><td>${x.type}</td><td>${esc(x.customer)}</td><td>${fmtEok(x.previousArr)}</td><td>${fmtEok(x.currentArr)}</td><td class="red">${fmtSign(x.deltaArr)}</td></tr>`));
+  $('modalBody').innerHTML=boxes+`<h2>증가 고객</h2>${inc}<h2 style="margin-top:18px">감소 고객</h2>${dec}`;
+  $('modalBackdrop').style.display='flex';
+}
+function getPinPassword(){
+  return [...document.querySelectorAll('.pinInput')].map(input => input.value).join('').replace(/\D/g,'').slice(0,4);
+}
+function focusFirstEmptyPin(){
+  const inputs = [...document.querySelectorAll('.pinInput')];
+  const empty = inputs.find(input => !input.value);
+  (empty || inputs[0])?.focus();
+}
+function setPinVisualState(){
+  document.querySelectorAll('.pinInput').forEach(input => input.classList.toggle('filled', !!input.value));
+}
+async function load(){
+  const password = getPinPassword() || LAST_PASSWORD || '';
+  if(password.length !== 4){
+    $('status').className='status err';
+    $('status').textContent='4자리 숫자 코드를 입력하세요.';
+    focusFirstEmptyPin();
+    return;
+  }
+  LAST_PASSWORD = password;
+  $('loadBtn').disabled = true;
+  $('reloadBtn').disabled = true;
+  $('status').className='status'; $('status').textContent='비밀번호 확인 후 데이터를 불러오는 중...';
+  showLoading('데이터 불러오는 중...', '비밀번호 확인 및 ARR 계산 중입니다');
+  try{
+    const url = `${API_URL}?password=${encodeURIComponent(password)}&ts=${Date.now()}`;
+    const res = await fetch(url, {method:'GET', cache:'no-store', redirect:'follow'});
+    if(!res.ok) throw new Error(`HTTP ${res.status}`);
+    const payload = await res.json();
+    if(payload && payload.success === false) throw new Error(payload.message || '비밀번호가 올바르지 않습니다.');
+    const flat = flattenApiData(payload && payload.success === true && payload.data ? payload.data : payload);
+    RAW_ROWS = normalizeRows(flat);
+    if(!RAW_ROWS.length) throw new Error('계산 가능한 행이 없습니다. 컬럼명은 고객명/매출/결제일자/시작일/만료일 형태여야 합니다.');
+    MONTH_DATA = calculate(RAW_ROWS);
+    $('status').className='status ok'; $('status').innerHTML=`로드 완료: 원본 ${flat.length.toLocaleString('ko-KR')}행 · 계산 가능 ${RAW_ROWS.length.toLocaleString('ko-KR')}행 · 탭 ${[...new Set(flat.map(r=>r._sheet))].join(', ')}`;
+    render();
+  }catch(e){
+    console.error(e);
+    $('status').className='status err';
+    $('status').innerHTML=`데이터 로드 실패: ${esc(e.message)}<br>확인: Apps Script Code.gs가 password 파라미터를 검사하는지, 최신 버전으로 다시 배포했는지 확인하세요.`;
+  }finally{
+    hideLoading();
+    $('loadBtn').disabled = false;
+    $('reloadBtn').disabled = !LAST_PASSWORD;
+  }
+}
+$('loadBtn').addEventListener('click', load);
+$('reloadBtn').addEventListener('click', load);
+const pinInputs = [...document.querySelectorAll('.pinInput')];
+pinInputs.forEach((input, index) => {
+  input.addEventListener('input', e => {
+    const digits = e.target.value.replace(/\D/g, '');
+    e.target.value = digits.slice(-1);
+    setPinVisualState();
+    if (e.target.value && index < pinInputs.length - 1) pinInputs[index + 1].focus();
+    if (getPinPassword().length === 4) load();
+  });
+  input.addEventListener('keydown', e => {
+    if (e.key === 'Backspace' && !input.value && index > 0) {
+      pinInputs[index - 1].focus();
+      pinInputs[index - 1].value = '';
+      setPinVisualState();
+      e.preventDefault();
+    }
+    if (e.key === 'ArrowLeft' && index > 0) pinInputs[index - 1].focus();
+    if (e.key === 'ArrowRight' && index < pinInputs.length - 1) pinInputs[index + 1].focus();
+    if (e.key === 'Enter') load();
+  });
+  input.addEventListener('paste', e => {
+    e.preventDefault();
+    const digits = (e.clipboardData || window.clipboardData).getData('text').replace(/\D/g, '').slice(0, 4);
+    pinInputs.forEach((pin, i) => pin.value = digits[i] || '');
+    setPinVisualState();
+    if (digits.length === 4) load(); else focusFirstEmptyPin();
+  });
+});
+setPinVisualState();
+pinInputs[0]?.focus();
+$('modalClose').addEventListener('click',()=>$('modalBackdrop').style.display='none');
+$('modalBackdrop').addEventListener('click',e=>{if(e.target.id==='modalBackdrop') $('modalBackdrop').style.display='none';});
+</script>
+</body>
+</html>
