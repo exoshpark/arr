@@ -43,6 +43,26 @@
     <div class="card"><h2>최종월 Top10 고객 ARR</h2><div id="top10Table"></div></div>
   </section>
   <section class="section card hidden" id="monthSection"><h2>월별 상세</h2><div id="monthTable" class="scroll"></div></section>
+
+  <section class="section card hidden" id="forvalSection">
+    <h2>엑소스피어 for Forval ARR 분석 <span class="k">· JPY · 월말 활성 계약 ARR 기준</span></h2>
+    <div class="small" style="margin-bottom:14px">Forval 탭은 판매구분을 상품코드로 보고, 각 계약의 매출을 계약일수로 나눈 뒤 365를 곱해 ARR로 환산합니다. 각 월 말 기준 활성 계약만 합산하며 단위는 엔화입니다. 표시는 Forval 데이터의 시작월부터 마지막 데이터월까지 자동으로 생성합니다. 단, 시작월은 2025-09 이전으로 내려가지 않습니다.</div>
+    <div class="grid" id="forvalKpis" style="margin-bottom:14px"></div>
+    <div class="two">
+      <div class="card">
+        <h2>Forval ARR 추이 <span class="k">· 점 클릭: 해당 월 상품코드 상세</span></h2>
+        <div id="forvalArrChart" class="chartWrap"></div>
+      </div>
+      <div class="card">
+        <h2>최종월 Top10 상품코드 ARR</h2>
+        <div id="forvalTopTable"></div>
+      </div>
+    </div>
+    <div class="section card" style="padding:0;margin-top:14px;background:transparent;border:0;box-shadow:none">
+      <h2>Forval 월별 상세</h2>
+      <div id="forvalMonthTable" class="scroll"></div>
+    </div>
+  </section>
 </main>
 <div id="modalBackdrop" class="modalBackdrop"><div class="modal"><div class="modalHead"><div><div id="modalTitle" class="modalTitle"></div><div id="modalSub" class="modalSub"></div></div><button class="closeBtn" id="modalClose">닫기</button></div><div id="modalBody"></div></div></div>
 
@@ -55,12 +75,17 @@
 <script>
 const API_URL = "https://script.google.com/macros/s/AKfycby1bmRQ1El3e9Vvs_unjaYWvKwkQi-bmitfR4FC8_S6JuZj2Rt2RAm5G1Di-IUMFyx3/exec";
 const TARGET_SHEETS = ["FY22","FY23","FY24","FY25"];
+const FORVAL_SHEET_NAMES = ["Forval","FORVAL","forval","포발"];
+const FORVAL_MIN_DISPLAY_MONTH = "2025-09";
 let MONTH_DATA = [];
 let RAW_ROWS = [];
+let FORVAL_MONTH_DATA = [];
+let FORVAL_ROWS = [];
 let LAST_PASSWORD = "";
 
 const $ = (id)=>document.getElementById(id);
 const fmt = (n)=>Math.round(n||0).toLocaleString('ko-KR') + '원';
+const fmtYen = (n)=>'¥' + Math.round(n||0).toLocaleString('ja-JP');
 const fmtSign = (n)=> (n>=0?'+':'') + fmt(n);
 const fmtEok = (n)=> ((n||0)/100000000).toLocaleString('ko-KR',{maximumFractionDigits:2}) + '억';
 const pct = (n)=> isFinite(n) ? (n*100).toFixed(1)+'%' : '-';
@@ -123,7 +148,7 @@ function flattenApiData(payload){
   const data = payload && payload.success === true && payload.data ? payload.data : payload;
   const rows=[];
   if(Array.isArray(data)) return data.map(r=>({...r, _sheet:'DATA'}));
-  for(const name of TARGET_SHEETS){
+  for(const name of [...TARGET_SHEETS, ...FORVAL_SHEET_NAMES]){
     const arr = data?.[name] || data?.[name.toLowerCase()] || data?.[name.toUpperCase()];
     if(Array.isArray(arr)) arr.forEach(r=>rows.push({...r,_sheet:name}));
   }
@@ -175,6 +200,64 @@ function calculate(rows){
     return {month:mo.month,mrr,arr,netArr,activeCustomers:byCustomer.size,activeContracts:active.length,topCustomers,netDetails:{increases:increases.sort((a,b)=>b.deltaArr-a.deltaArr),decreases:decreases.sort((a,b)=>a.deltaArr-b.deltaArr),summary:{grossIncrease:increases.reduce((s,x)=>s+x.deltaArr,0),grossDecrease:decreases.reduce((s,x)=>s+x.deltaArr,0),net:netArr,newCustomers:increases.filter(x=>x.type==='신규').length,expandedCustomers:increases.filter(x=>x.type==='증액/추가').length,churnedCustomers:decreases.filter(x=>x.type==='이탈/만료').length,contractedCustomers:decreases.filter(x=>x.type==='감소').length}}};
   });
 }
+
+function isForvalSheetName(name){
+  return FORVAL_SHEET_NAMES.some(s => normalizeKey(s) === normalizeKey(name));
+}
+function normalizeForvalRows(rows){
+  return rows.map((r, idx)=>{
+    const sheet = r._sheet || '';
+    const productCode = String(getVal(r,['판매구분','상품코드','productCode','product','code']) ?? '').trim();
+    const revenue = parseMoney(getVal(r,['매출','계약금액','금액','revenue','amount']));
+    const paidAt = parseDate(getVal(r,['결제일자','결제일','paidAt','paymentDate']));
+    const start = parseDate(getVal(r,['시작일','계약시작일','start','startDate']));
+    const end = parseDate(getVal(r,['만료일','종료일','계약만료일','end','endDate','expiryDate']));
+    const days = start && end ? daysInclusive(start,end) : 0;
+    const daily = days > 0 ? revenue / days : 0;
+    const arr = daily * 365;
+    return {idx, sheet, productCode, revenue, paidAt, start, end, days, daily, arr, raw:r};
+  }).filter(r=>isForvalSheetName(r.sheet) && r.productCode && r.revenue && r.start && r.end && r.end>=r.start && r.days>0);
+}
+function monthStart(d){return new Date(d.getFullYear(), d.getMonth(), 1);}
+function addMonths(d, count){return new Date(d.getFullYear(), d.getMonth()+count, 1);}
+function makeMonthRange(startMonth, endMonth){
+  const months=[];
+  let cur = new Date(Number(startMonth.slice(0,4)), Number(startMonth.slice(5,7))-1, 1);
+  const end = new Date(Number(endMonth.slice(0,4)), Number(endMonth.slice(5,7))-1, 1);
+  while(cur <= end){
+    months.push({month: ym(cur), date: endOfMonth(cur.getFullYear(), cur.getMonth())});
+    cur = addMonths(cur, 1);
+  }
+  return months;
+}
+function calculateForval(rows){
+  if(!rows.length) return [];
+
+  // Forval 표시는 실제 데이터가 존재하는 구간만 보여줍니다.
+  // 시작: 최초 시작일 월 또는 2025-09 중 늦은 월
+  // 종료: 마지막 시작일 월. 만료월까지 펼치면 연간 계약 때문에 실제 데이터가 없는 미래월까지 보일 수 있어 제외합니다.
+  const firstStartMonth = rows.reduce((min, r)=> ym(r.start) < min ? ym(r.start) : min, ym(rows[0].start));
+  const lastStartMonth = rows.reduce((max, r)=> ym(r.start) > max ? ym(r.start) : max, ym(rows[0].start));
+  const startMonth = firstStartMonth < FORVAL_MIN_DISPLAY_MONTH ? FORVAL_MIN_DISPLAY_MONTH : firstStartMonth;
+  const endMonth = lastStartMonth < startMonth ? startMonth : lastStartMonth;
+  const months = makeMonthRange(startMonth, endMonth);
+
+  return months.map(mo=>{
+    const active = rows.filter(r=>r.start<=mo.date && r.end>=mo.date);
+    const byProduct = new Map();
+    active.forEach(r=>{
+      const cur = byProduct.get(r.productCode)||{productCode:r.productCode, arr:0, rows:0, revenue:0, daily:0};
+      cur.arr += r.arr;
+      cur.revenue += r.revenue;
+      cur.daily += r.daily;
+      cur.rows += 1;
+      byProduct.set(r.productCode,cur);
+    });
+    const topProducts = [...byProduct.values()].sort((a,b)=>b.arr-a.arr);
+    const arr = topProducts.reduce((s,p)=>s+p.arr,0);
+    return {month:mo.month, arr, productCount:byProduct.size, rowCount:active.length, topProducts};
+  });
+}
 function revealDashboard(){
   ['mainCharts','netSection','tablesSection','monthSection'].forEach(id=>$(id).classList.remove('hidden'));
   $('reloadBtn').disabled = false;
@@ -197,7 +280,7 @@ function render(){
     최종 ARR은 <b>${fmtEok(last.arr)}</b>입니다.<br>최종월 활성고객사는 <b>${last.activeCustomers.toLocaleString('ko-KR')}개</b>입니다.<br>Top10 고객 ARR 비중은 <b>${pct(top10Share)}</b>입니다.<br>최대 Net New ARR은 <b>${bestNet.month}</b>의 <b>${fmtSign(bestNet.netArr)}</b>입니다.<br>가장 큰 감소 월은 <b>${worstNet.month}</b>의 <b>${fmtSign(worstNet.netArr)}</b>입니다.`;
   drawLineChart('arrChart', MONTH_DATA, 'arr', true);
   drawBarChart('netArrChart', MONTH_DATA.slice(1), 'netArr');
-  renderYearTable(); renderTop10(last); renderMonthTable();
+  renderYearTable(); renderTop10(last); renderMonthTable(); renderForval();
 }
 function table(headers, rows){return `<table><thead><tr>${headers.map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>${rows.join('')}</tbody></table>`}
 function renderYearTable(){
@@ -214,6 +297,56 @@ function renderTop10(last){
 }
 function renderMonthTable(){
   $('monthTable').innerHTML=table(['월','MRR','ARR','Net New ARR','활성고객사','활성계약수'],MONTH_DATA.map(m=>`<tr><td>${m.month}</td><td>${fmt(m.mrr)}</td><td>${fmtEok(m.arr)}</td><td class="${m.netArr>=0?'green':'red'}">${fmtSign(m.netArr)}</td><td>${m.activeCustomers.toLocaleString('ko-KR')}</td><td>${m.activeContracts.toLocaleString('ko-KR')}</td></tr>`));
+}
+
+function renderForval(){
+  const section = $('forvalSection');
+  if(!section) return;
+  if(!FORVAL_MONTH_DATA.length || !FORVAL_MONTH_DATA.some(m=>m.arr>0)){
+    section.classList.add('hidden');
+    return;
+  }
+  section.classList.remove('hidden');
+  const nonzero = FORVAL_MONTH_DATA.filter(m=>m.arr>0);
+  const last = nonzero[nonzero.length-1] || FORVAL_MONTH_DATA[FORVAL_MONTH_DATA.length-1];
+  const max = FORVAL_MONTH_DATA.reduce((a,b)=>b.arr>a.arr?b:a, FORVAL_MONTH_DATA[0]);
+  const productCodes = new Set(FORVAL_ROWS.map(r=>r.productCode));
+  const activeTotalRows = last.rowCount || 0;
+  $('forvalKpis').innerHTML = `
+    <div class="card"><div class="k">${last.month} Forval ARR</div><div class="v">${fmtYen(last.arr)}</div></div>
+    <div class="card"><div class="k">최고 ARR</div><div class="v">${max.month}</div><div class="k">${fmtYen(max.arr)}</div></div>
+    <div class="card"><div class="k">최종월 활성 상품코드</div><div class="v">${last.productCount.toLocaleString('ko-KR')}개</div></div>
+    <div class="card"><div class="k">최종월 활성 매출 건수</div><div class="v">${activeTotalRows.toLocaleString('ko-KR')}건</div></div>`;
+  drawForvalLineChart('forvalArrChart', FORVAL_MONTH_DATA);
+  renderForvalTopTable(last);
+  renderForvalMonthTable();
+}
+function renderForvalTopTable(last){
+  const rows = (last?.topProducts || []).slice(0,10).map((p,i)=>`<tr><td>${i+1}</td><td>${esc(p.productCode)}</td><td>${fmtYen(p.arr)}</td><td>${p.rows.toLocaleString('ko-KR')}건</td></tr>`);
+  $('forvalTopTable').innerHTML = table(['순위','상품코드','ARR(¥)','활성 건수'], rows);
+}
+function renderForvalMonthTable(){
+  $('forvalMonthTable').innerHTML = table(['월','ARR(¥)','상품코드 수','활성 건수','Top 상품코드'], FORVAL_MONTH_DATA.map(m=>{
+    const top = m.topProducts[0];
+    return `<tr><td>${m.month}</td><td>${fmtYen(m.arr)}</td><td>${m.productCount.toLocaleString('ko-KR')}</td><td>${m.rowCount.toLocaleString('ko-KR')}</td><td>${top ? esc(top.productCode)+' · '+fmtYen(top.arr) : '-'}</td></tr>`;
+  }));
+}
+function drawForvalLineChart(id,data){
+  const w=900,h=330,p={l:70,r:22,t:18,b:42};
+  const vals=data.map(d=>d.arr); const max=Math.max(1,...vals)*1.08, min=0;
+  const x=i=>p.l+i*(w-p.l-p.r)/Math.max(1,data.length-1); const y=v=>h-p.b-(v-min)*(h-p.t-p.b)/(max-min||1);
+  const grid=[0,.25,.5,.75,1].map(t=>{const yy=p.t+t*(h-p.t-p.b); const val=max-(max-min)*t; return `<line class="gridline" x1="${p.l}" x2="${w-p.r}" y1="${yy}" y2="${yy}"/><text class="axis" x="8" y="${yy+4}">${fmtYen(val)}</text>`}).join('');
+  const path=data.map((d,i)=>`${i?'L':'M'}${x(i)},${y(d.arr)}`).join(' ');
+  const monthTicks=data.map((d,i)=> i%3===0 ? `<text class="axis" x="${x(i)}" y="${h-14}" text-anchor="middle">${d.month.slice(2)}</text>`:'').join('');
+  const pts=data.map((d,i)=>`<circle class="point" cx="${x(i)}" cy="${y(d.arr)}" r="4.6" data-i="${i}"/>`).join('');
+  $(id).innerHTML=`<div class="tooltip"></div><svg viewBox="0 0 ${w} ${h}" role="img">${grid}<path class="trendLine" d="${path}"/>${pts}${monthTicks}</svg>`;
+  bindTooltip(id,data,(d)=>`<b>${d.month}</b><br>ARR ${fmtYen(d.arr)}<br>상품코드 ${d.productCount.toLocaleString('ko-KR')}개<br>활성 건수 ${d.rowCount.toLocaleString('ko-KR')}건`,openForvalMonthDetail);
+}
+function openForvalMonthDetail(d){
+  $('modalTitle').textContent=`${d.month} Forval 상품코드 상세`;
+  $('modalSub').textContent=`월말 활성 계약 ARR ${fmtYen(d.arr)} · 상품코드 ${d.productCount.toLocaleString('ko-KR')}개 · 활성 건수 ${d.rowCount.toLocaleString('ko-KR')}건`;
+  $('modalBody').innerHTML=table(['순위','상품코드','ARR(¥)','활성 건수'],d.topProducts.map((p,i)=>`<tr><td>${i+1}</td><td>${esc(p.productCode)}</td><td>${fmtYen(p.arr)}</td><td>${p.rows.toLocaleString('ko-KR')}건</td></tr>`));
+  $('modalBackdrop').style.display='flex';
 }
 function drawLineChart(id,data,key,clickable){
   const w=900,h=330,p={l:58,r:22,t:18,b:42}; const vals=data.map(d=>d[key]); const max=Math.max(...vals)*1.08, min=0;
@@ -325,10 +458,12 @@ async function load(){
     if(payload && payload.success === false) throw new Error(payload.message || '비밀번호가 올바르지 않습니다.');
     const flat = flattenApiData(payload && payload.success === true && payload.data ? payload.data : payload);
     RAW_ROWS = normalizeRows(flat);
-    if(!RAW_ROWS.length) throw new Error('계산 가능한 행이 없습니다. 컬럼명은 고객명/매출/결제일자/시작일/만료일 형태여야 합니다.');
-    MONTH_DATA = calculate(RAW_ROWS);
-    $('status').className='status ok'; $('status').innerHTML=`로드 완료: 원본 ${flat.length.toLocaleString('ko-KR')}행 · 계산 가능 ${RAW_ROWS.length.toLocaleString('ko-KR')}행 · 탭 ${[...new Set(flat.map(r=>r._sheet))].join(', ')}`;
-    render();
+    FORVAL_ROWS = normalizeForvalRows(flat);
+    if(!RAW_ROWS.length && !FORVAL_ROWS.length) throw new Error('계산 가능한 행이 없습니다. FY 탭은 고객명/매출/시작일/만료일, Forval 탭은 판매구분/매출/시작일/만료일 컬럼이 필요합니다.');
+    MONTH_DATA = RAW_ROWS.length ? calculate(RAW_ROWS) : [];
+    FORVAL_MONTH_DATA = calculateForval(FORVAL_ROWS);
+    $('status').className='status ok'; $('status').innerHTML=`로드 완료: 원본 ${flat.length.toLocaleString('ko-KR')}행 · FY 계산 가능 ${RAW_ROWS.length.toLocaleString('ko-KR')}행 · Forval 계산 가능 ${FORVAL_ROWS.length.toLocaleString('ko-KR')}행 · Forval 표시 ${FORVAL_MONTH_DATA[0]?.month || '-'}~${FORVAL_MONTH_DATA[FORVAL_MONTH_DATA.length-1]?.month || '-'} · 탭 ${[...new Set(flat.map(r=>r._sheet))].join(', ')}`;
+    if(MONTH_DATA.length) render(); else renderForval();
   }catch(e){
     console.error(e);
     $('status').className='status err';
