@@ -3,39 +3,81 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>2022~2025 ARR 대시보드</title>
+  <title>엑소스피어 KPI 대시보드</title>
   <style>
     :root{--bg:#08111f;--panel:#0f172a;--panel2:#111827;--text:#e5e7eb;--muted:#94a3b8;--line:#38bdf8;--good:#22c55e;--bad:#ef4444;--grid:#334155;--warn:#f59e0b}
     *{box-sizing:border-box} body{margin:0;background:radial-gradient(circle at top left,#1e293b 0,#0b1020 42%,#020617 100%);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Noto Sans KR',sans-serif} .wrap{max-width:1240px;margin:0 auto;padding:28px} h1{margin:0 0 8px;font-size:32px;letter-spacing:-.04em} h2{font-size:18px;margin:0 0 14px}.sub{color:var(--muted);line-height:1.55;margin-bottom:18px}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.two{display:grid;grid-template-columns:1.35fr .65fr;gap:14px;margin-top:14px}.card{background:rgba(15,23,42,.88);border:1px solid rgba(148,163,184,.22);border-radius:18px;padding:18px;box-shadow:0 18px 45px rgba(0,0,0,.24)}.k{font-size:13px;color:var(--muted)}.v{font-size:27px;font-weight:850;margin-top:7px;letter-spacing:-.04em}.section{margin-top:14px}.chartWrap{position:relative;background:#08111f;border:1px solid rgba(148,163,184,.14);border-radius:14px;padding:8px;overflow:hidden} svg{width:100%;height:auto;display:block}.axis{fill:#94a3b8;font-size:12px}.gridline{stroke:var(--grid);opacity:.45;stroke-width:1}.trendLine{fill:none;stroke:var(--line);stroke-width:4;stroke-linecap:round;stroke-linejoin:round}.point{fill:#0ea5e9;stroke:#e0f2fe;stroke-width:1.5;cursor:pointer}.bar{cursor:pointer;opacity:.88}.pos{fill:var(--good)}.neg{fill:var(--bad)}.zero{stroke:#94a3b8;opacity:.7}.tooltip{position:absolute;display:none;min-width:260px;max-width:430px;background:#020617;border:1px solid rgba(186,230,253,.36);box-shadow:0 20px 45px rgba(0,0,0,.45);border-radius:14px;padding:13px;z-index:5;pointer-events:none;color:#e5e7eb;font-size:13px;line-height:1.5}.tooltip b{color:#fff}.pill{display:inline-block;padding:5px 9px;border-radius:999px;background:rgba(56,189,248,.13);color:#bae6fd;font-size:12px;margin:0 5px 6px 0}table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:10px 8px;border-bottom:1px solid rgba(148,163,184,.16);text-align:right;white-space:nowrap}th:first-child,td:first-child{text-align:left}th{position:sticky;top:0;background:#132033;color:#cbd5e1;z-index:1}.scroll{max-height:520px;overflow:auto}.small{font-size:12px;color:#94a3b8;margin-top:8px;line-height:1.6}.note{color:#cbd5e1;line-height:1.7;font-size:14px}.status{border-radius:14px;padding:12px 14px;margin:12px 0;background:rgba(2,6,23,.65);border:1px solid rgba(148,163,184,.2);color:#cbd5e1;font-size:13px;line-height:1.6}.status.err{border-color:rgba(239,68,68,.4);color:#fecaca}.status.ok{border-color:rgba(34,197,94,.35);color:#bbf7d0}.btn{border:1px solid rgba(148,163,184,.28);background:rgba(15,23,42,.9);color:#e5e7eb;border-radius:12px;padding:9px 12px;cursor:pointer}.btn.primary{background:#0ea5e9;border-color:#38bdf8;color:#00111d;font-weight:800}.btn:disabled{opacity:.55;cursor:not-allowed}.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.authBox{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.input{height:39px;border-radius:12px;border:1px solid rgba(148,163,184,.34);background:rgba(2,6,23,.65);color:#e5e7eb;padding:0 12px;outline:none;min-width:170px} .input:focus{border-color:#38bdf8}.pinBox{display:flex;gap:8px;align-items:center}.pinInput{width:46px;height:48px;border-radius:14px;border:1px solid rgba(148,163,184,.34);background:rgba(2,6,23,.68);color:#e5e7eb;text-align:center;font-size:24px;font-weight:900;outline:none;box-shadow:inset 0 0 0 1px rgba(255,255,255,.02)}.pinInput:focus{border-color:#38bdf8;box-shadow:0 0 0 3px rgba(56,189,248,.14)}.pinInput.filled{border-color:rgba(56,189,248,.54);background:rgba(14,165,233,.12)}.netStats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:12px}.netStat{background:rgba(2,6,23,.52);border:1px solid rgba(148,163,184,.14);border-radius:12px;padding:10px}.netStat .label{font-size:11px;color:#94a3b8}.netStat .num{font-size:15px;font-weight:850;margin-top:3px}.barLabel{fill:#cbd5e1;font-size:11px;font-weight:700}.barGuide{stroke:#334155;opacity:.38;stroke-width:1}.yearDivider{stroke:#64748b;opacity:.28;stroke-dasharray:4 5}.netAxisTitle{fill:#94a3b8;font-size:11px}.modalBackdrop{position:fixed;inset:0;background:rgba(2,6,23,.72);display:none;align-items:center;justify-content:center;z-index:20;padding:20px}.modal{width:min(980px,96vw);max-height:86vh;overflow:auto;background:#020617;border:1px solid rgba(186,230,253,.32);border-radius:20px;box-shadow:0 30px 80px rgba(0,0,0,.58);padding:22px}.modalHead{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:14px}.modalTitle{font-size:22px;font-weight:850}.modalSub{color:#94a3b8;font-size:13px;margin-top:6px}.closeBtn{border:1px solid rgba(148,163,184,.28);background:rgba(15,23,42,.9);color:#e5e7eb;border-radius:12px;padding:8px 12px;cursor:pointer}.summaryBox{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:10px 0 16px}.summaryItem{background:rgba(15,23,42,.8);border:1px solid rgba(148,163,184,.15);border-radius:12px;padding:10px}.summaryItem .label{font-size:12px;color:#94a3b8}.summaryItem .num{font-size:16px;font-weight:800;margin-top:4px}.green{color:#86efac}.red{color:#fca5a5}.hidden{display:none!important}
 .loadingOverlay{position:fixed;inset:0;background:rgba(2,6,23,.78);display:none;align-items:center;justify-content:center;flex-direction:column;z-index:9999;backdrop-filter:blur(6px)}
 .loadingOverlay.show{display:flex}.spinner{width:62px;height:62px;border-radius:50%;border:5px solid rgba(226,232,240,.16);border-top-color:#38bdf8;animation:spin .9s linear infinite;box-shadow:0 0 32px rgba(56,189,248,.18)}.loadingText{margin-top:16px;color:#e5e7eb;font-size:14px;font-weight:750}.loadingSub{margin-top:6px;color:#94a3b8;font-size:12px}@keyframes spin{to{transform:rotate(360deg)}}
+
+.authScreen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+.authCard{width:min(430px,92vw);background:rgba(15,23,42,.92);border:1px solid rgba(148,163,184,.24);border-radius:24px;padding:30px;box-shadow:0 28px 80px rgba(0,0,0,.42);text-align:center}
+.authTitle{font-size:28px;font-weight:900;letter-spacing:-.04em;margin-bottom:10px}
+.authDesc{color:#94a3b8;font-size:14px;line-height:1.6;margin-bottom:22px}
+.authError{display:none;color:#fecaca;background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.28);border-radius:12px;padding:10px 12px;margin-top:14px;font-size:13px}
+.dashboardRoot.hidden{display:none!important}
+.topbar.compact{justify-content:space-between;margin-bottom:16px}
+.topActions{display:flex;gap:8px;align-items:center}
+
+
+.authCard .pinBox{justify-content:center;width:100%}
+@media print{
+  body{background:#fff;color:#111}
+  .topActions,.modalBackdrop,.loadingOverlay{display:none!important}
+  .topbar{display:flex!important;margin-bottom:18px}
+  .topbar h1{color:#111!important;font-size:28px!important}
+  .card{break-inside:avoid;box-shadow:none}
+  .chartWrap{break-inside:avoid}
+}
+
 @media(max-width:950px){.grid,.two,.summaryBox{grid-template-columns:1fr}.wrap{padding:18px}}
   </style>
 </head>
 <body>
-<main class="wrap">
-  <div class="topbar">
-    <div>
-      <h1>2022~2025 ARR 대시보드</h1>
-      <div class="sub">비밀번호 입력 후 Apps Script JSON API에서 FY22~FY25 데이터를 가져와 계산합니다.</div>
+<section id="authScreen" class="authScreen">
+  <div class="authCard">
+    <div class="authTitle">엑소스피어 KPI 대시보드</div>
+    <div class="authDesc">비밀번호를 입력하면 대시보드가 표시됩니다.</div>
+    <div class="pinBox" aria-label="4자리 비밀번호 입력">
+      <input class="pinInput" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="1" autocomplete="one-time-code" aria-label="비밀번호 첫 번째 숫자" />
+      <input class="pinInput" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="1" autocomplete="one-time-code" aria-label="비밀번호 두 번째 숫자" />
+      <input class="pinInput" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="1" autocomplete="one-time-code" aria-label="비밀번호 세 번째 숫자" />
+      <input class="pinInput" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="1" autocomplete="one-time-code" aria-label="비밀번호 네 번째 숫자" />
     </div>
-    <div class="authBox">
-      <div class="pinBox" aria-label="4자리 비밀번호 입력">
-        <input class="pinInput" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="1" autocomplete="one-time-code" aria-label="비밀번호 첫 번째 숫자" />
-        <input class="pinInput" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="1" autocomplete="one-time-code" aria-label="비밀번호 두 번째 숫자" />
-        <input class="pinInput" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="1" autocomplete="one-time-code" aria-label="비밀번호 세 번째 숫자" />
-        <input class="pinInput" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="1" autocomplete="one-time-code" aria-label="비밀번호 네 번째 숫자" />
-      </div>
-      <button id="loadBtn" class="btn primary">데이터 불러오기</button>
-      <button id="reloadBtn" class="btn" disabled>다시 불러오기</button>
+    <button id="loadBtn" class="btn primary" style="margin-top:16px;width:100%">대시보드 보기</button>
+    <div id="authError" class="authError"></div>
+  </div>
+</section>
+
+<main id="dashboardRoot" class="wrap dashboardRoot hidden">
+  <div class="topbar compact">
+    <div>
+      <h1>엑소스피어 KPI 대시보드</h1>
+    </div>
+    <div class="topActions">
+      <button id="printPdfBtn" class="btn">PDF 출력하기</button>
+      <button id="reloadBtn" class="btn">다시 불러오기</button>
     </div>
   </div>
-  <div id="status" class="status">비밀번호를 입력한 뒤 데이터를 불러오세요.</div>
 
   <section class="grid" id="kpis"></section>
   <section class="two hidden" id="mainCharts">
     <div class="card"><h2>ARR 추이 <span class="k">· 점 클릭: 해당 월 Top20 고객</span></h2><div id="arrChart" class="chartWrap"></div><div class="small">Top20 기준: 해당 월 말 활성 계약의 고객별 일매출 합 × 365.</div></div>
     <div class="card"><h2>해석 요약</h2><div id="summary" class="note"></div></div>
+  </section>
+  <section class="section card hidden" id="revenueSection">
+    <h2>결제매출 추이</h2>
+    <div class="two">
+      <div>
+        <h2>월별 결제매출 추이 <span class="k">· 결제일자 기준 월별 결제매출 합계</span></h2>
+        <div id="revenueChart" class="chartWrap"></div>
+      </div>
+      <div>
+        <h2>연도별 결제매출 추이 <span class="k">· 결제일자 기준 연도별 결제매출 합계</span></h2>
+        <div id="yearRevenueChart" class="chartWrap"></div>
+      </div>
+    </div>
+    <div class="small">결제결제매출 추이 = 각 행의 결제일자가 속한 월/연도 기준 매출 합계입니다. FY26은 결제일자가 존재하는 마지막 월까지만 표시합니다.</div>
   </section>
   <section class="section card hidden" id="netSection"><h2>Net New ARR <span class="k">· 막대 클릭: 증감 고객사 상세</span></h2><div id="netArrChart" class="chartWrap"></div><div class="small">Net New ARR = 이번 달 ARR - 전월 ARR.</div></section>
   <section class="two hidden" id="tablesSection">
@@ -68,19 +110,21 @@
 
 <div id="loadingOverlay" class="loadingOverlay" aria-live="polite" aria-busy="true">
   <div class="spinner"></div>
-  <div class="loadingText">데이터 불러오는 중...</div>
-  <div class="loadingSub">ARR 데이터를 계산하고 있습니다</div>
+  <div class="loadingText">대시보드 불러오는 중...</div>
+  <div class="loadingSub">KPI 데이터를 계산하고 있습니다</div>
 </div>
 
 <script>
 const API_URL = "https://script.google.com/macros/s/AKfycby1bmRQ1El3e9Vvs_unjaYWvKwkQi-bmitfR4FC8_S6JuZj2Rt2RAm5G1Di-IUMFyx3/exec";
-const TARGET_SHEETS = ["FY22","FY23","FY24","FY25"];
+const TARGET_SHEETS = ["FY22","FY23","FY24","FY25","FY26"];
 const FORVAL_SHEET_NAMES = ["Forval","FORVAL","forval","포발"];
 const FORVAL_MIN_DISPLAY_MONTH = "2025-09";
 let MONTH_DATA = [];
 let RAW_ROWS = [];
 let FORVAL_MONTH_DATA = [];
 let FORVAL_ROWS = [];
+let REVENUE_MONTH_DATA = [];
+let REVENUE_YEAR_DATA = [];
 let LAST_PASSWORD = "";
 
 const $ = (id)=>document.getElementById(id);
@@ -130,7 +174,7 @@ function ym(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')
 function ymd(d){return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}
 function esc(s){return String(s??'').replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));}
 
-function showLoading(message='데이터 불러오는 중...', sub='ARR 데이터를 계산하고 있습니다'){
+function showLoading(message='대시보드 불러오는 중...', sub='KPI 데이터를 계산하고 있습니다'){
   const overlay = $('loadingOverlay');
   if(!overlay) return;
   const text = overlay.querySelector('.loadingText');
@@ -169,8 +213,37 @@ function normalizeRows(rows){
   }).filter(r=>r.customer && r.revenue && r.start && r.end && r.days>0 && r.end>=r.start);
 }
 function calculate(rows){
+  const minYear = 2022;
+
+  // 대시보드 표시 종료월은 FY26 탭의 '결제일자'가 존재하는 마지막 월 기준입니다.
+  // 예: FY26 마지막 결제일자가 2026-05-14이면 2026-05까지만 표시합니다.
+  // 계약 만료일이 2027년이어도 2026-06 이후 월은 생성하지 않습니다.
+  const fy26PaidRows = rows.filter(r => String(r.sheet || '').trim().toUpperCase() === 'FY26' && r.paidAt);
+
+  let lastPaidDate = null;
+  if (fy26PaidRows.length) {
+    lastPaidDate = fy26PaidRows.reduce((max, r) => r.paidAt > max ? r.paidAt : max, fy26PaidRows[0].paidAt);
+  } else {
+    const paidRows = rows.filter(r => r.paidAt);
+    if (paidRows.length) {
+      lastPaidDate = paidRows.reduce((max, r) => r.paidAt > max ? r.paidAt : max, paidRows[0].paidAt);
+    }
+  }
+
+  const fallbackLastStartDate = rows.reduce((max, r) => r.start > max ? r.start : max, rows[0].start);
+  const lastDisplayDate = lastPaidDate || fallbackLastStartDate;
+
+  const maxYear = lastDisplayDate.getFullYear();
+  const maxMonth = lastDisplayDate.getMonth();
+
   const months=[];
-  for(let y=2022;y<=2025;y++){ for(let m=0;m<12;m++) months.push({month:`${y}-${String(m+1).padStart(2,'0')}`, date:endOfMonth(y,m)}); }
+  for(let y=minYear; y<=maxYear; y++){
+    const lastMonth = (y === maxYear) ? maxMonth : 11;
+    for(let m=0; m<=lastMonth; m++){
+      months.push({month:`${y}-${String(m+1).padStart(2,'0')}`, date:endOfMonth(y,m)});
+    }
+  }
+
   const prevMap = new Map();
   return months.map((mo, i)=>{
     const active = rows.filter(r=>r.start<=mo.date && r.end>=mo.date);
@@ -258,45 +331,110 @@ function calculateForval(rows){
     return {month:mo.month, arr, productCount:byProduct.size, rowCount:active.length, topProducts};
   });
 }
+
+function calculateRevenue(rows, monthData){
+  if(!monthData.length) return [];
+  const monthSet = new Set(monthData.map(m => m.month));
+  const byMonth = new Map(monthData.map(m => [m.month, {month:m.month, revenue:0, count:0, customers:new Set()}]));
+
+  rows.forEach(r=>{
+    if(!r.paidAt) return;
+    const month = ym(r.paidAt);
+    if(!monthSet.has(month)) return;
+    const cur = byMonth.get(month);
+    cur.revenue += r.revenue || 0;
+    cur.count += 1;
+    if(r.customer) cur.customers.add(r.customer);
+  });
+
+  return [...byMonth.values()].map(m=>({
+    month:m.month,
+    revenue:m.revenue,
+    count:m.count,
+    customerCount:m.customers.size
+  }));
+}
+
+
+function calculateRevenueYear(monthData){
+  const byYear = new Map();
+  monthData.forEach(m=>{
+    const year = m.month.slice(0,4);
+    const cur = byYear.get(year) || {year, revenue:0, count:0, customerCount:0};
+    cur.revenue += m.revenue || 0;
+    cur.count += m.count || 0;
+    cur.customerCount += m.customerCount || 0;
+    byYear.set(year, cur);
+  });
+  return [...byYear.values()].sort((a,b)=>Number(a.year)-Number(b.year));
+}
+
 function revealDashboard(){
-  ['mainCharts','netSection','tablesSection','monthSection'].forEach(id=>$(id).classList.remove('hidden'));
-  $('reloadBtn').disabled = false;
+  const auth = $('authScreen');
+  const dashboard = $('dashboardRoot');
+  if(auth) auth.classList.add('hidden');
+  if(dashboard) dashboard.classList.remove('hidden');
+  ['mainCharts','revenueSection','netSection','tablesSection','monthSection'].forEach(id=>$(id).classList.remove('hidden'));
+  if($('reloadBtn')) $('reloadBtn').disabled = false;
 }
 function render(){
   revealDashboard();
   const last = MONTH_DATA[MONTH_DATA.length-1];
   const first = MONTH_DATA[0];
-  const max = MONTH_DATA.reduce((a,b)=> b.arr>a.arr?b:a, MONTH_DATA[0]);
-  const cagr = Math.pow(last.arr/Math.max(first.arr,1),1/3)-1;
+  const lastRevenue = REVENUE_MONTH_DATA.find(r=>r.month===last.month)?.revenue || 0;
+
+  const cagrYears = Math.max(1, (Number(last.month.slice(0,4)) - Number(first.month.slice(0,4))) + (Number(last.month.slice(5,7)) - Number(first.month.slice(5,7))) / 12);
+  const cagr = Math.pow(last.arr/Math.max(first.arr,1),1/cagrYears)-1;
+
   $('kpis').innerHTML = `
-    <div class="card"><div class="k">${last.month} MRR</div><div class="v">${fmt(last.mrr)}</div></div>
+    <div class="card"><div class="k">${last.month} 결제매출</div><div class="v">${fmtEok(lastRevenue)}</div></div>
     <div class="card"><div class="k">${last.month} ARR</div><div class="v">${fmtEok(last.arr)}</div></div>
-    <div class="card"><div class="k">최고 ARR</div><div class="v">${max.month}</div><div class="k">${fmtEok(max.arr)}</div></div>
-    <div class="card"><div class="k">22말→25말 ARR CAGR</div><div class="v">${pct(cagr)}</div></div>`;
-  const top10Share = last.topCustomers.slice(0,10).reduce((s,c)=>s+c.arr,0)/last.arr;
-  const bestNet = MONTH_DATA.slice(1).reduce((a,b)=>b.netArr>a.netArr?b:a, MONTH_DATA[1]);
-  const worstNet = MONTH_DATA.slice(1).reduce((a,b)=>b.netArr<a.netArr?b:a, MONTH_DATA[1]);
-  $('summary').innerHTML = `<span class="pill">Apps Script API</span><span class="pill">FY22~FY25</span><span class="pill">Password Protected</span><br>
-    최종 ARR은 <b>${fmtEok(last.arr)}</b>입니다.<br>최종월 활성고객사는 <b>${last.activeCustomers.toLocaleString('ko-KR')}개</b>입니다.<br>Top10 고객 ARR 비중은 <b>${pct(top10Share)}</b>입니다.<br>최대 Net New ARR은 <b>${bestNet.month}</b>의 <b>${fmtSign(bestNet.netArr)}</b>입니다.<br>가장 큰 감소 월은 <b>${worstNet.month}</b>의 <b>${fmtSign(worstNet.netArr)}</b>입니다.`;
+    <div class="card"><div class="k">${last.month} 활성 고객 수</div><div class="v">${last.activeCustomers.toLocaleString('ko-KR')}개</div></div>
+    <div class="card"><div class="k">ARR CAGR (${first.month.slice(0,4)}~${last.month.slice(0,4)})</div><div class="v">${pct(cagr)}</div></div>`;
+
+  const top10Share = last.arr ? last.topCustomers.slice(0,10).reduce((s,c)=>s+c.arr,0)/last.arr : 0;
+  const bestNet = MONTH_DATA.slice(1).reduce((a,b)=>b.netArr>a.netArr?b:a, MONTH_DATA[1] || last);
+  const worstNet = MONTH_DATA.slice(1).reduce((a,b)=>b.netArr<a.netArr?b:a, MONTH_DATA[1] || last);
+
+  $('summary').innerHTML = `
+    최종월 결제매출은 <b>${fmtEok(lastRevenue)}</b>입니다.<br>
+    최종 ARR은 <b>${fmtEok(last.arr)}</b>입니다.<br>
+    활성 고객 수는 <b>${last.activeCustomers.toLocaleString('ko-KR')}개</b>입니다.<br>
+    Top10 고객 ARR 비중은 <b>${pct(top10Share)}</b>입니다.<br>
+    최고 성장 월은 <b>${bestNet.month}</b>의 <b>${fmtSign(bestNet.netArr)}</b>입니다.<br>
+    최고 감소 월은 <b>${worstNet.month}</b>의 <b>${fmtSign(worstNet.netArr)}</b>입니다.<br>
+    ARR CAGR(${first.month.slice(0,4)}~${last.month.slice(0,4)})은 <b>${pct(cagr)}</b>입니다.`;
+
   drawLineChart('arrChart', MONTH_DATA, 'arr', true);
+  drawRevenueChart('revenueChart', REVENUE_MONTH_DATA);
+  drawYearRevenueChart('yearRevenueChart', REVENUE_YEAR_DATA);
   drawBarChart('netArrChart', MONTH_DATA.slice(1), 'netArr');
   renderYearTable(); renderTop10(last); renderMonthTable(); renderForval();
 }
+
 function table(headers, rows){return `<table><thead><tr>${headers.map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>${rows.join('')}</tbody></table>`}
 function renderYearTable(){
+  const years = [...new Set(MONTH_DATA.map(m => Number(m.month.slice(0,4))))].sort((a,b)=>a-b);
   const rows=[];
-  for(let y=2022;y<=2025;y++){
+  years.forEach(y=>{
     const list=MONTH_DATA.filter(m=>m.month.startsWith(String(y)));
-    const end=list[list.length-1]; const prev=MONTH_DATA.find(m=>m.month===`${y-1}-12`);
-    rows.push(`<tr><td>${y}</td><td>${fmt(list.reduce((s,m)=>s+m.mrr,0)/list.length)}</td><td>${fmt(end.mrr)}</td><td>${fmtEok(end.arr)}</td><td>${prev?pct(end.arr/prev.arr-1):'-'}</td><td>${Math.round(list.reduce((s,m)=>s+m.activeCustomers,0)/list.length).toLocaleString('ko-KR')}개</td></tr>`);
-  }
-  $('yearTable').innerHTML=table(['연도','평균 MRR','연말 MRR','연말 ARR','ARR YoY','평균 활성고객사'],rows);
+    if(!list.length) return;
+    const end=list[list.length-1];
+    const prev=MONTH_DATA.find(m=>m.month===`${y-1}-12`);
+    const yearRevenue = REVENUE_YEAR_DATA.find(r=>r.year===String(y))?.revenue || 0;
+    rows.push(`<tr><td>${y}</td><td>${fmtEok(yearRevenue)}</td><td>${fmt(list.reduce((s,m)=>s+m.mrr,0)/list.length)}</td><td>${fmt(end.mrr)}</td><td>${fmtEok(end.arr)}</td><td>${prev?pct(end.arr/prev.arr-1):'-'}</td><td>${Math.round(list.reduce((s,m)=>s+m.activeCustomers,0)/list.length).toLocaleString('ko-KR')}개</td></tr>`);
+  });
+  $('yearTable').innerHTML=table(['연도','결제매출','평균 MRR','연말/최종월 MRR','연말/최종월 ARR','ARR YoY','평균 활성고객사'],rows);
 }
+
 function renderTop10(last){
   $('top10Table').innerHTML=table(['고객','MRR','ARR','계약수'],last.topCustomers.slice(0,10).map(c=>`<tr><td>${esc(c.customer)}</td><td>${fmt(c.mrr)}</td><td>${fmtEok(c.arr)}</td><td>${c.contracts}</td></tr>`));
 }
 function renderMonthTable(){
-  $('monthTable').innerHTML=table(['월','MRR','ARR','Net New ARR','활성고객사','활성계약수'],MONTH_DATA.map(m=>`<tr><td>${m.month}</td><td>${fmt(m.mrr)}</td><td>${fmtEok(m.arr)}</td><td class="${m.netArr>=0?'green':'red'}">${fmtSign(m.netArr)}</td><td>${m.activeCustomers.toLocaleString('ko-KR')}</td><td>${m.activeContracts.toLocaleString('ko-KR')}</td></tr>`));
+  $('monthTable').innerHTML=table(['월','결제매출','MRR','ARR','Net New ARR','활성고객사','활성계약수'],MONTH_DATA.map(m=>{
+    const rev = REVENUE_MONTH_DATA.find(r=>r.month===m.month)?.revenue || 0;
+    return `<tr><td>${m.month}</td><td>${fmt(rev)}</td><td>${fmt(m.mrr)}</td><td>${fmtEok(m.arr)}</td><td class="${m.netArr>=0?'green':'red'}">${fmtSign(m.netArr)}</td><td>${m.activeCustomers.toLocaleString('ko-KR')}</td><td>${m.activeContracts.toLocaleString('ko-KR')}</td></tr>`;
+  }));
 }
 
 function renderForval(){
@@ -331,6 +469,54 @@ function renderForvalMonthTable(){
     return `<tr><td>${m.month}</td><td>${fmtYen(m.arr)}</td><td>${m.productCount.toLocaleString('ko-KR')}</td><td>${m.rowCount.toLocaleString('ko-KR')}</td><td>${top ? esc(top.productCode)+' · '+fmtYen(top.arr) : '-'}</td></tr>`;
   }));
 }
+
+function drawRevenueChart(id,data){
+  const w=900,h=330,p={l:58,r:22,t:18,b:42};
+  const vals=data.map(d=>d.revenue);
+  const max=Math.max(1,...vals)*1.12, min=0;
+  const x=i=>p.l+i*(w-p.l-p.r)/Math.max(1,data.length-1);
+  const y=v=>h-p.b-(v-min)*(h-p.t-p.b)/(max-min||1);
+  const grid=[0,.25,.5,.75,1].map(t=>{
+    const yy=p.t+t*(h-p.t-p.b);
+    const val=max-(max-min)*t;
+    return `<line class="gridline" x1="${p.l}" x2="${w-p.r}" y1="${yy}" y2="${yy}"/><text class="axis" x="8" y="${yy+4}">${fmtEok(val)}</text>`;
+  }).join('');
+  const path=data.map((d,i)=>`${i?'L':'M'}${x(i)},${y(d.revenue)}`).join(' ');
+  const monthTicks=data.map((d,i)=> i%3===0 ? `<text class="axis" x="${x(i)}" y="${h-14}" text-anchor="middle">${d.month.slice(2)}</text>`:'').join('');
+  const pts=data.map((d,i)=>`<circle class="point" cx="${x(i)}" cy="${y(d.revenue)}" r="4.6" data-i="${i}"/>`).join('');
+  $(id).innerHTML=`<div class="tooltip"></div><svg viewBox="0 0 ${w} ${h}" role="img">${grid}<path class="trendLine" d="${path}"/>${pts}${monthTicks}</svg>`;
+  bindTooltip(id,data,(d)=>`<b>${d.month}</b><br>결제매출 ${fmtEok(d.revenue)}<br>결제 건수 ${d.count.toLocaleString('ko-KR')}건<br>결제 고객 ${d.customerCount.toLocaleString('ko-KR')}개`,null);
+}
+
+
+function drawYearRevenueChart(id,data){
+  const w=520,h=330,p={l:58,r:22,t:18,b:42};
+  const vals=data.map(d=>d.revenue);
+  const max=Math.max(1,...vals)*1.15, min=0;
+  const plotW=w-p.l-p.r;
+  const slot=plotW/Math.max(1,data.length);
+  const bw=Math.min(58, slot*.58);
+  const x=i=>p.l+i*slot+(slot-bw)/2;
+  const y=v=>h-p.b-(v-min)*(h-p.t-p.b)/(max-min||1);
+  const grid=[0,.25,.5,.75,1].map(t=>{
+    const yy=p.t+t*(h-p.t-p.b);
+    const val=max-(max-min)*t;
+    return `<line class="gridline" x1="${p.l}" x2="${w-p.r}" y1="${yy}" y2="${yy}"/><text class="axis" x="8" y="${yy+4}">${fmtEok(val)}</text>`;
+  }).join('');
+  const bars=data.map((d,i)=>{
+    const yy=y(d.revenue);
+    const hh=h-p.b-yy;
+    return `<rect class="bar pos" x="${x(i)}" y="${yy}" width="${bw}" height="${Math.max(2,hh)}" rx="6" data-i="${i}"/>`;
+  }).join('');
+  const ticks=data.map((d,i)=>`<text class="axis" x="${x(i)+bw/2}" y="${h-14}" text-anchor="middle">${d.year}</text>`).join('');
+  const labels=data.map((d,i)=>{
+    const yy=y(d.revenue)-8;
+    return `<text class="barLabel" x="${x(i)+bw/2}" y="${yy}" text-anchor="middle">${fmtEok(d.revenue)}</text>`;
+  }).join('');
+  $(id).innerHTML=`<div class="tooltip"></div><svg viewBox="0 0 ${w} ${h}" role="img">${grid}${bars}${labels}${ticks}</svg>`;
+  bindTooltip(id,data,(d)=>`<b>${d.year}</b><br>결제결제매출 ${fmtEok(d.revenue)}<br>결제 건수 ${d.count.toLocaleString('ko-KR')}건`,null);
+}
+
 function drawForvalLineChart(id,data){
   const w=900,h=330,p={l:70,r:22,t:18,b:42};
   const vals=data.map(d=>d.arr); const max=Math.max(1,...vals)*1.08, min=0;
@@ -440,16 +626,19 @@ function setPinVisualState(){
 async function load(){
   const password = getPinPassword() || LAST_PASSWORD || '';
   if(password.length !== 4){
-    $('status').className='status err';
-    $('status').textContent='4자리 숫자 코드를 입력하세요.';
+    const authError = $('authError');
+    if(authError){
+      authError.textContent='4자리 숫자 코드를 입력하세요.';
+      authError.style.display='block';
+    }
     focusFirstEmptyPin();
     return;
   }
   LAST_PASSWORD = password;
   $('loadBtn').disabled = true;
-  $('reloadBtn').disabled = true;
-  $('status').className='status'; $('status').textContent='비밀번호 확인 후 데이터를 불러오는 중...';
-  showLoading('데이터 불러오는 중...', '비밀번호 확인 및 ARR 계산 중입니다');
+  if($('reloadBtn')) $('reloadBtn').disabled = true;
+  if($('authError')) $('authError').style.display='none';
+  showLoading('대시보드 불러오는 중...', 'KPI 데이터 계산 중입니다');
   try{
     const url = `${API_URL}?password=${encodeURIComponent(password)}&ts=${Date.now()}`;
     const res = await fetch(url, {method:'GET', cache:'no-store', redirect:'follow'});
@@ -461,19 +650,26 @@ async function load(){
     FORVAL_ROWS = normalizeForvalRows(flat);
     if(!RAW_ROWS.length && !FORVAL_ROWS.length) throw new Error('계산 가능한 행이 없습니다. FY 탭은 고객명/매출/시작일/만료일, Forval 탭은 판매구분/매출/시작일/만료일 컬럼이 필요합니다.');
     MONTH_DATA = RAW_ROWS.length ? calculate(RAW_ROWS) : [];
+    REVENUE_MONTH_DATA = MONTH_DATA.length ? calculateRevenue(RAW_ROWS, MONTH_DATA) : [];
+    REVENUE_YEAR_DATA = REVENUE_MONTH_DATA.length ? calculateRevenueYear(REVENUE_MONTH_DATA) : [];
     FORVAL_MONTH_DATA = calculateForval(FORVAL_ROWS);
-    $('status').className='status ok'; $('status').innerHTML=`로드 완료: 원본 ${flat.length.toLocaleString('ko-KR')}행 · FY 계산 가능 ${RAW_ROWS.length.toLocaleString('ko-KR')}행 · Forval 계산 가능 ${FORVAL_ROWS.length.toLocaleString('ko-KR')}행 · Forval 표시 ${FORVAL_MONTH_DATA[0]?.month || '-'}~${FORVAL_MONTH_DATA[FORVAL_MONTH_DATA.length-1]?.month || '-'} · 탭 ${[...new Set(flat.map(r=>r._sheet))].join(', ')}`;
     if(MONTH_DATA.length) render(); else renderForval();
   }catch(e){
     console.error(e);
-    $('status').className='status err';
-    $('status').innerHTML=`데이터 로드 실패: ${esc(e.message)}<br>확인: Apps Script Code.gs가 password 파라미터를 검사하는지, 최신 버전으로 다시 배포했는지 확인하세요.`;
+    const authError = $('authError');
+    if(authError && !$('authScreen')?.classList.contains('hidden')){
+      authError.innerHTML=`데이터 로드 실패: ${esc(e.message)}`;
+      authError.style.display='block';
+    } else {
+      alert(`데이터 로드 실패: ${e.message}`);
+    }
   }finally{
     hideLoading();
-    $('loadBtn').disabled = false;
-    $('reloadBtn').disabled = !LAST_PASSWORD;
+    if($('loadBtn')) $('loadBtn').disabled = false;
+    if($('reloadBtn')) $('reloadBtn').disabled = false;
   }
 }
+$('printPdfBtn')?.addEventListener('click',()=>window.print());
 $('loadBtn').addEventListener('click', load);
 $('reloadBtn').addEventListener('click', load);
 const pinInputs = [...document.querySelectorAll('.pinInput')];
