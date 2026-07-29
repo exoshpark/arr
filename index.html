@@ -6,7 +6,7 @@
   <title>엑소스피어 KPI 대시보드</title>
   <style>
     :root{--bg:#08111f;--panel:#0f172a;--panel2:#111827;--text:#e5e7eb;--muted:#94a3b8;--line:#38bdf8;--good:#22c55e;--bad:#ef4444;--grid:#334155;--warn:#f59e0b}
-    *{box-sizing:border-box} body{margin:0;background:radial-gradient(circle at top left,#1e293b 0,#0b1020 42%,#020617 100%);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Noto Sans KR',sans-serif} .wrap{max-width:1240px;margin:0 auto;padding:28px} h1{margin:0 0 8px;font-size:32px;letter-spacing:-.04em} h2{font-size:18px;margin:0 0 14px}.sub{color:var(--muted);line-height:1.55;margin-bottom:18px}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.two{display:grid;grid-template-columns:1.35fr .65fr;gap:14px;margin-top:14px}.card{background:rgba(15,23,42,.88);border:1px solid rgba(148,163,184,.22);border-radius:18px;padding:18px;box-shadow:0 18px 45px rgba(0,0,0,.24)}.k{font-size:13px;color:var(--muted)}.v{font-size:27px;font-weight:850;margin-top:7px;letter-spacing:-.04em}.section{margin-top:14px}.chartWrap{position:relative;background:#08111f;border:1px solid rgba(148,163,184,.14);border-radius:14px;padding:8px;overflow:hidden} svg{width:100%;height:auto;display:block}.axis{fill:#94a3b8;font-size:12px}.gridline{stroke:var(--grid);opacity:.45;stroke-width:1}.trendLine{fill:none;stroke:var(--line);stroke-width:4;stroke-linecap:round;stroke-linejoin:round}.point{fill:#0ea5e9;stroke:#e0f2fe;stroke-width:1.5;cursor:pointer}.bar{cursor:pointer;opacity:.88}.pos{fill:var(--good)}.neg{fill:var(--bad)}.zero{stroke:#94a3b8;opacity:.7}.tooltip{position:absolute;display:none;min-width:260px;max-width:430px;background:#020617;border:1px solid rgba(186,230,253,.36);box-shadow:0 20px 45px rgba(0,0,0,.45);border-radius:14px;padding:13px;z-index:5;pointer-events:none;color:#e5e7eb;font-size:13px;line-height:1.5}.tooltip b{color:#fff}.pill{display:inline-block;padding:5px 9px;border-radius:999px;background:rgba(56,189,248,.13);color:#bae6fd;font-size:12px;margin:0 5px 6px 0}table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:10px 8px;border-bottom:1px solid rgba(148,163,184,.16);text-align:right;white-space:nowrap}th:first-child,td:first-child{text-align:left}th{position:sticky;top:0;background:#132033;color:#cbd5e1;z-index:1}.scroll{max-height:520px;overflow:auto}.small{font-size:12px;color:#94a3b8;margin-top:8px;line-height:1.6}.note{color:#cbd5e1;line-height:1.7;font-size:14px}.status{border-radius:14px;padding:12px 14px;margin:12px 0;background:rgba(2,6,23,.65);border:1px solid rgba(148,163,184,.2);color:#cbd5e1;font-size:13px;line-height:1.6}.status.err{border-color:rgba(239,68,68,.4);color:#fecaca}.status.ok{border-color:rgba(34,197,94,.35);color:#bbf7d0}.btn{border:1px solid rgba(148,163,184,.28);background:rgba(15,23,42,.9);color:#e5e7eb;border-radius:12px;padding:9px 12px;cursor:pointer}.btn.primary{background:#0ea5e9;border-color:#38bdf8;color:#00111d;font-weight:800}.btn:disabled{opacity:.55;cursor:not-allowed}.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.authBox{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.input{height:39px;border-radius:12px;border:1px solid rgba(148,163,184,.34);background:rgba(2,6,23,.65);color:#e5e7eb;padding:0 12px;outline:none;min-width:170px} .input:focus{border-color:#38bdf8}.pinBox{display:flex;gap:8px;align-items:center}.pinInput{width:46px;height:48px;border-radius:14px;border:1px solid rgba(148,163,184,.34);background:rgba(2,6,23,.68);color:#e5e7eb;text-align:center;font-size:24px;font-weight:900;outline:none;box-shadow:inset 0 0 0 1px rgba(255,255,255,.02)}.pinInput:focus{border-color:#38bdf8;box-shadow:0 0 0 3px rgba(56,189,248,.14)}.pinInput.filled{border-color:rgba(56,189,248,.54);background:rgba(14,165,233,.12)}.netStats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:12px}.netStat{background:rgba(2,6,23,.52);border:1px solid rgba(148,163,184,.14);border-radius:12px;padding:10px}.netStat .label{font-size:11px;color:#94a3b8}.netStat .num{font-size:15px;font-weight:850;margin-top:3px}.barLabel{fill:#cbd5e1;font-size:11px;font-weight:700}.barGuide{stroke:#334155;opacity:.38;stroke-width:1}.yearDivider{stroke:#64748b;opacity:.28;stroke-dasharray:4 5}.netAxisTitle{fill:#94a3b8;font-size:11px}.modalBackdrop{position:fixed;inset:0;background:rgba(2,6,23,.72);display:none;align-items:center;justify-content:center;z-index:20;padding:20px}.modal{width:min(980px,96vw);max-height:86vh;overflow:auto;background:#020617;border:1px solid rgba(186,230,253,.32);border-radius:20px;box-shadow:0 30px 80px rgba(0,0,0,.58);padding:22px}.modalHead{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:14px}.modalTitle{font-size:22px;font-weight:850}.modalSub{color:#94a3b8;font-size:13px;margin-top:6px}.closeBtn{border:1px solid rgba(148,163,184,.28);background:rgba(15,23,42,.9);color:#e5e7eb;border-radius:12px;padding:8px 12px;cursor:pointer}.summaryBox{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:10px 0 16px}.summaryItem{background:rgba(15,23,42,.8);border:1px solid rgba(148,163,184,.15);border-radius:12px;padding:10px}.summaryItem .label{font-size:12px;color:#94a3b8}.summaryItem .num{font-size:16px;font-weight:800;margin-top:4px}.green{color:#86efac}.red{color:#fca5a5}.hidden{display:none!important}
+    *{box-sizing:border-box} body{margin:0;background:radial-gradient(circle at top left,#1e293b 0,#0b1020 42%,#020617 100%);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Noto Sans KR',sans-serif} .wrap{max-width:1240px;margin:0 auto;padding:28px} h1{margin:0 0 8px;font-size:32px;letter-spacing:-.04em} h2{font-size:18px;margin:0 0 14px}.sub{color:var(--muted);line-height:1.55;margin-bottom:18px}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.two{display:grid;grid-template-columns:1.35fr .65fr;gap:14px;margin-top:14px}.card{background:rgba(15,23,42,.88);border:1px solid rgba(148,163,184,.22);border-radius:18px;padding:18px;box-shadow:0 18px 45px rgba(0,0,0,.24)}.k{font-size:13px;color:var(--muted)}.v{font-size:27px;font-weight:850;margin-top:7px;letter-spacing:-.04em}.section{margin-top:14px}.chartWrap{position:relative;background:#08111f;border:1px solid rgba(148,163,184,.14);border-radius:14px;padding:8px;overflow:hidden}.countryCharts{grid-template-columns:1fr 1fr;align-items:start;overflow:visible}.countryCharts>.card{min-width:0;overflow:visible}.countryTrendPanel{overflow:visible}.countryTrendGrid{display:grid;grid-template-columns:1.35fr .65fr;gap:14px;align-items:start}.countryTrendItem{min-width:0}.countryTrendItem h3{font-size:18px;margin:0 0 14px}.countryTrendChart{height:292px;min-height:292px;overflow:visible}.countryTrendChart svg{width:100%;height:100%;display:block}.yearRevenueChart{height:292px;min-height:292px;overflow:visible;padding:10px 10px 12px;z-index:10}.yearRevenueChart svg{width:100%;height:100%;display:block}.yearRevenueChart .tooltip{position:fixed!important;z-index:9999;max-width:min(360px,calc(100vw - 24px))} svg{width:100%;height:auto;display:block}.axis{fill:#94a3b8;font-size:12px}.gridline{stroke:var(--grid);opacity:.45;stroke-width:1}.trendLine{fill:none;stroke:var(--line);stroke-width:4;stroke-linecap:round;stroke-linejoin:round}.japanTotal{fill:none;stroke:#38bdf8;stroke-width:4;stroke-linecap:round;stroke-linejoin:round}.japanForval{fill:none;stroke:#f59e0b;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;opacity:.9}.japanSecurity{fill:none;stroke:#22c55e;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;opacity:.9}.countryKorea{fill:none;stroke:#22c55e;stroke-width:3.5;stroke-linecap:round;stroke-linejoin:round}.countryJapan{fill:none;stroke:#f59e0b;stroke-width:3.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:8 5}.countryKoreaPoint{fill:#22c55e;stroke:#dcfce7;stroke-width:1.4}.countryJapanPoint{fill:#f59e0b;stroke:#fef3c7;stroke-width:1.4}.shareGrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0}.shareBox{background:rgba(2,6,23,.5);border:1px solid rgba(148,163,184,.15);border-radius:14px;padding:16px}.shareTitle{font-size:13px;color:#cbd5e1;margin-bottom:12px;font-weight:750}.shareRow{display:grid;grid-template-columns:62px 1fr 62px;gap:10px;align-items:center;margin:9px 0;font-size:12px}.shareTrack{height:10px;background:rgba(148,163,184,.16);border-radius:999px;overflow:hidden}.shareFill{height:100%;border-radius:999px}.shareFill.kr{background:#22c55e}.shareFill.jp{background:#f59e0b}.sharePct{text-align:right;font-weight:800;color:#e5e7eb}.axisRight{fill:#fbbf24;font-size:11px}.axisLeft{fill:#86efac;font-size:11px}.legend{display:flex;gap:14px;flex-wrap:wrap;margin:8px 0 0;font-size:12px;color:#cbd5e1}.legend i{display:inline-block;width:18px;height:3px;border-radius:4px;margin-right:6px;vertical-align:middle}.point{fill:#0ea5e9;stroke:#e0f2fe;stroke-width:1.5;cursor:pointer}.bar{cursor:pointer;opacity:.88}.pos{fill:var(--good)}.neg{fill:var(--bad)}.zero{stroke:#94a3b8;opacity:.7}.tooltip{position:absolute;display:none;min-width:260px;max-width:430px;background:#020617;border:1px solid rgba(186,230,253,.36);box-shadow:0 20px 45px rgba(0,0,0,.45);border-radius:14px;padding:13px;z-index:5;pointer-events:none;color:#e5e7eb;font-size:13px;line-height:1.5}.tooltip b{color:#fff}.pill{display:inline-block;padding:5px 9px;border-radius:999px;background:rgba(56,189,248,.13);color:#bae6fd;font-size:12px;margin:0 5px 6px 0}table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:10px 8px;border-bottom:1px solid rgba(148,163,184,.16);text-align:right;white-space:nowrap}th:first-child,td:first-child{text-align:left}th{position:sticky;top:0;background:#132033;color:#cbd5e1;z-index:1}.scroll{max-height:520px;overflow:auto}.small{font-size:12px;color:#94a3b8;margin-top:8px;line-height:1.6}.note{color:#cbd5e1;line-height:1.7;font-size:14px}.status{border-radius:14px;padding:12px 14px;margin:12px 0;background:rgba(2,6,23,.65);border:1px solid rgba(148,163,184,.2);color:#cbd5e1;font-size:13px;line-height:1.6}.status.err{border-color:rgba(239,68,68,.4);color:#fecaca}.status.ok{border-color:rgba(34,197,94,.35);color:#bbf7d0}.btn{border:1px solid rgba(148,163,184,.28);background:rgba(15,23,42,.9);color:#e5e7eb;border-radius:12px;padding:9px 12px;cursor:pointer}.btn.primary{background:#0ea5e9;border-color:#38bdf8;color:#00111d;font-weight:800}.btn:disabled{opacity:.55;cursor:not-allowed}.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.authBox{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.input{height:39px;border-radius:12px;border:1px solid rgba(148,163,184,.34);background:rgba(2,6,23,.65);color:#e5e7eb;padding:0 12px;outline:none;min-width:170px} .input:focus{border-color:#38bdf8}.pinBox{display:flex;gap:8px;align-items:center}.pinInput{width:46px;height:48px;border-radius:14px;border:1px solid rgba(148,163,184,.34);background:rgba(2,6,23,.68);color:#e5e7eb;text-align:center;font-size:24px;font-weight:900;outline:none;box-shadow:inset 0 0 0 1px rgba(255,255,255,.02)}.pinInput:focus{border-color:#38bdf8;box-shadow:0 0 0 3px rgba(56,189,248,.14)}.pinInput.filled{border-color:rgba(56,189,248,.54);background:rgba(14,165,233,.12)}.netStats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:12px}.netStat{background:rgba(2,6,23,.52);border:1px solid rgba(148,163,184,.14);border-radius:12px;padding:10px}.netStat .label{font-size:11px;color:#94a3b8}.netStat .num{font-size:15px;font-weight:850;margin-top:3px}.barLabel{fill:#cbd5e1;font-size:11px;font-weight:700}.barGuide{stroke:#334155;opacity:.38;stroke-width:1}.yearDivider{stroke:#64748b;opacity:.28;stroke-dasharray:4 5}.netAxisTitle{fill:#94a3b8;font-size:11px}.modalBackdrop{position:fixed;inset:0;background:rgba(2,6,23,.72);display:none;align-items:center;justify-content:center;z-index:20;padding:20px}.modal{width:min(980px,96vw);max-height:86vh;overflow:auto;background:#020617;border:1px solid rgba(186,230,253,.32);border-radius:20px;box-shadow:0 30px 80px rgba(0,0,0,.58);padding:22px}.modalHead{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:14px}.modalTitle{font-size:22px;font-weight:850}.modalSub{color:#94a3b8;font-size:13px;margin-top:6px}.closeBtn{border:1px solid rgba(148,163,184,.28);background:rgba(15,23,42,.9);color:#e5e7eb;border-radius:12px;padding:8px 12px;cursor:pointer}.summaryBox{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:10px 0 16px}.summaryItem{background:rgba(15,23,42,.8);border:1px solid rgba(148,163,184,.15);border-radius:12px;padding:10px}.summaryItem .label{font-size:12px;color:#94a3b8}.summaryItem .num{font-size:16px;font-weight:800;margin-top:4px}.green{color:#86efac}.red{color:#fca5a5}.hidden{display:none!important}
 .loadingOverlay{position:fixed;inset:0;background:rgba(2,6,23,.78);display:none;align-items:center;justify-content:center;flex-direction:column;z-index:9999;backdrop-filter:blur(6px)}
 .loadingOverlay.show{display:flex}.spinner{width:62px;height:62px;border-radius:50%;border:5px solid rgba(226,232,240,.16);border-top-color:#38bdf8;animation:spin .9s linear infinite;box-shadow:0 0 32px rgba(56,189,248,.18)}.loadingText{margin-top:16px;color:#e5e7eb;font-size:14px;font-weight:750}.loadingSub{margin-top:6px;color:#94a3b8;font-size:12px}@keyframes spin{to{transform:rotate(360deg)}}
 
@@ -30,7 +30,7 @@
   .chartWrap{break-inside:avoid}
 }
 
-@media(max-width:950px){.grid,.two,.summaryBox{grid-template-columns:1fr}.wrap{padding:18px}}
+@media(max-width:950px){.grid,.two,.summaryBox,.shareGrid,.countryCharts,.countryTrendGrid{grid-template-columns:1fr}.wrap{padding:18px}.countryTrendChart,.yearRevenueChart{height:340px;min-height:340px}}
   </style>
 </head>
 <body>
@@ -86,6 +86,55 @@
   </section>
   <section class="section card hidden" id="monthSection"><h2>월별 상세</h2><div id="monthTable" class="scroll"></div></section>
 
+  <section class="section card hidden" id="countrySection">
+    <h2>FY 매출 국가별 분석 <span class="k">· FY 데이터 전용 · KRW</span></h2>
+    <div class="small" style="margin-bottom:14px">본 분석은 <b>FY22~FY26 데이터만</b> 사용합니다. Forval 및 ExoSecurity 데이터는 포함하지 않습니다. FY 데이터에서 고객명이 <b>JIRAN JAPAN Inc.</b> 또는 <b>JSecurity, Inc.</b>인 매출만 일본 파트너 매출로 분류하고, 나머지는 한국 매출로 분류합니다.</div>
+    <div class="grid" id="countryKpis" style="margin-bottom:14px"></div>
+    <div class="shareGrid" id="countryShares"></div>
+    <div class="card countryTrendPanel" style="margin-top:14px">
+      <h2>ARR 및 결제매출 추이</h2>
+      <div class="countryTrendGrid">
+        <div class="countryTrendItem">
+          <h3>월별 ARR 추이 <span class="k">· 국가별 월말 ARR · 단일 Y축 · KRW</span></h3>
+          <div id="countryArrChart" class="chartWrap countryTrendChart"></div>
+          <div class="legend"><span><i style="background:#22c55e"></i>한국</span><span><i style="background:#f59e0b"></i>일본</span></div>
+        </div>
+        <div class="countryTrendItem">
+          <h3>연도별 결제매출 추이 <span class="k">· 결제일자 기준 연도별 합계</span></h3>
+          <div id="countryRevenueChart" class="chartWrap yearRevenueChart"></div>
+          <div class="legend"><span><i style="background:#22c55e"></i>한국</span><span><i style="background:#f59e0b"></i>일본</span></div>
+        </div>
+      </div>
+      <div class="small">월별 ARR은 각 월 말 활성 계약 기준이며, 연도별 결제매출은 결제일자가 속한 연도 기준 합계입니다. FY26은 결제일자가 존재하는 마지막 월까지만 표시합니다.</div>
+    </div>
+    <div class="card" style="margin-top:14px"><h2>해석 요약</h2><div id="countrySummary" class="note"></div></div>
+    <div class="section card" style="padding:0;margin-top:14px;background:transparent;border:0;box-shadow:none"><h2>국가별 월별 상세</h2><div id="countryMonthTable" class="scroll"></div></div>
+  </section>
+
+  <section class="section card hidden" id="japanSection">
+    <h2>일본 사업 통합 분석 <span class="k">· Forval + ExoSecurity · JPY · 월말 활성 계약 ARR 기준</span></h2>
+    <div class="small" style="margin-bottom:14px">Forval 계약 ARR과 ExoSecurity 구독 ARR을 월별로 합산한 일본 사업 전체 지표입니다. Forval은 각 행을 고객 1개로 계산하며, 상품코드는 고객 식별값으로 표기합니다. 동일한 상품코드가 있어도 행을 합치지 않습니다.</div>
+    <div class="grid" id="japanKpis" style="margin-bottom:14px"></div>
+    <div class="two">
+      <div class="card">
+        <h2>Japan ARR 추이 <span class="k">· 점 클릭: 해당 월 통합 Top20</span></h2>
+        <div id="japanArrChart" class="chartWrap"></div>
+        <div class="legend"><span><i style="background:#38bdf8"></i>Japan 전체</span><span><i style="background:#f59e0b"></i>Forval</span><span><i style="background:#22c55e"></i>ExoSecurity</span></div>
+      </div>
+      <div class="card">
+        <h2>해석 요약</h2>
+        <div id="japanSummary" class="note"></div>
+      </div>
+    </div>
+    <div class="two">
+      <div class="card"><h2>최종월 ARR 구성</h2><div id="japanMixTable"></div></div>
+      <div class="card"><h2>최종월 Top20 고객 ARR</h2><div id="japanTopTable" class="scroll"></div></div>
+    </div>
+    <div class="section card" style="padding:0;margin-top:14px;background:transparent;border:0;box-shadow:none">
+      <h2>Japan 월별 상세</h2><div id="japanMonthTable" class="scroll"></div>
+    </div>
+  </section>
+
   <section class="section card hidden" id="forvalSection">
     <h2>엑소스피어 for Forval ARR 분석 <span class="k">· JPY · 월말 활성 계약 ARR 기준</span></h2>
     <div class="small" style="margin-bottom:14px">Forval 탭은 판매구분을 상품코드로 보고, 각 계약의 매출을 계약일수로 나눈 뒤 365를 곱해 ARR로 환산합니다. 각 월 말 기준 활성 계약만 합산하며 단위는 엔화입니다. 표시는 Forval 데이터의 시작월부터 마지막 데이터월까지 자동으로 생성합니다. 단, 시작월은 2025-09 이전으로 내려가지 않습니다.</div>
@@ -105,6 +154,26 @@
       <div id="forvalMonthTable" class="scroll"></div>
     </div>
   </section>
+
+  <section class="section card hidden" id="exoSecuritySection">
+    <h2>엑소시큐리티 ARR 분석 <span class="k">· JPY · 월말 활성 계약 ARR 기준</span></h2>
+    <div class="small" style="margin-bottom:14px">ExoSecurity 탭의 유료 개시일 이후 고객을 각 월말 활성 계약으로 집계하고, 월 구독료에 12를 곱해 ARR로 환산합니다. 단위는 엔화(JPY)이며 회사명은 KR을 우선 표시하고 비어 있으면 JP를 사용합니다.</div>
+    <div class="grid" id="exoSecurityKpis" style="margin-bottom:14px"></div>
+    <div class="two">
+      <div class="card">
+        <h2>엑소시큐리티 ARR 추이 <span class="k">· 점 클릭: 해당 월 고객 상세</span></h2>
+        <div id="exoSecurityArrChart" class="chartWrap"></div>
+      </div>
+      <div class="card">
+        <h2>최종월 Top10 고객 ARR</h2>
+        <div id="exoSecurityTopTable"></div>
+      </div>
+    </div>
+    <div class="section card" style="padding:0;margin-top:14px;background:transparent;border:0;box-shadow:none">
+      <h2>엑소시큐리티 월별 상세</h2>
+      <div id="exoSecurityMonthTable" class="scroll"></div>
+    </div>
+  </section>
 </main>
 <div id="modalBackdrop" class="modalBackdrop"><div class="modal"><div class="modalHead"><div><div id="modalTitle" class="modalTitle"></div><div id="modalSub" class="modalSub"></div></div><button class="closeBtn" id="modalClose">닫기</button></div><div id="modalBody"></div></div></div>
 
@@ -118,13 +187,21 @@
 const API_URL = "https://script.google.com/macros/s/AKfycby1bmRQ1El3e9Vvs_unjaYWvKwkQi-bmitfR4FC8_S6JuZj2Rt2RAm5G1Di-IUMFyx3/exec";
 const TARGET_SHEETS = ["FY22","FY23","FY24","FY25","FY26"];
 const FORVAL_SHEET_NAMES = ["Forval","FORVAL","forval","포발"];
+const EXOSECURITY_SHEET_NAMES = ["ExoSecurity","EXOSECURITY","exosecurity","엑소시큐리티"];
+const EXOSECURITY_FALLBACK_ROWS = [{"유료 개시일":"2020. 8. 1","회사명 KR":"아스카 주식회사","회사명 JP":"アスカ株式会社","기업ID":"aska","플랜":"Endpoint protection","계약 라이선스":"89","":"86","월 구독료":"¥6,900","_sheet":"ExoSecurity"},{"유료 개시일":"2021. 9. 9","회사명 KR":"엠디 주식회사","회사명 JP":"エムディー株式会社","기업ID":"emdi","플랜":"Endpoint protection","계약 라이선스":"67","":"66","월 구독료":"¥2,500","_sheet":"ExoSecurity"},{"유료 개시일":"2021. 10. 1","회사명 KR":"주식회사 하야사카 사이클 상회","회사명 JP":"株式会社早坂サイクル商会","기업ID":"hayasaka","플랜":"Endpoint protection","계약 라이선스":"104","":"99","월 구독료":"¥6,200","_sheet":"ExoSecurity"},{"유료 개시일":"2021. 11. 4","회사명 KR":"주식회사 야마지 푸드 시스템","회사명 JP":"株式会社山路フードシステム","기업ID":"yfs-0930","플랜":"Endpoint protection","계약 라이선스":"50","":"43","월 구독료":"¥5,000","_sheet":"ExoSecurity"},{"유료 개시일":"2022. 4. 1","회사명 KR":"주식회사 소셜 인테리어（구：주식회사 subsclife）","회사명 JP":"株式会社ソーシャルインテリア（旧：株式会社subsclife）","기업ID":"social-interior","플랜":"Endpoint protection","계약 라이선스":"147","":"147","월 구독료":"¥17,000","_sheet":"ExoSecurity"},{"유료 개시일":"2022. 4. 1","회사명 KR":"텔레넷 주식회사","회사명 JP":"テレネット株式会社","기업ID":"telenet","플랜":"All-in-one protection","계약 라이선스":"60","":"59","월 구독료":"¥5,833","_sheet":"ExoSecurity"},{"유료 개시일":"2022. 8. 1","회사명 KR":"주식회사 플레이버 라이프사","회사명 JP":"株式会社フレーバーライフ社","기업ID":"flex-1","플랜":"All-in-one protection","계약 라이선스":"50","":"48","월 구독료":"¥10,000","_sheet":"ExoSecurity"},{"유료 개시일":"2022. 8. 2","회사명 KR":"주식회사 디지털 나렛지","회사명 JP":"株式会社デジタル・ナレッジ","기업ID":"dkakb","플랜":"All-in-one protection","계약 라이선스":"460","":"456","월 구독료":"¥79,000","_sheet":"ExoSecurity"},{"유료 개시일":"2022. 9. 1","회사명 KR":"주식회사 라복스","회사명 JP":"株式会社ラヴォックス","기업ID":"loveox","플랜":"Endpoint protection","계약 라이선스":"96","":"93","월 구독료":"¥8,100","_sheet":"ExoSecurity"},{"유료 개시일":"2022. 10. 3","회사명 KR":"주식회사 셰어 컴퍼니","회사명 JP":"株式会社シェアカンパニー","기업ID":"sharecompany","플랜":"Endpoint protection","계약 라이선스":"50","":"36","월 구독료":"¥5,000","_sheet":"ExoSecurity"},{"유료 개시일":"2022. 11. 1","회사명 KR":"리프트 주식회사","회사명 JP":"リフト株式会社","기업ID":"lift2022","플랜":"Endpoint protection","계약 라이선스":"60","":"58","월 구독료":"¥4,750","_sheet":"ExoSecurity"},{"유료 개시일":"2022. 11. 21","회사명 KR":"주식회사 요시다","회사명 JP":"株式会社吉田","기업ID":"yoshidasecurity","플랜":"All-in-one protection","계약 라이선스":"50","":"37","월 구독료":"¥5,000","_sheet":"ExoSecurity"},{"유료 개시일":"2022. 11. 26","회사명 KR":"카나즈루 식품 제과 주식회사","회사명 JP":"金鶴食品製菓株式会社","기업ID":"kanazuru","플랜":"All-in-one protection","계약 라이선스":"120","":"100","월 구독료":"¥19,000","_sheet":"ExoSecurity"},{"유료 개시일":"2022. 12. 1","회사명 KR":"주식회사 센츠","회사명 JP":"株式会社宣通","기업ID":"sentsu","플랜":"Endpoint protection","계약 라이선스":"60","":"60","월 구독료":"¥5,000","_sheet":"ExoSecurity"},{"유료 개시일":"2022. 12. 1","회사명 KR":"주식회사 렛지","회사명 JP":"株式会社レッジ","기업ID":"ledge","플랜":"Endpoint protection","계약 라이선스":"50","":"11","월 구독료":"¥5,000","_sheet":"ExoSecurity"},{"유료 개시일":"2022. 12. 1","회사명 KR":"주식회사 2PS","회사명 JP":"株式会社2PS","기업ID":"2ps","플랜":"All-in-one protection","계약 라이선스":"50","":"18","월 구독료":"¥10,000","_sheet":"ExoSecurity"},{"유료 개시일":"2022. 12. 1","회사명 KR":"주식회사 코코블루트","회사명 JP":"株式会社ココブルート","기업ID":"cbt-secu-202212001","플랜":"All-in-one protection","계약 라이선스":"5","":"4","월 구독료":"¥2,000","_sheet":"ExoSecurity"},{"유료 개시일":"2023. 1. 1","회사명 KR":"의료법인사단 카시노키회 오시마 쿠루미 병원","회사명 JP":"医療法人社団 樫の木会 大島くるみ病院","기업ID":"kurumi-hospital22","플랜":"Endpoint protection","계약 라이선스":"50","":"50","월 구독료":"¥4,750","_sheet":"ExoSecurity"},{"유료 개시일":"2023. 1. 1","회사명 KR":"주식회사 Gozal","회사명 JP":"株式会社Gozal","기업ID":"gozal","플랜":"Endpoint protection","계약 라이선스":"50","":"10","월 구독료":"¥5,000","_sheet":"ExoSecurity"},{"유료 개시일":"2023. 2. 1","회사명 KR":"주식회사 카도나가 수산","회사명 JP":"株式会社門永水産","기업ID":"kado-naga-6778","플랜":"Endpoint protection","계약 라이선스":"50","":"21","월 구독료":"¥5,000","_sheet":"ExoSecurity"},{"유료 개시일":"2023. 2. 1","회사명 KR":"기버 테이크올 주식회사","회사명 JP":"ギバーテイクオール株式会社","기업ID":"gta2022","플랜":"Endpoint protection","계약 라이선스":"30","":"27","월 구독료":"¥4,000","_sheet":"ExoSecurity"},{"유료 개시일":"2023. 3. 1","회사명 KR":"주식회사 타카하시","회사명 JP":"株式会社タカハシ","기업ID":"takahashi","플랜":"Endpoint protection","계약 라이선스":"130","":"124","월 구독료":"¥18,000","_sheet":"ExoSecurity"},{"유료 개시일":"2023. 3. 1","회사명 KR":"주식회사 칸세이","회사명 JP":"株式会社カンセイ","기업ID":"kansei","플랜":"All-in-one protection","계약 라이선스":"50","":"19","월 구독료":"¥10,000","_sheet":"ExoSecurity"},{"유료 개시일":"2023. 3. 1","회사명 KR":"주식회사 차레잡","회사명 JP":"株式会社チャレジョブ","기업ID":"challe-job","플랜":"All-in-one protection","계약 라이선스":"50","":"19","월 구독료":"¥10,000","_sheet":"ExoSecurity"},{"유료 개시일":"2023. 3. 10","회사명 KR":"일반사단법인 일본전기협회","회사명 JP":"一般社団法人日本電気協会","기업ID":"nihondenkikyokai","플랜":"All-in-one protection","계약 라이선스":"84","":"83","월 구독료":"¥11,000","_sheet":"ExoSecurity"},{"유료 개시일":"2023. 4. 1","회사명 KR":"간토 아세틸렌공업 주식회사","회사명 JP":"関東アセチレン工業株式会社","기업ID":"kak","플랜":"All-in-one protection","계약 라이선스":"50","":"37","월 구독료":"¥7,600","_sheet":"ExoSecurity"},{"유료 개시일":"2023. 5. 1","회사명 KR":"주식회사 Olive","회사명 JP":"株式会社Olive","기업ID":"olive-0314","플랜":"All-in-one protection","계약 라이선스":"75","":"50","월 구독료":"¥20,000","_sheet":"ExoSecurity"},{"유료 개시일":"2023. 5. 1","회사명 KR":"대성수지공업 주식회사","회사명 JP":"大成樹脂工業株式会社","기업ID":"web-taisei","플랜":"Endpoint protection","계약 라이선스":"50","":"49","월 구독료":"¥5,000","_sheet":"ExoSecurity"},{"유료 개시일":"2023. 5. 1","회사명 KR":"피아 아사히 넥스트코프 주식회사","회사명 JP":"ぴあ朝日ネクストスコープ株式会社","기업ID":"panx","플랜":"All-in-one protection","계약 라이선스":"50","":"13","월 구독료":"¥5,000","_sheet":"ExoSecurity"},{"유료 개시일":"2023. 5. 11","회사명 KR":"마루호 발조 공업 주식회사","회사명 JP":"マルホ発條工業株式会社","기업ID":"maruho-htj maruho-htj02000 maruho-htj04000 maruho-htj07000 maruho-htj09010 maruho-htj09020 maruho-htj08000","플랜":"All-in-one protection","계약 라이선스":"379","":"321","월 구독료":"¥40,800","_sheet":"ExoSecurity"},{"유료 개시일":"2023. 6. 21","회사명 KR":"주식회사 히비키","회사명 JP":"株式会社響","기업ID":"hibiki-2658","플랜":"All-in-one protection","계약 라이선스":"50","":"4","월 구독료":"¥5,000","_sheet":"ExoSecurity"},{"유료 개시일":"2023. 6. 23","회사명 KR":"주식회사 DFS","회사명 JP":"株式会社DFS","기업ID":"dfs-202304","플랜":"All-in-one protection","계약 라이선스":"155","":"131","월 구독료":"¥11,636","_sheet":"ExoSecurity"},{"유료 개시일":"2023. 7. 1","회사명 KR":"주식회사 넥스트 디자인","회사명 JP":"株式会社ネクストデザイン","기업ID":"nextdsgn-2023","플랜":"Endpoint protection","계약 라이선스":"5","":"3","월 구독료":"¥1,000","_sheet":"ExoSecurity"},{"유료 개시일":"2023. 8. 1","회사명 KR":"주식회사 브레인 스태프","회사명 JP":"株式会社ブレインスタッフ","기업ID":"brainstaff-2023","플랜":"Endpoint protection","계약 라이선스":"50","":"19","월 구독료":"¥5,000","_sheet":"ExoSecurity"},{"유료 개시일":"2023. 8. 1","회사명 KR":"치타카 인터내셔널 푸드 주식회사","회사명 JP":"チタカ・インターナショナル・フーズ株式会社","기업ID":"cif","플랜":"Endpoint protection","계약 라이선스":"50","":"41","월 구독료":"¥5,000","_sheet":"ExoSecurity"},{"유료 개시일":"2023. 8. 1","회사명 KR":"악테스 쿄산 주식회사","회사명 JP":"アクテス京三株式会社","기업ID":"actes-kyosan","플랜":"Endpoint protection","계약 라이선스":"99","":"93","월 구독료":"¥14,060","_sheet":"ExoSecurity"},{"유료 개시일":"2023. 8. 1","회사명 KR":"명광산업 주식회사","회사명 JP":"明光産業株式会社","기업ID":"meiko-mtech1023","플랜":"Endpoint protection","계약 라이선스":"50","":"13","월 구독료":"¥5,000","_sheet":"ExoSecurity"},{"유료 개시일":"2023. 8. 1","회사명 KR":"주식회사 아이 스포츠","회사명 JP":"株式会社愛スポーツ","기업ID":"ekiai","플랜":"Endpoint protection","계약 라이선스":"50","":"36","월 구독료":"¥4,750","_sheet":"ExoSecurity"},{"유료 개시일":"2023. 9. 1","회사명 KR":"ProGATE 주식회사","회사명 JP":"ProGATE株式会社","기업ID":"pro-g","플랜":"All-in-one protection","계약 라이선스":"50","":"39","월 구독료":"¥10,000","_sheet":"ExoSecurity"},{"유료 개시일":"2023. 9. 1","회사명 KR":"의료법인사단 원무회","회사명 JP":"医療法人社団 原武会","기업ID":"haratakekai","플랜":"All-in-one protection","계약 라이선스":"70","":"68","월 구독료":"¥18,000","_sheet":"ExoSecurity"},{"유료 개시일":"2023. 11. 1","회사명 KR":"코토부키 전기 설비 주식회사","회사명 JP":"寿電設株式会社","기업ID":"kotobuki-5319","플랜":"All-in-one protection","계약 라이선스":"85","":"77","월 구독료":"¥19,200","_sheet":"ExoSecurity"},{"유료 개시일":"2023. 11. 1","회사명 KR":"주식회사 코이데 환경 서비스","회사명 JP":"株式会社小出環境サービス","기업ID":"kks-sec-78","플랜":"All-in-one protection","계약 라이선스":"50","":"41","월 구독료":"¥10,000","_sheet":"ExoSecurity"},{"유료 개시일":"2023. 11. 1","회사명 KR":"주식회사 Vuetech","회사명 JP":"株式会社Vuetech","기업ID":"vuetech2018","플랜":"All-in-one protection","계약 라이선스":"20","":"17","월 구독료":"¥6,000","_sheet":"ExoSecurity"},{"유료 개시일":"2023. 11. 1","회사명 KR":"코각스 주식회사 (1)","회사명 JP":"コガックス株式会社","기업ID":"kogax-01","플랜":"All-in-one protection","계약 라이선스":"80","":"68","월 구독료":"¥16,720","_sheet":"ExoSecurity"},{"유료 개시일":"2023. 11. 1","회사명 KR":"코각스 주식회사 (2)","회사명 JP":"コガックス株式会社","기업ID":"kogax-10","플랜":"Endpoint protection","계약 라이선스":"50","":"32","월 구독료":"¥3,800","_sheet":"ExoSecurity"},{"유료 개시일":"2023. 12. 1","회사명 KR":"합동회사 GPIT 서비스","회사명 JP":"合同会社GPITサービス","기업ID":"gpitcoltd","플랜":"Endpoint protection","계약 라이선스":"50","":"34","월 구독료":"¥1,000","_sheet":"ExoSecurity"},{"유료 개시일":"2023. 12. 1","회사명 KR":"주식회사 트라이하치","회사명 JP":"株式会社トライハッチ","기업ID":"tryhatch0105","플랜":"All-in-one protection","계약 라이선스":"50","":"39","월 구독료":"¥10,000","_sheet":"ExoSecurity"},{"유료 개시일":"2023. 12. 18","회사명 KR":"코튼라보 주식회사","회사명 JP":"コットン・ラボ株式会社","기업ID":"cottonlabo","플랜":"Endpoint protection","계약 라이선스":"53","":"50","월 구독료":"¥3,500","_sheet":"ExoSecurity"},{"유료 개시일":"2024. 1. 1","회사명 KR":"주식회사 EasyTokyo","회사명 JP":"株式会社EasyTokyo","기업ID":"","플랜":"All-in-one protection","계약 라이선스":"5","":"0","월 구독료":"¥2,000","_sheet":"ExoSecurity"},{"유료 개시일":"2024. 1. 1","회사명 KR":"게로 시약소","회사명 JP":"下呂市役所","기업ID":"gero-city-212202","플랜":"All-in-one protection","계약 라이선스":"700","":"700","월 구독료":"¥243,000","_sheet":"ExoSecurity"},{"유료 개시일":"2024. 2. 1","회사명 KR":"주식회사 케이엠 더블유 재팬","회사명 JP":"株式会社ケイエムダブリュジャパン","기업ID":"kmwjapan","플랜":"All-in-one protection","계약 라이선스":"50","":"10","월 구독료":"¥7,000","_sheet":"ExoSecurity"},{"유료 개시일":"2024. 2. 1","회사명 KR":"주식회사 마루타카 상회","회사명 JP":"株式会社丸高商会","기업ID":"marutaka","플랜":"All-in-one protection","계약 라이선스":"80","":"65","월 구독료":"¥15,400","_sheet":"ExoSecurity"},{"유료 개시일":"2024. 2. 15","회사명 KR":"LaZo 주식회사","회사명 JP":"LaZo株式会社","기업ID":"lazo-master01","플랜":"Endpoint protection","계약 라이선스":"65","":"59","월 구독료":"¥2,500","_sheet":"ExoSecurity"},{"유료 개시일":"2024. 3. 1","회사명 KR":"주식회사 토기야","회사명 JP":"株式会社研屋","기업ID":"togiya-1","플랜":"Endpoint protection","계약 라이선스":"65","":"61","월 구독료":"¥3,150","_sheet":"ExoSecurity"},{"유료 개시일":"2024. 3. 1","회사명 KR":"주식회사 SoVa","회사명 JP":"株式会社SoVa","기업ID":"sova-security","플랜":"Endpoint protection","계약 라이선스":"90","":"85","월 구독료":"¥2,500","_sheet":"ExoSecurity"},{"유료 개시일":"2024. 4. 1","회사명 KR":"주식회사 사계절의 자연사","회사명 JP":"株式会社四季の自然舎","기업ID":"mmmiura-3231","플랜":"All-in-one protection","계약 라이선스":"105","":"104","월 구독료":"¥15,400","_sheet":"ExoSecurity"},{"유료 개시일":"2024. 4. 1","회사명 KR":"사회복지법인 신코회 유보연계형 인정 어린이집 녹병아리 프리 스쿨","회사명 JP":"社会福祉法人伸晃会幼保連携型 認定こども園ろっくひよこプリスクール","기업ID":"hiyoko-1","플랜":"Endpoint protection","계약 라이선스":"50","":"37","월 구독료":"¥3,800","_sheet":"ExoSecurity"},{"유료 개시일":"2024. 4. 1","회사명 KR":"주식회사 SOCIAL COMMON CAPITAL","회사명 JP":"株式会社SOCIAL COMMON CAPITAL","기업ID":"scc-commosus-2022","플랜":"All-in-one protection","계약 라이선스":"50","":"17","월 구독료":"¥5,000","_sheet":"ExoSecurity"},{"유료 개시일":"2024. 5. 1","회사명 KR":"주식회사 IBS","회사명 JP":"株式会社IBS","기업ID":"ibs-corp","플랜":"All-in-one protection","계약 라이선스":"132","":"120","월 구독료":"¥29,960","_sheet":"ExoSecurity"},{"유료 개시일":"2024. 5. 1","회사명 KR":"주식회사 NICCO","회사명 JP":"株式会社NICCO","기업ID":"nicco-1","플랜":"Endpoint protection","계약 라이선스":"50","":"15","월 구독료":"¥3,800","_sheet":"ExoSecurity"},{"유료 개시일":"2024. 5. 1","회사명 KR":"주식회사 마루미츠 포테리","회사명 JP":"株式会社マルミツポテリ","기업ID":"marupote1010","플랜":"Endpoint protection","계약 라이선스":"50","":"29","월 구독료":"¥4,750","_sheet":"ExoSecurity"},{"유료 개시일":"2024. 5. 1","회사명 KR":"특별 양호 양로원 고시엔","회사명 JP":"特別養護老人ホーム 甲寿園","기업ID":"kouju01","플랜":"Endpoint protection","계약 라이선스":"50","":"48","월 구독료":"¥5,000","_sheet":"ExoSecurity"},{"유료 개시일":"2024. 5. 1","회사명 KR":"주식회사 오아시스 파크","회사명 JP":"株式会社オアシスパーク","기업ID":"oasis-6766","플랜":"All-in-one protection","계약 라이선스":"50","":"31","월 구독료":"¥5,000","_sheet":"ExoSecurity"},{"유료 개시일":"2024. 6. 1","회사명 KR":"ＷＯＮＤＥＲ ＬＩＮＥ 주식회사","회사명 JP":"ＷＯＮＤＥＲ ＬＩＮＥ株式会社","기업ID":"wonder88","플랜":"All-in-one protection","계약 라이선스":"50","":"7","월 구독료":"¥10,000","_sheet":"ExoSecurity"},{"유료 개시일":"2024. 7. 1","회사명 KR":"주식회사 AIGOSS","회사명 JP":"株式会社AIGOSS","기업ID":"aigoss-0703","플랜":"Endpoint protection","계약 라이선스":"50","":"22","월 구독료":"¥3,500","_sheet":"ExoSecurity"},{"유료 개시일":"2024. 7. 5","회사명 KR":"밸리데이터 주식회사","회사명 JP":"バリデーター株式会社","기업ID":"val-0212-dator","플랜":"Endpoint protection","계약 라이선스":"50","":"29","월 구독료":"¥2,500","_sheet":"ExoSecurity"},{"유료 개시일":"2024. 7. 19","회사명 KR":"주식회사 리콘트 파트너스","회사명 JP":"株式会社リコントパートナーズ","기업ID":"recont","플랜":"Endpoint protection","계약 라이선스":"50","":"27","월 구독료":"¥2,500","_sheet":"ExoSecurity"},{"유료 개시일":"2024. 7. 22","회사명 KR":"마스터 피스 그룹 주식회사","회사명 JP":"マスターピース・グループ株式会社","기업ID":"mpg","플랜":"All-in-one protection","계약 라이선스":"50","":"4","월 구독료":"¥10,000","_sheet":"ExoSecurity"},{"유료 개시일":"2024. 7. 26","회사명 KR":"식스센스 라보 주식회사","회사명 JP":"シックスセンスラボ株式会社","기업ID":"sixthsenselab","플랜":"Endpoint protection","계약 라이선스":"50","":"25","월 구독료":"¥5,000","_sheet":"ExoSecurity"},{"유료 개시일":"2024. 8. 21","회사명 KR":"공립 세이키 주식회사","회사명 JP":"共立精機株式会社","기업ID":"kyoritsu-5eik1","플랜":"Endpoint protection","계약 라이선스":"75","":"71","월 구독료":"¥5,000","_sheet":"ExoSecurity"},{"유료 개시일":"2024. 8. 29","회사명 KR":"주식회사 요네킨","회사명 JP":"株式会社ヨネキン","기업ID":"yonekin-1","플랜":"Endpoint protection","계약 라이선스":"70","":"63","월 구독료":"¥8,550","_sheet":"ExoSecurity"},{"유료 개시일":"2024. 8. 30","회사명 KR":"Fujisawa SST 매니지먼트 주식회사","회사명 JP":"Fujisawa SSTマネジメント株式会社","기업ID":"fsst","플랜":"All-in-one protection","계약 라이선스":"50","":"22","월 구독료":"¥5,000","_sheet":"ExoSecurity"},{"유료 개시일":"2024. 8. 30","회사명 KR":"노바리 주식회사","회사명 JP":"ノバリ株式会社","기업ID":"novari","플랜":"Endpoint protection","계약 라이선스":"70","":"64","월 구독료":"¥2,500","_sheet":"ExoSecurity"},{"유료 개시일":"2024. 9. 1","회사명 KR":"주식회사 비전 크리에이트","회사명 JP":"株式会社ビジョンクリエイト","기업ID":"visioncreate","플랜":"All-in-one protection","계약 라이선스":"50","":"49","월 구독료":"¥9,500","_sheet":"ExoSecurity"},{"유료 개시일":"2024. 9. 1","회사명 KR":"주식회사 비프런트","회사명 JP":"株式会社ビーフロンティア","기업ID":"bfront","플랜":"All-in-one protection","계약 라이선스":"10","":"6","월 구독료":"¥1,400","_sheet":"ExoSecurity"},{"유료 개시일":"2024. 9. 30","회사명 KR":"주식회사 OMC홀딩","회사명 JP":"株式会社OMCホールディング","기업ID":"okime-5280","플랜":"Endpoint protection","계약 라이선스":"166","":"165","월 구독료":"¥13,500","_sheet":"ExoSecurity"},{"유료 개시일":"2024. 9. 30","회사명 KR":"닛상 메디컬 주식회사","회사명 JP":"日商メディカル株式会社","기업ID":"nisshomedical","플랜":"Endpoint protection","계약 라이선스":"60","":"60","월 구독료":"¥2,700","_sheet":"ExoSecurity"},{"유료 개시일":"2024. 9. 30","회사명 KR":"BODYMAKER 주식회사","회사명 JP":"ＢＯＤＹＭＡＫＥＲ株式会社","기업ID":"bodymaker-82","플랜":"Endpoint protection","계약 라이선스":"50","":"24","월 구독료":"¥2,500","_sheet":"ExoSecurity"},{"유료 개시일":"2024. 10. 4","회사명 KR":"주식회사 Contents Lab. Blue TOKYO","회사명 JP":"株式会社Contents Lab. Blue TOKYO","기업ID":"clbtokyo","플랜":"Endpoint protection","계약 라이선스":"70","":"29","월 구독료":"¥9,000","_sheet":"ExoSecurity"},{"유료 개시일":"2024. 10. 15","회사명 KR":"주식회사 지큐브","회사명 JP":"株式会社ジー・キューブ","기업ID":"gcube","플랜":"Endpoint protection","계약 라이선스":"60","":"57","월 구독료":"¥2,500","_sheet":"ExoSecurity"},{"유료 개시일":"2024. 11. 2","회사명 KR":"주식회사 알케이 어뮤즈먼트","회사명 JP":"株式会社アール・ケイ・アミューズメント","기업ID":"amsgroup","플랜":"Endpoint protection","계약 라이선스":"50","":"49","월 구독료":"¥5,000","_sheet":"ExoSecurity"},{"유료 개시일":"2024. 11. 11","회사명 KR":"주식회사 히로치 상사","회사명 JP":"株式会社ヒロチー商事","기업ID":"hirochi","플랜":"Endpoint protection","계약 라이선스":"50","":"17","월 구독료":"¥2,500","_sheet":"ExoSecurity"},{"유료 개시일":"2024. 12. 1","회사명 KR":"주식회사 컨설팅링크","회사명 JP":"株式会社コンサルリンク","기업ID":"cllink","플랜":"All-in-one protection","계약 라이선스":"90","":"86","월 구독료":"¥5,000","_sheet":"ExoSecurity"},{"유료 개시일":"2024. 12. 11","회사명 KR":"주식회사 토와","회사명 JP":"株式会社東和","기업ID":"towa22","플랜":"All-in-one protection","계약 라이선스":"69","":"67","월 구독료":"¥16,192","_sheet":"ExoSecurity"},{"유료 개시일":"2024. 12. 19","회사명 KR":"주식회사 Chocolate-box Japan","회사명 JP":"株式会社Chocolate-box Japan","기업ID":"chocolate-box-japan","플랜":"All-in-one protection","계약 라이선스":"50","":"15","월 구독료":"¥7,000","_sheet":"ExoSecurity"},{"유료 개시일":"2024. 12. 24","회사명 KR":"주식회사 핫스페이스","회사명 JP":"株式会社ホットスペース","기업ID":"hotspace-0729","플랜":"Endpoint protection","계약 라이선스":"50","":"13","월 구독료":"¥2,500","_sheet":"ExoSecurity"},{"유료 개시일":"2024. 12. 27","회사명 KR":"주식회사 마츠","회사명 JP":"株式会社松","기업ID":"matsu","플랜":"Endpoint protection","계약 라이선스":"50","":"37","월 구독료":"¥4,750","_sheet":"ExoSecurity"},{"유료 개시일":"2025. 1. 6","회사명 KR":"주식회사 사테라이트 오피스","회사명 JP":"株式会社サテライトオフィス","기업ID":"sateraito-2025","플랜":"All-in-one protection","계약 라이선스":"200","":"35","월 구독료":"¥5,000","_sheet":"ExoSecurity"},{"유료 개시일":"2025. 1. 7","회사명 KR":"주식회사 KAFLIX CLOUD","회사명 JP":"株式会社KAFLIX CLOUD","기업ID":"kaflixcloud","플랜":"All-in-one protection","계약 라이선스":"50","":"21","월 구독료":"¥5,000","_sheet":"ExoSecurity"},{"유료 개시일":"2025. 1. 16","회사명 KR":"블루 블루에 재팬 주식회사","회사명 JP":"ブルーブルーエジャパン株式会社","기업ID":"bleubleuet","플랜":"Endpoint protection","계약 라이선스":"98","":"96","월 구독료":"¥10,450","_sheet":"ExoSecurity"},{"유료 개시일":"2025. 1. 20","회사명 KR":"주식회사 인터랙티브 파트너스","회사명 JP":"株式会社インタラクティブパートナーズ","기업ID":"int24yq6iljnwrncq","플랜":"Endpoint protection","계약 라이선스":"50","":"49","월 구독료":"¥2,500","_sheet":"ExoSecurity"},{"유료 개시일":"2025. 1. 23","회사명 KR":"티엔에스 주식회사","회사명 JP":"ティー・エヌ・エス株式会社","기업ID":"tns","플랜":"Endpoint protection","계약 라이선스":"50","":"14","월 구독료":"¥2,500","_sheet":"ExoSecurity"},{"유료 개시일":"2025. 1. 24","회사명 KR":"스터디포켓 주식회사","회사명 JP":"スタディポケット株式会社","기업ID":"studypocket","플랜":"All-in-one protection","계약 라이선스":"50","":"15","월 구독료":"¥5,000","_sheet":"ExoSecurity"},{"유료 개시일":"2025. 2. 7","회사명 KR":"주식회사 나무커뮤니케이션","회사명 JP":"株式会社ナムコミュニケーション","기업ID":"namujapan-2014","플랜":"Endpoint protection","계약 라이선스":"50","":"35","월 구독료":"¥2,500","_sheet":"ExoSecurity"},{"유료 개시일":"2025. 2. 16","회사명 KR":"주식회사 에스아이에스","회사명 JP":"株式会社エスアイエス","기업ID":"sis-security-001","플랜":"Endpoint protection","계약 라이선스":"50","":"42","월 구독료":"¥2,500","_sheet":"ExoSecurity"},{"유료 개시일":"2025. 2. 22","회사명 KR":"주식회사 펌프킨라보","회사명 JP":"株式会社ぱんぷきんらぼ","기업ID":"pumpkin-labo","플랜":"Endpoint protection","계약 라이선스":"50","":"7","월 구독료":"¥2,500","_sheet":"ExoSecurity"},{"유료 개시일":"2025. 3. 6","회사명 KR":"합동회사 P-BEANS","회사명 JP":"合同会社P-BEANS","기업ID":"p-base-security50","플랜":"Endpoint protection","계약 라이선스":"50","":"47","월 구독료":"¥5,000","_sheet":"ExoSecurity"},{"유료 개시일":"2025. 3. 7","회사명 KR":"주식회사 씨티이","회사명 JP":"株式会社シーティーイー","기업ID":"web-cte","플랜":"All-in-one protection","계약 라이선스":"50","":"47","월 구독료":"¥10,000","_sheet":"ExoSecurity"},{"유료 개시일":"2025. 3. 14","회사명 KR":"주식회사 협동프레스","회사명 JP":"株式会社協同プレス","기업ID":"kyodo-9777","플랜":"Endpoint protection","계약 라이선스":"138","":"138","월 구독료":"¥11,300","_sheet":"ExoSecurity"},{"유료 개시일":"2025. 3. 19","회사명 KR":"재팬마텍스 주식회사","회사명 JP":"ジャパンマテックス株式会社","기업ID":"japanmatex","플랜":"Endpoint protection","계약 라이선스":"50","":"26","월 구독료":"¥5,000","_sheet":"ExoSecurity"},{"유료 개시일":"2025. 3. 19","회사명 KR":"주식회사 일본경영종합연구소","회사명 JP":"株式会社日本経営総合研究所","기업ID":"nihonkeiei-1212","플랜":"All-in-one protection","계약 라이선스":"90","":"85","월 구독료":"¥5,000","_sheet":"ExoSecurity"},{"유료 개시일":"2025. 4. 2","회사명 KR":"의료 법인 사단 일생회","회사명 JP":"医療法人社団 日生会","기업ID":"nisseikai-0823","플랜":"Endpoint protection","계약 라이선스":"50","":"24","월 구독료":"¥5,000","_sheet":"ExoSecurity"},{"유료 개시일":"2025. 4. 2","회사명 KR":"주식회사 협영정보","회사명 JP":"株式会社協栄情報","기업ID":"cpi","플랜":"Endpoint protection","계약 라이선스":"50","":"19","월 구독료":"¥5,000","_sheet":"ExoSecurity"},{"유료 개시일":"2025. 4. 5","회사명 KR":"일반사단법인 환자의 눈높이","회사명 JP":"一般社団法人患者目線","기업ID":"km01","플랜":"All-in-one protection","계약 라이선스":"60","":"54","월 구독료":"¥7,000","_sheet":"ExoSecurity"},{"유료 개시일":"2025. 4. 17","회사명 KR":"주식회사 바인드 큐브","회사명 JP":"株式会社バインドキューブ","기업ID":"bindcube","플랜":"Endpoint protection","계약 라이선스":"50","":"9","월 구독료":"¥2,500","_sheet":"ExoSecurity"},{"유료 개시일":"2025. 5. 1","회사명 KR":"주식회사 애즈원기획","회사명 JP":"株式会社アズワン企画","기업ID":"asone-planning2735","플랜":"Endpoint protection","계약 라이선스":"100","":"98","월 구독료":"¥3,500","_sheet":"ExoSecurity"},{"유료 개시일":"2025. 5. 1","회사명 KR":"주식회사 프라임케어","회사명 JP":"株式会社プライムケア","기업ID":"primecare5108","플랜":"Endpoint protection","계약 라이선스":"120","":"108","월 구독료":"¥3,500","_sheet":"ExoSecurity"},{"유료 개시일":"2025. 5. 1","회사명 KR":"코엔도주식회사","회사명 JP":"江原道株式会社","기업ID":"kgd-ccc-110","플랜":"All-in-one protection","계약 라이선스":"50","":"48","월 구독료":"¥5,000","_sheet":"ExoSecurity"},{"유료 개시일":"2025. 5. 7","회사명 KR":"주식회사 피에이","회사명 JP":"株式会社ピーエーイー(長野ITサポート)","기업ID":"pae","플랜":"All-in-one protection","계약 라이선스":"75","":"63","월 구독료":"¥28,500","_sheet":"ExoSecurity"},{"유료 개시일":"2025. 5. 9","회사명 KR":"의료법인 대장정형외과","회사명 JP":"医療法人大場整形外科","기업ID":"ohba","플랜":"All-in-one protection","계약 라이선스":"50","":"10","월 구독료":"¥5,000","_sheet":"ExoSecurity"},{"유료 개시일":"2025. 5. 15","회사명 KR":"주식회사 코어모바일","회사명 JP":"株式会社コアモバイル","기업ID":"coremobile","플랜":"Endpoint protection","계약 라이선스":"50","":"37","월 구독료":"¥2,500","_sheet":"ExoSecurity"},{"유료 개시일":"2025. 5. 27","회사명 KR":"주식회사 Vision Platform","회사명 JP":"株式会社Vision Platform","기업ID":"visionplatform","플랜":"Endpoint protection","계약 라이선스":"50","":"10","월 구독료":"¥5,000","_sheet":"ExoSecurity"},{"유료 개시일":"2025. 6. 11","회사명 KR":"주식회사 Morrow World","회사명 JP":"株式会社Morrow World","기업ID":"morrow-world","플랜":"Endpoint protection","계약 라이선스":"50","":"17","월 구독료":"¥5,000","_sheet":"ExoSecurity"},{"유료 개시일":"2025. 7. 1","회사명 KR":"주식회사 캠프넷","회사명 JP":"株式会社キャンプネット","기업ID":"campnet2","플랜":"Endpoint protection","계약 라이선스":"50","":"38","월 구독료":"¥4,750","_sheet":"ExoSecurity"},{"유료 개시일":"2025. 6. 26","회사명 KR":"의료법인 사단홍인회 나카타 병원","회사명 JP":"医療法人社団弘人会 中田病院","기업ID":"nakada-3122","플랜":"Endpoint protection","계약 라이선스":"50","":"38","월 구독료":"¥5,000","_sheet":"ExoSecurity"},{"유료 개시일":"2025. 7. 10","회사명 KR":"일반재단법인 야마하 음악진흥회","회사명 JP":"一般財団法人ヤマハ音楽振興会","기업ID":"yamahamf","플랜":"All-in-one protection","계약 라이선스":"50","":"22","월 구독료":"¥2,500","_sheet":"ExoSecurity"},{"유료 개시일":"2025. 8. 18","회사명 KR":"정보 환경 솔루션즈 주식회사","회사명 JP":"情報環境ソリューションズ株式会社","기업ID":"ies","플랜":"All-in-one protection","계약 라이선스":"150","":"112","월 구독료":"¥10,000","_sheet":"ExoSecurity"},{"유료 개시일":"2025. 8. 1","회사명 KR":"주식회사 마그넷스튜디오","회사명 JP":"株式会社マグネットスタジオ","기업ID":"mgs01","플랜":"Endpoint protection","계약 라이선스":"130","":"127","월 구독료":"¥10,500","_sheet":"ExoSecurity"},{"유료 개시일":"2025. 8. 1","회사명 KR":"의료법인 대복회","회사명 JP":"医療法人大福会","기업ID":"taifukukai-01","플랜":"All-in-one protection","계약 라이선스":"50","":"15","월 구독료":"¥5,000","_sheet":"ExoSecurity"},{"유료 개시일":"2025. 8. 15","회사명 KR":"주식회사 Mentor Capital","회사명 JP":"株式会社Mentor Capital","기업ID":"mentor-capital","플랜":"All-in-one protection","계약 라이선스":"50","":"19","월 구독료":"¥5,000","_sheet":"ExoSecurity"},{"유료 개시일":"2025. 8. 28","회사명 KR":"오사카 전기상사 주식회사","회사명 JP":"大阪電機商事株式会社","기업ID":"osaka-19590301","플랜":"Endpoint protection","계약 라이선스":"50","":"42","월 구독료":"¥2,500","_sheet":"ExoSecurity"},{"유료 개시일":"2025. 9. 11","회사명 KR":"주식회사 HIRAKUTO","회사명 JP":"株式会社HIRAKUTO","기업ID":"hirakuto-exo","플랜":" All-in-one protection","계약 라이선스":"10","":"4","월 구독료":"¥2,000","_sheet":"ExoSecurity"},{"유료 개시일":"2025. 10. 2","회사명 KR":"주식회사 EFACTORY GUYS","회사명 JP":"株式会社EFACTORYGUYS","기업ID":"efactoryguys","플랜":"Endpoint protection","계약 라이선스":"50","":"12","월 구독료":"¥4,750","_sheet":"ExoSecurity"},{"유료 개시일":"2025. 9. 1","회사명 KR":"공립 아키루 의료센터","회사명 JP":"公立阿伎留医療センター","기업ID":"akiru-municipal1925","플랜":"Endpoint protection","계약 라이선스":"160","":"145","월 구독료":"¥12,500","_sheet":"ExoSecurity"},{"유료 개시일":"2025. 10. 15","회사명 KR":"아라야 주식회사","회사명 JP":"アラヤ株式会社","기업ID":"alaya","플랜":"Endpoint protection","계약 라이선스":"63","":"60","월 구독료":"¥4,750","_sheet":"ExoSecurity"},{"유료 개시일":"2025. 11. 7","회사명 KR":"주식회사 JT","회사명 JP":"株式会社JT","기업ID":"jt-12345678","플랜":"All-in-one protection","계약 라이선스":"110","":"99","월 구독료":"¥20,520","_sheet":"ExoSecurity"},{"유료 개시일":"2025. 11. 10","회사명 KR":"의료법인 세키에츠 중앙병원","회사명 JP":"医療法人関越中央病院","기업ID":"kanetsu-5250","플랜":"Endpoint protection","계약 라이선스":"50","":"41","월 구독료":"¥3,800","_sheet":"ExoSecurity"},{"유료 개시일":"2025. 11. 10","회사명 KR":"의료법인 세키에츠 중앙병원 간호 복지촌 키타하라 마을","회사명 JP":"医療法人関越中央病院 介護・福祉村 北原の里","기업ID":"kitahara-4611","플랜":"Endpoint protection","계약 라이선스":"50","":"36","월 구독료":"¥3,800","_sheet":"ExoSecurity"},{"유료 개시일":"2025. 12. 17","회사명 KR":"아쿠에어 주식회사","회사명 JP":"アクエアー株式会社","기업ID":"aquair0991285","플랜":"Endpoint protection","계약 라이선스":"50","":"11","월 구독료":"¥3,800","_sheet":"ExoSecurity"},{"유료 개시일":"2025. 12. 25","회사명 KR":"주식회사 프라임 홀딩스","회사명 JP":"株式会社プライムホールディングス","기업ID":"primeholdings001","플랜":"Endpoint protection","계약 라이선스":"50","":"12","월 구독료":"¥3,500","_sheet":"ExoSecurity"},{"유료 개시일":"2025. 12. 17","회사명 KR":"츠바이소 주식회사","회사명 JP":"ツバイソ株式会社","기업ID":"tsubaiso","플랜":"Endpoint protection","계약 라이선스":"50","":"28","월 구독료":"¥2,500","_sheet":"ExoSecurity"},{"유료 개시일":"2025. 12. 25","회사명 KR":"히구치 강관 주식회사","회사명 JP":"ヒグチ鋼管株式会社","기업ID":"yasuda","플랜":"Endpoint protection","계약 라이선스":"50","":"36","월 구독료":"¥2,500","_sheet":"ExoSecurity"},{"유료 개시일":"2026. 1. 8","회사명 KR":"일본직판 주식회사","회사명 JP":"日本直販株式会社","기업ID":"nck","플랜":"Endpoint protection","계약 라이선스":"60","":"56","월 구독료":"¥6,650","_sheet":"ExoSecurity"},{"유료 개시일":"2026. 2. 2","회사명 KR":"동군운송 주식회사","회사명 JP":"東群運送株式会社","기업ID":"tougun-1400","플랜":"Endpoint protection","계약 라이선스":"10","":"7","월 구독료":"¥1,050","_sheet":"ExoSecurity"},{"유료 개시일":"2026. 2. 24","회사명 KR":"주식회사 프라임넥스트","회사명 JP":"株式会社プライムネクスト","기업ID":"primenext3141","플랜":"Endpoint protection","계약 라이선스":"10","":"7","월 구독료":"¥2,100","_sheet":"ExoSecurity"},{"유료 개시일":"2026. 3. 17","회사명 KR":"스에히로야 전기 주식회사","회사명 JP":"末廣屋電機株式会社","기업ID":"suehiroya-kk","플랜":"Endpoint protection","계약 라이선스":"135","":"101","월 구독료":"¥20,250","_sheet":"ExoSecurity"},{"유료 개시일":"2026. 3. 18","회사명 KR":"주식회사 케이엠티","회사명 JP":"株式会社ケイエムティ","기업ID":"kmt-2009","플랜":"All-in-one protection","계약 라이선스":"10","":"2","월 구독료":"¥6,000","_sheet":"ExoSecurity"},{"유료 개시일":"2026. 6. 1","회사명 KR":"주식회사 Channel Corporation","회사명 JP":"株式会社Channel Corporation","기업ID":"jp-channel","플랜":"All-in-one protection","계약 라이선스":"40","":"14","월 구독료":"¥13,600","_sheet":"ExoSecurity"},{"유료 개시일":"2026. 4. 12","회사명 KR":"일본 신타츠 주식회사","회사명 JP":"日本信達株式会社","기업ID":"jstt","플랜":"Endpoint protection","계약 라이선스":"10","":"8","월 구독료":"¥1,250","_sheet":"ExoSecurity"},{"유료 개시일":"2026. 3. 31","회사명 KR":"NovaLeaf 주식회사 (1)","회사명 JP":"株式会社NovaLeaf","기업ID":"novaleaf-3939","플랜":"All-in-one protection","계약 라이선스":"5","":"5","월 구독료":"¥1,260","_sheet":"ExoSecurity"},{"유료 개시일":"2026. 3. 31","회사명 KR":"NovaLeaf 주식회사 (2)","회사명 JP":"株式会社NovaLeaf","기업ID":"novaleaf-2525","플랜":"Endpoint protection","계약 라이선스":"5","":"0","월 구독료":"¥625","_sheet":"ExoSecurity"},{"유료 개시일":"2026. 7. 1","회사명 KR":"주식회사 요코보리 상사 운송","회사명 JP":"株式会社横堀商事運輸","기업ID":"ysu-exp","플랜":"Endpoint protection","계약 라이선스":"30","":"25","월 구독료":"¥6,300","_sheet":"ExoSecurity"},{"유료 개시일":"2026. 5. 25","회사명 KR":"주식회사 윌 인터내셔널","회사명 JP":"株式会社ウィル・インターナショナル","기업ID":"will","플랜":"Endpoint protection","계약 라이선스":"40","":"33","월 구독료":"¥7,200","_sheet":"ExoSecurity"}];
+let EXOSECURITY_DATA_SOURCE = "API";
 const FORVAL_MIN_DISPLAY_MONTH = "2025-09";
 let MONTH_DATA = [];
 let RAW_ROWS = [];
 let FORVAL_MONTH_DATA = [];
 let FORVAL_ROWS = [];
+let EXOSECURITY_MONTH_DATA = [];
+let LAST_DATA_MONTH = null;
+let JAPAN_MONTH_DATA = [];
+let EXOSECURITY_ROWS = [];
 let REVENUE_MONTH_DATA = [];
 let REVENUE_YEAR_DATA = [];
+let COUNTRY_MONTH_DATA = [];
 let LAST_PASSWORD = "";
 
 const $ = (id)=>document.getElementById(id);
@@ -190,14 +267,12 @@ function hideLoading(){
 
 function flattenApiData(payload){
   const data = payload && payload.success === true && payload.data ? payload.data : payload;
+  if(Array.isArray(data)) return data.map(r=>({...r, _sheet:r._sheet || 'DATA'}));
   const rows=[];
-  if(Array.isArray(data)) return data.map(r=>({...r, _sheet:'DATA'}));
-  for(const name of [...TARGET_SHEETS, ...FORVAL_SHEET_NAMES]){
-    const arr = data?.[name] || data?.[name.toLowerCase()] || data?.[name.toUpperCase()];
-    if(Array.isArray(arr)) arr.forEach(r=>rows.push({...r,_sheet:name}));
-  }
-  if(rows.length===0 && data && typeof data==='object'){
-    Object.entries(data).forEach(([sheet, arr])=>{ if(Array.isArray(arr)) arr.forEach(r=>rows.push({...r,_sheet:sheet})); });
+  if(data && typeof data === 'object'){
+    Object.entries(data).forEach(([sheet, arr])=>{
+      if(Array.isArray(arr)) arr.forEach(r=>rows.push({...r,_sheet:sheet}));
+    });
   }
   return rows;
 }
@@ -303,7 +378,7 @@ function makeMonthRange(startMonth, endMonth){
   }
   return months;
 }
-function calculateForval(rows){
+function calculateForval(rows, cutoffMonth=null){
   if(!rows.length) return [];
 
   // Forval 표시는 실제 데이터가 존재하는 구간만 보여줍니다.
@@ -312,23 +387,78 @@ function calculateForval(rows){
   const firstStartMonth = rows.reduce((min, r)=> ym(r.start) < min ? ym(r.start) : min, ym(rows[0].start));
   const lastStartMonth = rows.reduce((max, r)=> ym(r.start) > max ? ym(r.start) : max, ym(rows[0].start));
   const startMonth = firstStartMonth < FORVAL_MIN_DISPLAY_MONTH ? FORVAL_MIN_DISPLAY_MONTH : firstStartMonth;
-  const endMonth = lastStartMonth < startMonth ? startMonth : lastStartMonth;
+  const naturalEndMonth = lastStartMonth < startMonth ? startMonth : lastStartMonth;
+  const endMonth = cutoffMonth && cutoffMonth < naturalEndMonth ? cutoffMonth : naturalEndMonth;
   const months = makeMonthRange(startMonth, endMonth);
 
   return months.map(mo=>{
+    // Forval은 각 행이 고객 1개입니다. 상품코드는 고객 식별용 표기로만 사용하며,
+    // 동일한 상품코드가 있어도 행을 합치거나 중복 제거하지 않습니다.
     const active = rows.filter(r=>r.start<=mo.date && r.end>=mo.date);
-    const byProduct = new Map();
-    active.forEach(r=>{
-      const cur = byProduct.get(r.productCode)||{productCode:r.productCode, arr:0, rows:0, revenue:0, daily:0};
-      cur.arr += r.arr;
-      cur.revenue += r.revenue;
-      cur.daily += r.daily;
-      cur.rows += 1;
-      byProduct.set(r.productCode,cur);
-    });
-    const topProducts = [...byProduct.values()].sort((a,b)=>b.arr-a.arr);
+    const topProducts = active.map(r=>({
+      productCode:r.productCode,
+      arr:r.arr,
+      rows:1,
+      revenue:r.revenue,
+      daily:r.daily,
+      rowIndex:r.idx
+    })).sort((a,b)=>b.arr-a.arr);
     const arr = topProducts.reduce((s,p)=>s+p.arr,0);
-    return {month:mo.month, arr, productCount:byProduct.size, rowCount:active.length, topProducts};
+    return {month:mo.month, arr, productCount:active.length, rowCount:active.length, topProducts};
+  });
+}
+
+
+function isExoSecuritySheetName(name){
+  return EXOSECURITY_SHEET_NAMES.some(s => normalizeKey(s) === normalizeKey(name));
+}
+function normalizeExoSecurityRows(rows){
+  return rows.map((r, idx)=>{
+    const sheet = r._sheet || '';
+    const paidStart = parseDate(getVal(r,['유료 개시일','유료개시일','paidStart','startDate']));
+    const companyKr = String(getVal(r,['회사명 KR','회사명KR','회사명']) ?? '').trim();
+    const companyJp = String(getVal(r,['회사명 JP','회사명JP']) ?? '').trim();
+    const company = companyKr || companyJp;
+    const companyId = String(getVal(r,['기업ID','기업 ID','companyId','tenantId']) ?? '').trim();
+    const plan = String(getVal(r,['플랜','plan']) ?? '').trim();
+    const contractedLicenses = parseMoney(getVal(r,['계약 라이선스','계약라이선스','contractedLicenses']));
+    const monthlyFee = parseMoney(getVal(r,['월 구독료','월구독료','MRR','monthlyFee']));
+    return {idx, sheet, paidStart, companyKr, companyJp, company, companyId, plan, contractedLicenses, monthlyFee, arr:monthlyFee*12, raw:r};
+  }).filter(r=>isExoSecuritySheetName(r.sheet) && r.paidStart && r.company && r.monthlyFee>0);
+}
+function calculateExoSecurity(rows, cutoffMonth=null){
+  if(!rows.length) return [];
+  const eligibleRows = cutoffMonth ? rows.filter(r=>ym(r.paidStart)<=cutoffMonth) : rows;
+  if(!eligibleRows.length) return [];
+  const firstMonth = eligibleRows.reduce((min,r)=>ym(r.paidStart)<min?ym(r.paidStart):min,ym(eligibleRows[0].paidStart));
+  const naturalLastMonth = eligibleRows.reduce((max,r)=>ym(r.paidStart)>max?ym(r.paidStart):max,ym(eligibleRows[0].paidStart));
+  const lastMonth = cutoffMonth && cutoffMonth < naturalLastMonth ? cutoffMonth : naturalLastMonth;
+  return makeMonthRange(firstMonth,lastMonth).map(mo=>{
+    const active = eligibleRows.filter(r=>r.paidStart<=mo.date);
+    const byCustomer = new Map();
+    active.forEach(r=>{
+      const key = r.companyId || r.company;
+      const cur = byCustomer.get(key)||{company:r.company,companyKr:r.companyKr,companyJp:r.companyJp,companyId:r.companyId,plans:new Set(),monthlyFee:0,arr:0,contractedLicenses:0,rows:0};
+      if(r.plan) cur.plans.add(r.plan);
+      cur.monthlyFee += r.monthlyFee; cur.arr += r.arr; cur.contractedLicenses += r.contractedLicenses; cur.rows += 1;
+      byCustomer.set(key,cur);
+    });
+    const customers=[...byCustomer.values()].map(c=>({...c,plans:[...c.plans]})).sort((a,b)=>b.arr-a.arr);
+    return {month:mo.month,arr:customers.reduce((s,c)=>s+c.arr,0),mrr:customers.reduce((s,c)=>s+c.monthlyFee,0),customerCount:customers.length,contractedLicenses:customers.reduce((s,c)=>s+c.contractedLicenses,0),customers};
+  });
+}
+
+function calculateJapan(forvalData, securityData, cutoffMonth=null){
+  if(!forvalData.length && !securityData.length) return [];
+  const months=[...new Set([...forvalData.map(d=>d.month),...securityData.map(d=>d.month)])].filter(m=>!cutoffMonth || m<=cutoffMonth).sort();
+  return months.map(month=>{
+    const f=forvalData.find(d=>d.month===month) || {arr:0,productCount:0,rowCount:0,topProducts:[]};
+    const e=securityData.find(d=>d.month===month) || {arr:0,mrr:0,customerCount:0,contractedLicenses:0,customers:[]};
+    const entries=[
+      ...(f.topProducts||[]).map(x=>({name:x.productCode,source:'Forval',arr:x.arr,detail:'Forval 고객'})),
+      ...(e.customers||[]).map(x=>({name:x.company,source:'ExoSecurity',arr:x.arr,detail:`계약 라이선스 ${x.contractedLicenses.toLocaleString('ko-KR')}개`}))
+    ].sort((a,b)=>b.arr-a.arr);
+    return {month,forvalArr:f.arr||0,securityArr:e.arr||0,arr:(f.arr||0)+(e.arr||0),mrr:((f.arr||0)+(e.arr||0))/12,activeCustomers:(f.rowCount||0)+(e.customerCount||0),forvalCustomers:f.rowCount||0,securityCustomers:e.customerCount||0,topEntries:entries};
   });
 }
 
@@ -374,7 +504,7 @@ function revealDashboard(){
   const dashboard = $('dashboardRoot');
   if(auth) auth.classList.add('hidden');
   if(dashboard) dashboard.classList.remove('hidden');
-  ['mainCharts','revenueSection','netSection','tablesSection','monthSection'].forEach(id=>$(id).classList.remove('hidden'));
+  ['mainCharts','revenueSection','netSection','tablesSection','monthSection','countrySection','exoSecuritySection'].forEach(id=>$(id)?.classList.remove('hidden'));
   if($('reloadBtn')) $('reloadBtn').disabled = false;
 }
 function render(){
@@ -409,7 +539,7 @@ function render(){
   drawRevenueChart('revenueChart', REVENUE_MONTH_DATA);
   drawYearRevenueChart('yearRevenueChart', REVENUE_YEAR_DATA);
   drawBarChart('netArrChart', MONTH_DATA.slice(1), 'netArr');
-  renderYearTable(); renderTop10(last); renderMonthTable(); renderForval();
+  renderYearTable(); renderTop10(last); renderMonthTable(); renderCountry(); renderJapan(); renderForval(); renderExoSecurity();
 }
 
 function table(headers, rows){return `<table><thead><tr>${headers.map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>${rows.join('')}</tbody></table>`}
@@ -437,6 +567,200 @@ function renderMonthTable(){
   }));
 }
 
+
+const JAPAN_PARTNER_CUSTOMERS = new Set(['jiran japan inc.','jsecurity, inc.']);
+function isJapanPartnerCustomer(name){
+  return JAPAN_PARTNER_CUSTOMERS.has(String(name||'').trim().toLowerCase());
+}
+function calculateCountry(rows, monthData){
+  return monthData.map(m=>{
+    const [yy,mm]=m.month.split('-').map(Number), monthEnd=endOfMonth(yy,mm-1);
+    const active=rows.filter(r=>r.start<=monthEnd && r.end>=monthEnd);
+    const result={month:m.month,totalArr:0,koreaArr:0,japanArr:0,totalRevenue:0,koreaRevenue:0,japanRevenue:0,koreaCustomers:0,japanCustomers:0};
+    const korea=new Map(), japan=new Map();
+    active.forEach(r=>{
+      const target=isJapanPartnerCustomer(r.customer)?japan:korea;
+      target.set(r.customer,(target.get(r.customer)||0)+r.daily*365);
+    });
+    result.japanArr=[...japan.values()].reduce((a,b)=>a+b,0);
+    // FY 전체 ARR은 기존 FY 계산 결과를 기준값으로 사용하여 그래프 합계를 일치시킵니다.
+    result.totalArr=m.arr;
+    result.koreaArr=Math.max(0,result.totalArr-result.japanArr);
+    result.koreaCustomers=korea.size; result.japanCustomers=japan.size;
+    rows.filter(r=>r.paidAt && ym(r.paidAt)===m.month).forEach(r=>{
+      if(isJapanPartnerCustomer(r.customer)) result.japanRevenue+=r.revenue; else result.koreaRevenue+=r.revenue;
+    });
+    result.totalRevenue=result.koreaRevenue+result.japanRevenue;
+    return result;
+  });
+}
+function renderCountry(){
+  const section=$('countrySection'); if(!section) return;
+  if(!COUNTRY_MONTH_DATA.length){section.classList.add('hidden');return;}
+  section.classList.remove('hidden');
+  const last=COUNTRY_MONTH_DATA[COUNTRY_MONTH_DATA.length-1];
+  const latestYear=last.month.slice(0,4);
+  const yearRows=COUNTRY_MONTH_DATA.filter(m=>m.month.startsWith(latestYear+'-'));
+  const koreaYearRevenue=yearRows.reduce((s,m)=>s+m.koreaRevenue,0);
+  const japanYearRevenue=yearRows.reduce((s,m)=>s+m.japanRevenue,0);
+  const totalYearRevenue=koreaYearRevenue+japanYearRevenue;
+  const totalArr=last.koreaArr+last.japanArr;
+  const koreaArrShare=totalArr?last.koreaArr/totalArr:0;
+  const japanArrShare=totalArr?last.japanArr/totalArr:0;
+  const koreaRevenueShare=totalYearRevenue?koreaYearRevenue/totalYearRevenue:0;
+  const japanRevenueShare=totalYearRevenue?japanYearRevenue/totalYearRevenue:0;
+  $('countryKpis').innerHTML=`
+    <div class="card"><div class="k">${last.month} 한국 ARR</div><div class="v">${fmtEok(last.koreaArr)}</div></div>
+    <div class="card"><div class="k">${last.month} 일본 ARR</div><div class="v">${fmtEok(last.japanArr)}</div></div>
+    <div class="card"><div class="k">${latestYear}년 한국 결제매출</div><div class="v">${fmtEok(koreaYearRevenue)}</div></div>
+    <div class="card"><div class="k">${latestYear}년 일본 결제매출</div><div class="v">${fmtEok(japanYearRevenue)}</div></div>`;
+  $('countryShares').innerHTML=`
+    <div class="shareBox"><div class="shareTitle">ARR 국가별 비중 · ${last.month}</div>
+      <div class="shareRow"><span>한국</span><div class="shareTrack"><div class="shareFill kr" style="width:${koreaArrShare*100}%"></div></div><span class="sharePct">${pct(koreaArrShare)}</span></div>
+      <div class="shareRow"><span>일본</span><div class="shareTrack"><div class="shareFill jp" style="width:${japanArrShare*100}%"></div></div><span class="sharePct">${pct(japanArrShare)}</span></div>
+    </div>
+    <div class="shareBox"><div class="shareTitle">올해 결제매출 국가별 비중 · ${latestYear}</div>
+      <div class="shareRow"><span>한국</span><div class="shareTrack"><div class="shareFill kr" style="width:${koreaRevenueShare*100}%"></div></div><span class="sharePct">${pct(koreaRevenueShare)}</span></div>
+      <div class="shareRow"><span>일본</span><div class="shareTrack"><div class="shareFill jp" style="width:${japanRevenueShare*100}%"></div></div><span class="sharePct">${pct(japanRevenueShare)}</span></div>
+    </div>`;
+  $('countrySummary').innerHTML=`${latestYear}년 누적 결제매출은 한국 <b>${fmtEok(koreaYearRevenue)}</b>, 일본 <b>${fmtEok(japanYearRevenue)}</b>입니다.<br>일본 결제매출 비중은 <b>${pct(japanRevenueShare)}</b>입니다.<br>${last.month} ARR은 한국 <b>${fmtEok(last.koreaArr)}</b>, 일본 <b>${fmtEok(last.japanArr)}</b>이며 일본 ARR 비중은 <b>${pct(japanArrShare)}</b>입니다.`;
+  $('countryMonthTable').innerHTML=table(['월','한국 결제매출','일본 결제매출','한국 ARR','일본 ARR','일본 ARR 비중'],COUNTRY_MONTH_DATA.map(m=>`<tr><td>${m.month}</td><td>${fmt(m.koreaRevenue)}</td><td>${fmt(m.japanRevenue)}</td><td>${fmtEok(m.koreaArr)}</td><td>${fmtEok(m.japanArr)}</td><td>${pct((m.koreaArr+m.japanArr)?m.japanArr/(m.koreaArr+m.japanArr):0)}</td></tr>`));
+  drawCountrySingleAxisChart('countryArrChart',COUNTRY_MONTH_DATA,'Arr','month');
+  const countryYearData=aggregateCountryYears(COUNTRY_MONTH_DATA);
+  drawCountryYearBarChart('countryRevenueChart',countryYearData);
+}
+function aggregateCountryYears(data){
+  const byYear=new Map();
+  data.forEach(d=>{
+    const year=d.month.slice(0,4);
+    if(!byYear.has(year)) byYear.set(year,{year,koreaRevenue:0,japanRevenue:0,totalRevenue:0});
+    const row=byYear.get(year);
+    row.koreaRevenue+=d.koreaRevenue||0;
+    row.japanRevenue+=d.japanRevenue||0;
+    row.totalRevenue=row.koreaRevenue+row.japanRevenue;
+  });
+  return [...byYear.values()].sort((a,b)=>a.year.localeCompare(b.year));
+}
+
+function drawCountryYearBarChart(id,data){
+  const w=620,h=430,p={l:76,r:24,t:28,b:52};
+  const max=Math.max(1,...data.map(d=>(d.koreaRevenue||0)+(d.japanRevenue||0)))*1.12;
+  const plotW=w-p.l-p.r;
+  const slot=plotW/Math.max(1,data.length);
+  const groupW=Math.min(112,slot*.72);
+  const gap=8;
+  const bw=(groupW-gap)/2;
+  const groupX=i=>p.l+i*slot+(slot-groupW)/2;
+  const y=v=>h-p.b-(v||0)*(h-p.t-p.b)/max;
+  const grid=[0,.25,.5,.75,1].map(t=>{
+    const yy=p.t+t*(h-p.t-p.b), val=max*(1-t);
+    return `<line class="gridline" x1="${p.l}" x2="${w-p.r}" y1="${yy}" y2="${yy}"/><text class="axis" x="8" y="${yy+4}">${fmtEok(val)}</text>`;
+  }).join('');
+  const bars=data.map((d,i)=>{
+    const gx=groupX(i);
+    const ky=y(d.koreaRevenue), kh=Math.max(2,h-p.b-ky);
+    const jy=y(d.japanRevenue), jh=Math.max(2,h-p.b-jy);
+    return `<rect x="${gx}" y="${ky}" width="${bw}" height="${kh}" rx="6" fill="#22c55e" opacity=".9" data-i="${i}" data-series="korea"/>`+
+      `<rect x="${gx+bw+gap}" y="${jy}" width="${bw}" height="${jh}" rx="6" fill="#f59e0b" opacity=".92" data-i="${i}" data-series="japan"/>`;
+  }).join('');
+  const ticks=data.map((d,i)=>`<text class="axis" x="${groupX(i)+groupW/2}" y="${h-15}" text-anchor="middle">FY${d.year.slice(2)}</text>`).join('');
+  $(id).innerHTML=`<div class="tooltip"></div><svg viewBox="0 0 ${w} ${h}" role="img" aria-label="년도별 한국 및 일본 결제매출 막대그래프">${grid}${bars}${ticks}</svg>`;
+  const wrap=$(id), tip=wrap.querySelector('.tooltip');
+  wrap.querySelectorAll('[data-i]').forEach(el=>{
+    el.style.cursor='pointer';
+    el.addEventListener('mouseenter',()=>{ el.setAttribute('opacity','1'); });
+    el.addEventListener('mousemove',e=>{
+      const d=data[Number(el.dataset.i)];
+      const total=(d.koreaRevenue||0)+(d.japanRevenue||0);
+      const krShare=total?d.koreaRevenue/total:0;
+      const jpShare=total?d.japanRevenue/total:0;
+      const selected=el.dataset.series==='korea'?'한국':'일본';
+      tip.innerHTML=`<b>FY${d.year.slice(2)} · ${selected}</b><br>한국 결제매출 ${fmtEok(d.koreaRevenue)} <span class="small">(${pct(krShare)})</span><br>일본 결제매출 ${fmtEok(d.japanRevenue)} <span class="small">(${pct(jpShare)})</span><br><b>전체 결제매출 ${fmtEok(total)}</b>`;
+      tip.style.display='block';
+      tip.style.position='fixed';
+      const tipW=Math.min(360,Math.max(260,tip.offsetWidth||300));
+      const tipH=tip.offsetHeight||150;
+      let left=e.clientX+18;
+      let top=e.clientY-tipH-16;
+      if(left+tipW>window.innerWidth-12) left=e.clientX-tipW-18;
+      if(left<12) left=12;
+      if(top<12) top=e.clientY+18;
+      if(top+tipH>window.innerHeight-12) top=Math.max(12,window.innerHeight-tipH-12);
+      tip.style.left=left+'px';
+      tip.style.top=top+'px';
+    });
+    el.addEventListener('mouseleave',()=>{ el.setAttribute('opacity',el.dataset.series==='korea'?'.9':'.92'); tip.style.display='none'; });
+  });
+}
+
+function drawCountrySingleAxisChart(id,data,suffix,periodType){
+  const w=900,h=350,p={l:78,r:24,t:24,b:46};
+  const koreaKey='korea'+suffix,japanKey='japan'+suffix;
+  const max=Math.max(1,...data.flatMap(d=>[d[koreaKey]||0,d[japanKey]||0]))*1.10;
+  const x=i=>p.l+i*(w-p.l-p.r)/Math.max(1,data.length-1);
+  const y=v=>h-p.b-(v||0)*(h-p.t-p.b)/max;
+  const format=fmtEok;
+  const grid=[0,.25,.5,.75,1].map(t=>{
+    const yy=p.t+t*(h-p.t-p.b), val=max*(1-t);
+    return `<line class="gridline" x1="${p.l}" x2="${w-p.r}" y1="${yy}" y2="${yy}"/><text class="axis" x="8" y="${yy+4}">${format(val)}</text>`;
+  }).join('');
+  const path=(key,cls)=>`<path class="${cls}" d="${data.map((d,i)=>`${i?'L':'M'}${x(i)},${y(d[key])}`).join(' ')}"/>`;
+  const ticks=data.map((d,i)=>{
+    const label=periodType==='year'?`FY${d.year.slice(2)}`:d.month.slice(2);
+    return `<text class="axis" x="${x(i)}" y="${h-14}" text-anchor="middle">${label}</text>`;
+  }).join('');
+  const points=data.map((d,i)=>`<circle class="countryKoreaPoint" cx="${x(i)}" cy="${y(d[koreaKey])}" r="4.2" data-i="${i}"/><circle class="countryJapanPoint" cx="${x(i)}" cy="${y(d[japanKey])}" r="4.2" data-i="${i}"/>`).join('');
+  $(id).innerHTML=`<div class="tooltip"></div><svg viewBox="0 0 ${w} ${h}">${grid}${path(koreaKey,'countryKorea')}${path(japanKey,'countryJapan')}${points}${ticks}</svg>`;
+  bindTooltip(id,data,d=>{
+    const label=periodType==='year'?`FY${d.year.slice(2)}`:d.month;
+    return `<b>${label}</b><br>한국 ${format(d[koreaKey])}<br>일본 ${format(d[japanKey])}`;
+  },null);
+}
+
+
+
+function renderJapan(){
+  const section=$('japanSection'); if(!section) return;
+  if(!JAPAN_MONTH_DATA.length || !JAPAN_MONTH_DATA.some(m=>m.arr>0)){section.classList.add('hidden');return;}
+  section.classList.remove('hidden');
+  const nz=JAPAN_MONTH_DATA.filter(m=>m.arr>0), first=nz[0], last=nz[nz.length-1];
+  const years=Math.max((Number(last.month.slice(0,4))-Number(first.month.slice(0,4)))+(Number(last.month.slice(5,7))-Number(first.month.slice(5,7)))/12,1/12);
+  const cagr=first.arr>0?Math.pow(last.arr/first.arr,1/years)-1:0;
+  const prev=JAPAN_MONTH_DATA[JAPAN_MONTH_DATA.indexOf(last)-1];
+  const growth=prev?last.arr-prev.arr:0;
+  const forvalShare=last.arr?last.forvalArr/last.arr:0, secShare=last.arr?last.securityArr/last.arr:0;
+  const top10=last.topEntries.slice(0,10).reduce((a,b)=>a+b.arr,0), top10Share=last.arr?top10/last.arr:0;
+  $('japanKpis').innerHTML=`
+    <div class="card"><div class="k">${last.month} Japan ARR</div><div class="v">${fmtYen(last.arr)}</div></div>
+    <div class="card"><div class="k">${last.month} Japan MRR</div><div class="v">${fmtYen(last.mrr)}</div></div>
+    <div class="card"><div class="k">활성 고객 수</div><div class="v">${last.activeCustomers.toLocaleString('ko-KR')}개</div></div>
+    <div class="card"><div class="k">ARR CAGR (${first.month.slice(0,4)}~${last.month.slice(0,4)})</div><div class="v">${pct(cagr)}</div></div>`;
+  $('japanSummary').innerHTML=`최종월 Japan ARR은 <b>${fmtYen(last.arr)}</b>입니다.<br>전월 대비 ARR 증감은 <b class="${growth>=0?'green':'red'}">${growth>=0?'+':''}${fmtYen(growth)}</b>입니다.<br>Forval 비중은 <b>${pct(forvalShare)}</b>, ExoSecurity 비중은 <b>${pct(secShare)}</b>입니다.<br>활성 고객 수는 <b>${last.activeCustomers.toLocaleString('ko-KR')}개</b>입니다.<br>Top10 ARR 비중은 <b>${pct(top10Share)}</b>입니다.`;
+  $('japanMixTable').innerHTML=table(['구분','ARR(¥)','비중','활성 고객 수'],[
+    `<tr><td>Forval</td><td>${fmtYen(last.forvalArr)}</td><td>${pct(forvalShare)}</td><td>${last.forvalCustomers.toLocaleString('ko-KR')}</td></tr>`,
+    `<tr><td>ExoSecurity</td><td>${fmtYen(last.securityArr)}</td><td>${pct(secShare)}</td><td>${last.securityCustomers.toLocaleString('ko-KR')}</td></tr>`,
+    `<tr><td><b>Japan 전체</b></td><td><b>${fmtYen(last.arr)}</b></td><td><b>100.0%</b></td><td><b>${last.activeCustomers.toLocaleString('ko-KR')}</b></td></tr>`]);
+  $('japanTopTable').innerHTML=table(['순위','상품코드','구분','ARR(¥)'],last.topEntries.slice(0,20).map((x,i)=>`<tr><td>${i+1}</td><td>${esc(x.name)}</td><td>${x.source}</td><td>${fmtYen(x.arr)}</td></tr>`));
+  $('japanMonthTable').innerHTML=table(['월','Japan ARR(¥)','Forval ARR(¥)','ExoSecurity ARR(¥)','Japan MRR(¥)','활성 고객 수'],JAPAN_MONTH_DATA.map(m=>`<tr><td>${m.month}</td><td>${fmtYen(m.arr)}</td><td>${fmtYen(m.forvalArr)}</td><td>${fmtYen(m.securityArr)}</td><td>${fmtYen(m.mrr)}</td><td>${m.activeCustomers.toLocaleString('ko-KR')}</td></tr>`));
+  drawJapanLineChart('japanArrChart',JAPAN_MONTH_DATA);
+}
+function drawJapanLineChart(id,data){
+  const w=900,h=330,p={l:66,r:22,t:18,b:42}; const max=Math.max(1,...data.map(d=>d.arr))*1.08;
+  const x=i=>p.l+i*(w-p.l-p.r)/Math.max(1,data.length-1), y=v=>h-p.b-v*(h-p.t-p.b)/max;
+  const grid=[0,.25,.5,.75,1].map(t=>{const yy=p.t+t*(h-p.t-p.b),val=max*(1-t);return `<line class="gridline" x1="${p.l}" x2="${w-p.r}" y1="${yy}" y2="${yy}"/><text class="axis" x="8" y="${yy+4}">${fmtYen(val)}</text>`}).join('');
+  const path=(key,cls)=>`<path class="${cls}" d="${data.map((d,i)=>`${i?'L':'M'}${x(i)},${y(d[key])}`).join(' ')}"/>`;
+  const ticks=data.map((d,i)=>i%3===0?`<text class="axis" x="${x(i)}" y="${h-14}" text-anchor="middle">${d.month.slice(2)}</text>`:'').join('');
+  const pts=data.map((d,i)=>`<circle class="point" cx="${x(i)}" cy="${y(d.arr)}" r="4.8" data-i="${i}"/>`).join('');
+  $(id).innerHTML=`<div class="tooltip"></div><svg viewBox="0 0 ${w} ${h}">${grid}${path('arr','japanTotal')}${path('forvalArr','japanForval')}${path('securityArr','japanSecurity')}${pts}${ticks}</svg>`;
+  bindTooltip(id,data,d=>`<b>${d.month}</b><br>Japan ARR ${fmtYen(d.arr)}<br>Forval ${fmtYen(d.forvalArr)}<br>ExoSecurity ${fmtYen(d.securityArr)}<br>활성 고객 수 ${d.activeCustomers.toLocaleString('ko-KR')}개`,openJapanMonthDetail);
+}
+function openJapanMonthDetail(d){
+  $('modalTitle').textContent=`${d.month} Japan 통합 Top20`;
+  $('modalSub').textContent=`Japan ARR ${fmtYen(d.arr)} · Forval ${fmtYen(d.forvalArr)} · ExoSecurity ${fmtYen(d.securityArr)}`;
+  $('modalBody').innerHTML=table(['순위','상품코드','구분','ARR(¥)','상세'],d.topEntries.slice(0,20).map((x,i)=>`<tr><td>${i+1}</td><td>${esc(x.name)}</td><td>${x.source}</td><td>${fmtYen(x.arr)}</td><td>${esc(x.detail)}</td></tr>`));
+  $('modalBackdrop').style.display='flex';
+}
+
 function renderForval(){
   const section = $('forvalSection');
   if(!section) return;
@@ -453,21 +777,61 @@ function renderForval(){
   $('forvalKpis').innerHTML = `
     <div class="card"><div class="k">${last.month} Forval ARR</div><div class="v">${fmtYen(last.arr)}</div></div>
     <div class="card"><div class="k">최고 ARR</div><div class="v">${max.month}</div><div class="k">${fmtYen(max.arr)}</div></div>
-    <div class="card"><div class="k">최종월 활성 상품코드</div><div class="v">${last.productCount.toLocaleString('ko-KR')}개</div></div>
+    <div class="card"><div class="k">최종월 활성 고객 수</div><div class="v">${last.rowCount.toLocaleString('ko-KR')}개</div></div>
     <div class="card"><div class="k">최종월 활성 매출 건수</div><div class="v">${activeTotalRows.toLocaleString('ko-KR')}건</div></div>`;
   drawForvalLineChart('forvalArrChart', FORVAL_MONTH_DATA);
   renderForvalTopTable(last);
   renderForvalMonthTable();
 }
 function renderForvalTopTable(last){
-  const rows = (last?.topProducts || []).slice(0,10).map((p,i)=>`<tr><td>${i+1}</td><td>${esc(p.productCode)}</td><td>${fmtYen(p.arr)}</td><td>${p.rows.toLocaleString('ko-KR')}건</td></tr>`);
-  $('forvalTopTable').innerHTML = table(['순위','상품코드','ARR(¥)','활성 건수'], rows);
+  const rows = (last?.topProducts || []).slice(0,10).map((p,i)=>`<tr><td>${i+1}</td><td>${esc(p.productCode)}</td><td>${fmtYen(p.arr)}</td></tr>`);
+  $('forvalTopTable').innerHTML = table(['순위','상품코드','ARR(¥)'], rows);
 }
 function renderForvalMonthTable(){
-  $('forvalMonthTable').innerHTML = table(['월','ARR(¥)','상품코드 수','활성 건수','Top 상품코드'], FORVAL_MONTH_DATA.map(m=>{
+  $('forvalMonthTable').innerHTML = table(['월','ARR(¥)','활성 고객 수','Top 상품코드'], FORVAL_MONTH_DATA.map(m=>{
     const top = m.topProducts[0];
-    return `<tr><td>${m.month}</td><td>${fmtYen(m.arr)}</td><td>${m.productCount.toLocaleString('ko-KR')}</td><td>${m.rowCount.toLocaleString('ko-KR')}</td><td>${top ? esc(top.productCode)+' · '+fmtYen(top.arr) : '-'}</td></tr>`;
+    return `<tr><td>${m.month}</td><td>${fmtYen(m.arr)}</td><td>${m.rowCount.toLocaleString('ko-KR')}</td><td>${top ? esc(top.productCode)+' · '+fmtYen(top.arr) : '-'}</td></tr>`;
   }));
+}
+
+
+function renderExoSecurity(){
+  const section=$('exoSecuritySection');
+  if(!section) return;
+  section.classList.remove('hidden');
+  if(!EXOSECURITY_MONTH_DATA.length || !EXOSECURITY_MONTH_DATA.some(m=>m.arr>0)){
+    $('exoSecurityKpis').innerHTML = `<div class="card" style="grid-column:1/-1"><div class="k">ExoSecurity 데이터 확인</div><div class="v" style="font-size:18px">표시할 ARR 데이터가 없습니다.</div><div class="small">시트명과 필드명(유료 개시일, 회사명 KR, 회사명 JP, 기업ID, 플랜, 계약 라이선스, 월 구독료)을 확인해 주세요.</div></div>`;
+    $('exoSecurityArrChart').innerHTML = '';
+    $('exoSecurityTopTable').innerHTML = '';
+    $('exoSecurityMonthTable').innerHTML = '';
+    return;
+  }
+  const last=EXOSECURITY_MONTH_DATA[EXOSECURITY_MONTH_DATA.length-1];
+  const first=EXOSECURITY_MONTH_DATA[0];
+  $('exoSecurityKpis').innerHTML=`
+    <div class="card"><div class="k">${last.month} ARR</div><div class="v">${fmtYen(last.arr)}</div></div>
+    <div class="card"><div class="k">${last.month} MRR</div><div class="v">${fmtYen(last.mrr)}</div></div>
+    <div class="card"><div class="k">유료 고객 수</div><div class="v">${last.customerCount.toLocaleString('ko-KR')}개</div></div>
+    <div class="card"><div class="k">계약 라이선스</div><div class="v">${last.contractedLicenses.toLocaleString('ko-KR')}개</div><div class="k">${EXOSECURITY_DATA_SOURCE}</div></div>`;
+  drawExoSecurityLineChart('exoSecurityArrChart',EXOSECURITY_MONTH_DATA);
+  $('exoSecurityTopTable').innerHTML=table(['순위','고객','플랜','ARR(¥)','계약 라이선스'],last.customers.slice(0,10).map((c,i)=>`<tr><td>${i+1}</td><td>${esc(c.company)}</td><td>${esc(c.plans.join(', ')||'-')}</td><td>${fmtYen(c.arr)}</td><td>${c.contractedLicenses.toLocaleString('ko-KR')}</td></tr>`));
+  $('exoSecurityMonthTable').innerHTML=table(['월','MRR(¥)','ARR(¥)','유료 고객','계약 라이선스'],EXOSECURITY_MONTH_DATA.map(m=>`<tr><td>${m.month}</td><td>${fmtYen(m.mrr)}</td><td>${fmtYen(m.arr)}</td><td>${m.customerCount.toLocaleString('ko-KR')}</td><td>${m.contractedLicenses.toLocaleString('ko-KR')}</td></tr>`));
+}
+function drawExoSecurityLineChart(id,data){
+  const w=900,h=330,p={l:58,r:22,t:18,b:42}; const vals=data.map(d=>d.arr); const max=Math.max(1,...vals)*1.08,min=0;
+  const x=i=>p.l+i*(w-p.l-p.r)/Math.max(1,data.length-1), y=v=>h-p.b-(v-min)*(h-p.t-p.b)/(max-min||1);
+  const grid=[0,.25,.5,.75,1].map(t=>{const yy=p.t+t*(h-p.t-p.b),val=max-(max-min)*t;return `<line class="gridline" x1="${p.l}" x2="${w-p.r}" y1="${yy}" y2="${yy}"/><text class="axis" x="8" y="${yy+4}">${fmtYen(val)}</text>`}).join('');
+  const path=data.map((d,i)=>`${i?'L':'M'}${x(i)},${y(d.arr)}`).join(' ');
+  const ticks=data.map((d,i)=>i%3===0?`<text class="axis" x="${x(i)}" y="${h-14}" text-anchor="middle">${d.month.slice(2)}</text>`:'').join('');
+  const pts=data.map((d,i)=>`<circle class="point" cx="${x(i)}" cy="${y(d.arr)}" r="4.6" data-i="${i}"/>`).join('');
+  $(id).innerHTML=`<div class="tooltip"></div><svg viewBox="0 0 ${w} ${h}" role="img">${grid}<path class="trendLine" d="${path}"/>${pts}${ticks}</svg>`;
+  bindTooltip(id,data,d=>`<b>${d.month}</b><br>MRR ${fmtYen(d.mrr)}<br>ARR ${fmtYen(d.arr)}<br>유료 고객 ${d.customerCount.toLocaleString('ko-KR')}개`,openExoSecurityMonthDetail);
+}
+function openExoSecurityMonthDetail(d){
+  $('modalTitle').textContent=`${d.month} 엑소시큐리티 고객 상세`;
+  $('modalSub').textContent=`ARR ${fmtYen(d.arr)} · 유료 고객 ${d.customerCount.toLocaleString('ko-KR')}개`;
+  $('modalBody').innerHTML=table(['순위','회사명 KR','회사명 JP','기업ID','플랜','MRR(¥)','ARR(¥)','계약 라이선스'],d.customers.map((c,i)=>`<tr><td>${i+1}</td><td>${esc(c.companyKr||'-')}</td><td>${esc(c.companyJp||'-')}</td><td>${esc(c.companyId||'-')}</td><td>${esc(c.plans.join(', ')||'-')}</td><td>${fmtYen(c.monthlyFee)}</td><td>${fmtYen(c.arr)}</td><td>${c.contractedLicenses.toLocaleString('ko-KR')}</td></tr>`));
+  $('modalBackdrop').style.display='flex';
 }
 
 function drawRevenueChart(id,data){
@@ -526,12 +890,12 @@ function drawForvalLineChart(id,data){
   const monthTicks=data.map((d,i)=> i%3===0 ? `<text class="axis" x="${x(i)}" y="${h-14}" text-anchor="middle">${d.month.slice(2)}</text>`:'').join('');
   const pts=data.map((d,i)=>`<circle class="point" cx="${x(i)}" cy="${y(d.arr)}" r="4.6" data-i="${i}"/>`).join('');
   $(id).innerHTML=`<div class="tooltip"></div><svg viewBox="0 0 ${w} ${h}" role="img">${grid}<path class="trendLine" d="${path}"/>${pts}${monthTicks}</svg>`;
-  bindTooltip(id,data,(d)=>`<b>${d.month}</b><br>ARR ${fmtYen(d.arr)}<br>상품코드 ${d.productCount.toLocaleString('ko-KR')}개<br>활성 건수 ${d.rowCount.toLocaleString('ko-KR')}건`,openForvalMonthDetail);
+  bindTooltip(id,data,(d)=>`<b>${d.month}</b><br>ARR ${fmtYen(d.arr)}<br>활성 고객 ${d.rowCount.toLocaleString('ko-KR')}개`,openForvalMonthDetail);
 }
 function openForvalMonthDetail(d){
   $('modalTitle').textContent=`${d.month} Forval 상품코드 상세`;
-  $('modalSub').textContent=`월말 활성 계약 ARR ${fmtYen(d.arr)} · 상품코드 ${d.productCount.toLocaleString('ko-KR')}개 · 활성 건수 ${d.rowCount.toLocaleString('ko-KR')}건`;
-  $('modalBody').innerHTML=table(['순위','상품코드','ARR(¥)','활성 건수'],d.topProducts.map((p,i)=>`<tr><td>${i+1}</td><td>${esc(p.productCode)}</td><td>${fmtYen(p.arr)}</td><td>${p.rows.toLocaleString('ko-KR')}건</td></tr>`));
+  $('modalSub').textContent=`월말 활성 계약 ARR ${fmtYen(d.arr)} · 활성 고객 ${d.rowCount.toLocaleString('ko-KR')}개`;
+  $('modalBody').innerHTML=table(['순위','상품코드','ARR(¥)'],d.topProducts.map((p,i)=>`<tr><td>${i+1}</td><td>${esc(p.productCode)}</td><td>${fmtYen(p.arr)}</td></tr>`));
   $('modalBackdrop').style.display='flex';
 }
 function drawLineChart(id,data,key,clickable){
@@ -599,7 +963,7 @@ function bindTooltip(id,data,htmlFn,clickFn){
   });
 }
 function openTop20(d){
-  $('modalTitle').textContent=`${d.month} Top20 고객 ARR`; $('modalSub').textContent=`ARR ${fmtEok(d.arr)} · 활성고객 ${d.activeCustomers.toLocaleString()}개`;
+  $('modalTitle').textContent=`${d.month} Top20 고객 ARR`; $('modalSub').textContent=`ARR ${fmtYen(d.arr)} · 활성고객 ${d.activeCustomers.toLocaleString()}개`;
   $('modalBody').innerHTML=table(['순위','고객','MRR','ARR','계약수'],d.topCustomers.map((c,i)=>`<tr><td>${i+1}</td><td>${esc(c.customer)}</td><td>${fmt(c.mrr)}</td><td>${fmtEok(c.arr)}</td><td>${c.contracts}</td></tr>`));
   $('modalBackdrop').style.display='flex';
 }
@@ -648,12 +1012,27 @@ async function load(){
     const flat = flattenApiData(payload && payload.success === true && payload.data ? payload.data : payload);
     RAW_ROWS = normalizeRows(flat);
     FORVAL_ROWS = normalizeForvalRows(flat);
-    if(!RAW_ROWS.length && !FORVAL_ROWS.length) throw new Error('계산 가능한 행이 없습니다. FY 탭은 고객명/매출/시작일/만료일, Forval 탭은 판매구분/매출/시작일/만료일 컬럼이 필요합니다.');
+    EXOSECURITY_ROWS = normalizeExoSecurityRows(flat);
+    if(!EXOSECURITY_ROWS.length && EXOSECURITY_FALLBACK_ROWS.length){
+      EXOSECURITY_ROWS = normalizeExoSecurityRows(EXOSECURITY_FALLBACK_ROWS);
+      EXOSECURITY_DATA_SOURCE = '포함 데이터';
+    } else {
+      EXOSECURITY_DATA_SOURCE = 'API';
+    }
+    if(!RAW_ROWS.length && !FORVAL_ROWS.length && !EXOSECURITY_ROWS.length) throw new Error('계산 가능한 행이 없습니다. FY, Forval 또는 ExoSecurity 탭의 필수 컬럼을 확인하세요.');
     MONTH_DATA = RAW_ROWS.length ? calculate(RAW_ROWS) : [];
+    LAST_DATA_MONTH = MONTH_DATA.length ? MONTH_DATA[MONTH_DATA.length-1].month : null;
+    if(!LAST_DATA_MONTH){
+      const paidMonths = [...RAW_ROWS, ...FORVAL_ROWS].filter(r=>r.paidAt).map(r=>ym(r.paidAt));
+      if(paidMonths.length) LAST_DATA_MONTH = paidMonths.sort().at(-1);
+    }
     REVENUE_MONTH_DATA = MONTH_DATA.length ? calculateRevenue(RAW_ROWS, MONTH_DATA) : [];
     REVENUE_YEAR_DATA = REVENUE_MONTH_DATA.length ? calculateRevenueYear(REVENUE_MONTH_DATA) : [];
-    FORVAL_MONTH_DATA = calculateForval(FORVAL_ROWS);
-    if(MONTH_DATA.length) render(); else renderForval();
+    COUNTRY_MONTH_DATA = MONTH_DATA.length ? calculateCountry(RAW_ROWS, MONTH_DATA) : [];
+    FORVAL_MONTH_DATA = calculateForval(FORVAL_ROWS, LAST_DATA_MONTH);
+    EXOSECURITY_MONTH_DATA = calculateExoSecurity(EXOSECURITY_ROWS, LAST_DATA_MONTH);
+    JAPAN_MONTH_DATA = calculateJapan(FORVAL_MONTH_DATA, EXOSECURITY_MONTH_DATA, LAST_DATA_MONTH);
+    if(MONTH_DATA.length) render(); else { renderCountry(); renderJapan(); renderForval(); renderExoSecurity(); }
   }catch(e){
     console.error(e);
     const authError = $('authError');
