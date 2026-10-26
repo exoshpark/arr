@@ -245,7 +245,7 @@ body.report-printing .reportToolbar{visibility:hidden!important}
 <script>
 const API_URL = "https://script.google.com/macros/s/AKfycby1bmRQ1El3e9Vvs_unjaYWvKwkQi-bmitfR4FC8_S6JuZj2Rt2RAm5G1Di-IUMFyx3/exec";
 const TARGET_SHEETS = ["FY22","FY23","FY24","FY25","FY26"];
-const REPORT_MONTH = "2026-06";
+const REPORT_MONTH = "2026-09";
 const FORVAL_SHEET_NAMES = ["Forval","FORVAL","forval","포발"];
 const EXOSECURITY_SHEET_NAMES = ["ExoSecurity","EXOSECURITY","exosecurity","엑소시큐리티"];
 const JPY_TO_KRW = 9; // 100 JPY = 900 KRW
@@ -632,7 +632,7 @@ function buildManagementReport(){
   const idx=MONTH_DATA.findIndex(m=>m.month===REPORT_MONTH);
   if(idx<0){
     const latest=MONTH_DATA.at(-1)?.month||'없음';
-    page.innerHTML=`<div class="reportError"><b>${REPORT_MONTH} 데이터가 없습니다.</b><br>API에서 확인된 마지막 FY 데이터월: ${latest}<br><br>FY26 시트의 6월 결제일자 및 계약 데이터를 확인해 주세요.</div>`;
+    page.innerHTML=`<div class="reportError"><b>${REPORT_MONTH} 데이터가 없습니다.</b><br>API에서 확인된 마지막 FY 데이터월: ${latest}<br><br>FY26 시트의 9월 결제일자 및 계약 데이터를 확인해 주세요.</div>`;
     return false;
   }
   const priorYearMonth=`${Number(REPORT_MONTH.slice(0,4))-1}-${REPORT_MONTH.slice(5)}`;
@@ -641,14 +641,15 @@ function buildManagementReport(){
   const ytd=REVENUE_MONTH_DATA.filter(m=>m.month.startsWith(year+'-')&&m.month<=REPORT_MONTH).reduce((sum,m)=>sum+(m.revenue||0),0);
   const priorYtd=REVENUE_MONTH_DATA.filter(m=>m.month.startsWith(priorYear+'-')&&m.month<=priorYearMonth).reduce((sum,m)=>sum+(m.revenue||0),0);
   const country=COUNTRY_MONTH_DATA.find(m=>m.month===REPORT_MONTH)||{koreaArr:cur.arr,japanArr:0,koreaCustomers:cur.activeCustomers,japanCustomers:0};
-  const priorCountry=COUNTRY_MONTH_DATA.find(m=>m.month===priorYearMonth)||{koreaCustomers:0,japanCustomers:0};
-  const arrYoY=reportDelta(cur.arr,yoy?.arr), ytdYoY=reportDelta(ytd,priorYtd);
+  const priorCountry=COUNTRY_MONTH_DATA.find(m=>m.month===priorYearMonth);
+  const integratedArr=country.totalArr ?? (country.koreaArr+country.japanArr);
+  const arrYoY=reportDelta(integratedArr,priorCountry?.totalArr), ytdYoY=reportDelta(ytd,priorYtd);
   const years=[...new Set(MONTH_DATA.map(m=>m.month.slice(0,4)))].filter(y=>Number(y)<=Number(year)).sort();
   const arrYearData=years.map(y=>{
-    const exact=MONTH_DATA.find(m=>m.month===`${y}-06`);
-    return {year:y,arr:exact?.arr||0,asOf:exact?`${y}.06.30`:'데이터 없음'};
+    const exact=COUNTRY_MONTH_DATA.find(m=>m.month===`${y}-09`);
+    return {year:y,arr:exact?.totalArr||0,asOf:exact?`${y}.09.30`:'데이터 없음'};
   }).filter(d=>d.arr>0);
-  const revenueYearData=years.map(y=>({year:y,revenue:REVENUE_MONTH_DATA.filter(m=>m.month.startsWith(y+'-')&&m.month<=`${y}-06`).reduce((sum,m)=>sum+(m.revenue||0),0),asOf:`${y}.01.01~06.30`})).filter(d=>d.revenue>0);
+  const revenueYearData=years.map(y=>({year:y,revenue:REVENUE_MONTH_DATA.filter(m=>m.month.startsWith(y+'-')&&m.month<=`${y}-09`).reduce((sum,m)=>sum+(m.revenue||0),0),asOf:`${y}.01.01~09.30`})).filter(d=>d.revenue>0);
   const excludedCustomers=['jiranjapaninc','jsecurityinc','한국인터넷진흥원','directcloud','다이렉트클라우드'];
   const isExcludedCustomer=name=>{
     const n=String(name||'').trim().toLowerCase().replace(/[^a-z0-9가-힣]/g,'');
@@ -657,54 +658,54 @@ function buildManagementReport(){
   const japanOps=JAPAN_MONTH_DATA.find(m=>m.month===REPORT_MONTH);
   const priorJapanOps=JAPAN_MONTH_DATA.find(m=>m.month===priorYearMonth);
   const koreaCustomers=country.koreaCustomers||0;
-  const priorKoreaCustomers=priorCountry.koreaCustomers||0;
+  const priorKoreaCustomers=priorCountry?.koreaCustomers||0;
   const japanCustomers=japanOps?.activeCustomers||country.japanCustomers||0;
-  const priorJapanCustomers=priorJapanOps?.activeCustomers||priorCountry.japanCustomers||0;
+  const priorJapanCustomers=priorJapanOps?.activeCustomers||priorCountry?.japanCustomers||0;
   const koreaCustomerYoY=reportDelta(koreaCustomers,priorKoreaCustomers);
   const japanCustomerYoY=reportDelta(japanCustomers,priorJapanCustomers);
   const totalCountryArr=country.koreaArr+country.japanArr;
-  const countryH1=COUNTRY_MONTH_DATA.filter(m=>m.month.startsWith(year+'-')&&m.month<=REPORT_MONTH).reduce((a,m)=>({koreaRevenue:a.koreaRevenue+(m.koreaRevenue||0),japanRevenue:a.japanRevenue+(m.japanRevenue||0)}),{koreaRevenue:0,japanRevenue:0});
-  const totalCountryRevenue=countryH1.koreaRevenue+countryH1.japanRevenue;
-  const q2Start=new Date(2026,3,1), q2End=new Date(2026,5,30,23,59,59);
+  const countryYtd=COUNTRY_MONTH_DATA.filter(m=>m.month.startsWith(year+'-')&&m.month<=REPORT_MONTH).reduce((a,m)=>({koreaRevenue:a.koreaRevenue+(m.koreaRevenue||0),japanRevenue:a.japanRevenue+(m.japanRevenue||0)}),{koreaRevenue:0,japanRevenue:0});
+  const totalCountryRevenue=countryYtd.koreaRevenue+countryYtd.japanRevenue;
+  const q3Start=new Date(2026,6,1), q3End=new Date(2026,8,30,23,59,59,999);
   const newCustomerMap=new Map();
-  RAW_ROWS.filter(r=>r.start>=q2Start&&r.start<=q2End&&!isExcludedCustomer(r.customer)).forEach(r=>{
+  RAW_ROWS.filter(r=>r.start>=q3Start&&r.start<=q3End&&!isExcludedCustomer(r.customer)).forEach(r=>{
     const item=newCustomerMap.get(r.customer)||{customer:r.customer,revenue:0,start:r.start,contracts:0};
     item.revenue+=r.revenue||0; item.contracts+=1; if(r.start<item.start)item.start=r.start; newCustomerMap.set(r.customer,item);
   });
   const newCustomers=[...newCustomerMap.values()].sort((a,b)=>b.revenue-a.revenue).slice(0,5);
   const insights=[
-    `6월말 ARR은 <b>${reportMoney(cur.arr)}</b>으로 2025년 6월말 대비 <b class="${arrYoY.cls}">${arrYoY.text}</b> 성장했습니다.`,
-    `상반기 누적 결제매출은 <b>${reportMoney(ytd)}</b>으로 2025년 같은 기간 대비 <b class="${ytdYoY.cls}">${ytdYoY.text}</b>입니다.`,
+    `9월말 통합 ARR은 <b>${reportMoney(integratedArr)}</b>으로 2025년 9월말 대비 <b class="${arrYoY.cls}">${arrYoY.text}</b> 성장했습니다.`,
+    `1~9월 누적 결제매출은 <b>${reportMoney(ytd)}</b>으로 2025년 같은 기간 대비 <b class="${ytdYoY.cls}">${ytdYoY.text}</b>입니다.`,
     `한국 활성 고객은 <b>${koreaCustomers.toLocaleString()}개</b>로 전년 동기 대비 <b class="${koreaCustomerYoY.cls}">${koreaCustomerYoY.text}</b>입니다.`,
     `일본 활성 고객은 <b>${japanCustomers.toLocaleString()}개</b>로 전년 동기 대비 <b class="${japanCustomerYoY.cls}">${japanCustomerYoY.text}</b>입니다.`,
-    `6월말 ARR 구성은 한국 <b>${reportMoney(country.koreaArr)}</b>, 일본 <b>${reportMoney(country.japanArr)}</b>입니다.`
+    `9월말 ARR 구성은 한국 <b>${reportMoney(country.koreaArr)}</b>, 일본 <b>${reportMoney(country.japanArr)}</b>입니다.`
   ];
   const arrValueRows=arrYearData.map(d=>`<tr><td>${d.year}</td><td>${d.asOf}</td><td>${reportMoney(d.arr)}</td></tr>`).join('');
   const revenueValueRows=revenueYearData.map(d=>`<tr><td>${d.year}</td><td>${d.asOf}</td><td>${reportMoney(d.revenue)}</td></tr>`).join('');
   page.innerHTML=`
-    <header class="reportHeader"><div><div class="reportEyebrow">EXOSPHERE LABS · QUARTERLY MANAGEMENT REPORT</div><div class="reportTitle">분기 경영리포트</div></div><div class="reportDate"><b>2026년 2분기</b><br>기준일 2026.06.30</div></header>
+    <header class="reportHeader"><div><div class="reportEyebrow">EXOSPHERE LABS · QUARTERLY MANAGEMENT REPORT</div><div class="reportTitle">분기 경영리포트</div></div><div class="reportDate"><b>2026년 3분기</b><br>기준일 2026.09.30</div></header>
     <section class="reportKpis">
-      <div class="reportKpi"><div class="reportKpiLabel">ARR</div><div class="reportKpiValue">${reportMoney(cur.arr)}</div><div class="reportKpiDelta ${arrYoY.cls}">2025.06.30 대비 ${arrYoY.text}</div></div>
-      <div class="reportKpi"><div class="reportKpiLabel">상반기 누적 결제매출</div><div class="reportKpiValue">${reportMoney(ytd)}</div><div class="reportKpiDelta ${ytdYoY.cls}">2025년 상반기 대비 ${ytdYoY.text}</div></div>
-      <div class="reportKpi"><div class="reportKpiLabel">한국 활성 고객</div><div class="reportKpiValue">${koreaCustomers.toLocaleString()}개</div><div class="reportKpiDelta ${koreaCustomerYoY.cls}">2025.06.30 대비 ${koreaCustomerYoY.text}</div></div>
-      <div class="reportKpi"><div class="reportKpiLabel">일본 활성 고객</div><div class="reportKpiValue">${japanCustomers.toLocaleString()}개</div><div class="reportKpiDelta ${japanCustomerYoY.cls}">2025.06.30 대비 ${japanCustomerYoY.text}</div></div>
+      <div class="reportKpi"><div class="reportKpiLabel">통합 ARR</div><div class="reportKpiValue">${reportMoney(integratedArr)}</div><div class="reportKpiDelta ${arrYoY.cls}">2025.09.30 대비 ${arrYoY.text}</div></div>
+      <div class="reportKpi"><div class="reportKpiLabel">1~9월 누적 결제매출</div><div class="reportKpiValue">${reportMoney(ytd)}</div><div class="reportKpiDelta ${ytdYoY.cls}">2025년 1~9월 누적 대비 ${ytdYoY.text}</div></div>
+      <div class="reportKpi"><div class="reportKpiLabel">한국 활성 고객</div><div class="reportKpiValue">${koreaCustomers.toLocaleString()}개</div><div class="reportKpiDelta ${koreaCustomerYoY.cls}">2025.09.30 대비 ${koreaCustomerYoY.text}</div></div>
+      <div class="reportKpi"><div class="reportKpiLabel">일본 활성 고객</div><div class="reportKpiValue">${japanCustomers.toLocaleString()}개</div><div class="reportKpiDelta ${japanCustomerYoY.cls}">2025.09.30 대비 ${japanCustomerYoY.text}</div></div>
       <div class="reportKpi"><div class="reportKpiLabel">한국 ARR 비중</div><div class="reportKpiValue">${pct(totalCountryArr?country.koreaArr/totalCountryArr:0)}</div><div class="reportKpiDelta">${reportMoney(country.koreaArr)}</div></div>
       <div class="reportKpi"><div class="reportKpiLabel">일본 ARR 비중</div><div class="reportKpiValue">${pct(totalCountryArr?country.japanArr/totalCountryArr:0)}</div><div class="reportKpiDelta">${reportMoney(country.japanArr)}</div></div>
     </section>
     <section class="reportGrid">
-      <div class="reportPanel"><div class="reportPanelTitle">ARR 추이 <span>각 연도 6월 30일 기준</span></div><div class="reportChart">${reportYearLineSvg(arrYearData,'arr')}</div><table class="reportTrendValues"><thead><tr><th>연도</th><th>기준 시점</th><th>ARR</th></tr></thead><tbody>${arrValueRows}</tbody></table></div>
-      <div class="reportPanel"><div class="reportPanelTitle">결제매출 추이 <span>각 연도 1월 1일~6월 30일 누적</span></div><div class="reportChart">${reportYearBarSvg(revenueYearData)}</div><table class="reportTrendValues"><thead><tr><th>연도</th><th>집계 기간</th><th>결제매출</th></tr></thead><tbody>${revenueValueRows}</tbody></table></div>
+      <div class="reportPanel"><div class="reportPanelTitle">통합 ARR 추이 <span>각 연도 9월 30일 기준</span></div><div class="reportChart">${reportYearLineSvg(arrYearData,'arr')}</div><table class="reportTrendValues"><thead><tr><th>연도</th><th>기준 시점</th><th>ARR</th></tr></thead><tbody>${arrValueRows}</tbody></table></div>
+      <div class="reportPanel"><div class="reportPanelTitle">결제매출 추이 <span>각 연도 1월 1일~9월 30일 누적</span></div><div class="reportChart">${reportYearBarSvg(revenueYearData)}</div><table class="reportTrendValues"><thead><tr><th>연도</th><th>집계 기간</th><th>결제매출</th></tr></thead><tbody>${revenueValueRows}</tbody></table></div>
     </section>
     <section class="reportPanel reportCountry">
-      <div class="reportPanelTitle">한국 · 일본 사업 비교 <span>2026년 6월 30일 / 상반기 기준 · 금액 KRW</span></div>
-      <table class="reportCountryTable"><thead><tr><th>구분</th><th>ARR</th><th>ARR 비중</th><th>상반기 결제매출</th><th>매출 비중</th><th>활성 고객</th></tr></thead><tbody>
-        <tr><td><strong>한국</strong></td><td>${reportMoney(country.koreaArr)}</td><td>${pct(totalCountryArr?country.koreaArr/totalCountryArr:0)}</td><td>${reportMoney(countryH1.koreaRevenue)}</td><td>${pct(totalCountryRevenue?countryH1.koreaRevenue/totalCountryRevenue:0)}</td><td>${koreaCustomers.toLocaleString()}개</td></tr>
-        <tr><td><strong>일본</strong></td><td>${reportMoney(country.japanArr)}</td><td>${pct(totalCountryArr?country.japanArr/totalCountryArr:0)}</td><td>${reportMoney(countryH1.japanRevenue)}</td><td>${pct(totalCountryRevenue?countryH1.japanRevenue/totalCountryRevenue:0)}</td><td>${japanCustomers.toLocaleString()}개</td></tr>
+      <div class="reportPanelTitle">한국 · 일본 사업 비교 <span>2026년 9월 30일 / 1~9월 누적 기준 · 금액 KRW</span></div>
+      <table class="reportCountryTable"><thead><tr><th>구분</th><th>ARR</th><th>ARR 비중</th><th>1~9월 누적 결제매출</th><th>매출 비중</th><th>활성 고객</th></tr></thead><tbody>
+        <tr><td><strong>한국</strong></td><td>${reportMoney(country.koreaArr)}</td><td>${pct(totalCountryArr?country.koreaArr/totalCountryArr:0)}</td><td>${reportMoney(countryYtd.koreaRevenue)}</td><td>${pct(totalCountryRevenue?countryYtd.koreaRevenue/totalCountryRevenue:0)}</td><td>${koreaCustomers.toLocaleString()}개</td></tr>
+        <tr><td><strong>일본</strong></td><td>${reportMoney(country.japanArr)}</td><td>${pct(totalCountryArr?country.japanArr/totalCountryArr:0)}</td><td>${reportMoney(countryYtd.japanRevenue)}</td><td>${pct(totalCountryRevenue?countryYtd.japanRevenue/totalCountryRevenue:0)}</td><td>${japanCustomers.toLocaleString()}개</td></tr>
       </tbody></table>
     </section>
     <section class="reportBottom">
       <div class="reportPanel"><div class="reportPanelTitle">주요 해석</div>${insights.map(x=>`<div class="reportInsight"><i class="reportBullet"></i><div>${x}</div></div>`).join('')}</div>
-      <div class="reportPanel"><div class="reportPanelTitle">2분기 주요 계약</div><table class="reportTable"><thead><tr><th>고객</th><th>계약일</th><th>계약금액</th></tr></thead><tbody>${newCustomers.length?newCustomers.map(c=>`<tr><td>${esc(c.customer)}</td><td>${c.start.getFullYear()}.${String(c.start.getMonth()+1).padStart(2,'0')}.${String(c.start.getDate()).padStart(2,'0')}</td><td>${reportMoney(c.revenue)}</td></tr>`).join(''):`<tr><td colspan="3" style="text-align:center;color:#94a3b8">2분기 주요 계약 데이터가 없습니다.</td></tr>`}</tbody></table></div>
+      <div class="reportPanel"><div class="reportPanelTitle">3분기 주요 계약</div><table class="reportTable"><thead><tr><th>고객</th><th>계약일</th><th>계약금액</th></tr></thead><tbody>${newCustomers.length?newCustomers.map(c=>`<tr><td>${esc(c.customer)}</td><td>${c.start.getFullYear()}.${String(c.start.getMonth()+1).padStart(2,'0')}.${String(c.start.getDate()).padStart(2,'0')}</td><td>${reportMoney(c.revenue)}</td></tr>`).join(''):`<tr><td colspan="3" style="text-align:center;color:#94a3b8">3분기 주요 계약 데이터가 없습니다.</td></tr>`}</tbody></table></div>
     </section>`;
   return true;
 }
